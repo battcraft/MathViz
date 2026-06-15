@@ -1,0 +1,6 @@
+{
+  "name": "MathsGuru AI",
+  "description": "Interactive Hinglish micro-concept lessons, math riddles, and quizzes for Indian students of Classes 6-8",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,93 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Helper Primitives
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function incoming() {
+      return request.resource.data;
+    }
+    
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation Blueprint for UserStats
+    function isValidUserStats(data) {
+      return data.userId is string 
+        && data.userId == request.auth.uid // No status or identity spoofing
+        && data.xp is int && data.xp >= 0
+        && data.streak is int && data.streak >= 0
+        && (data.lastActiveDate == null || data.lastActiveDate is string)
+        && (data.screensViewed == null || data.screensViewed is list)
+        && (data.completedScreens == null || data.completedScreens is list)
+        && (data.badges == null || data.badges is list)
+        && (data.quizScores == null || data.quizScores is list);
+    }
+
+    // Match statement for the users collection
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId); // Query enforcer
+      
+      allow create: if isOwner(userId) 
+        && incoming().keys().hasAll(['userId', 'xp', 'streak']) 
+        && incoming().keys().size() >= 3
+        && isValidUserStats(incoming());
+        
+      allow update: if isOwner(userId)
+        && isValidUserStats(incoming())
+        && incoming().userId == existing().userId // Immutable field
+        && (
+          incoming().diff(existing()).affectedKeys().hasAny(['xp', 'streak', 'lastActiveDate', 'screensViewed', 'completedScreens', 'badges', 'quizScores'])
+        );
+        
+      allow delete: if isOwner(userId);
+    }
+
+    // Helper validation for Quiz
+    function isValidQuiz(data) {
+      return data.id is string
+        && data.topicId is string
+        && data.subtopicId is string
+        && data.difficulty is string
+        && data.questions is list;
+    }
+
+    // Helper validation for Story
+    function isValidStory(data) {
+      return data.id is string
+        && data.topicId is string
+        && data.subtopicId is string
+        && data.slides is list;
+    }
+
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidQuiz(incoming());
+      allow delete: if false;
+    }
+
+    match /stories/{storyId} {
+      allow read: if true;
+      allow create, update: if isSignedIn() && isValidStory(incoming());
+      allow delete: if false;
+    }
+  }
+}
