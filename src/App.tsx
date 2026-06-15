@@ -6,17 +6,18 @@ import HomeView from "./components/HomeView";
 import LearnView from "./components/LearnView";
 import QuizView from "./components/QuizView";
 import StoryView from "./components/StoryView";
+import VideosView from "./components/VideosView";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import UserMenu from "./components/UserMenu";
 import { DifficultyLevel } from "./types";
-import { Home, Compass, Target, BookOpen, Crown } from "lucide-react";
+import { Home, Compass, Target, BookOpen, Crown, PlayCircle } from "lucide-react";
 
 function RootContent() {
   const { t } = useLanguage();
   const { stats } = useAuth();
   
   // Navigation & Curriculums variables
-  const [activeTab, setActiveTab] = useState<"home" | "learn" | "quiz" | "story">("home");
+  const [activeTab, setActiveTab] = useState<"home" | "learn" | "quiz" | "story" | "videos">("home");
   const [difficulty, setDifficulty] = useState<DifficultyLevel>("intermediate");
 
   return (
@@ -118,6 +119,19 @@ function RootContent() {
             <span>{t("navStory")}</span>
           </button>
 
+          <button
+            id="tab-videos-btn"
+            onClick={() => setActiveTab("videos")}
+            className={`flex-1 min-w-[124px] py-3.5 px-3 rounded-xl font-sans font-black text-xs sm:text-sm uppercase tracking-wider transition-all cursor-pointer flex flex-col sm:flex-row items-center justify-center gap-2 ${
+              activeTab === "videos"
+                ? "bg-[#FF6B6B] text-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] scale-[1.03]"
+                : "text-zinc-700 hover:bg-neutral-100 hover:text-black"
+            }`}
+          >
+            <PlayCircle className="h-5 w-5" />
+            <span>{t("navVideos")}</span>
+          </button>
+
         </div>
 
         {/* 3. Screen View Wrapper */}
@@ -130,17 +144,18 @@ function RootContent() {
                 setActiveTab={setActiveTab}
               />
             )}
-            {(activeTab === "learn" || activeTab === "quiz") && (
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start animate-fade-in w-full">
-                <div id="progressive-syllabus-bento" className="lg:col-span-3">
-                  <LearnView difficulty={difficulty} />
-                </div>
-                <div id="general-championship-quiz-bento" className="lg:col-span-2">
-                  <QuizView />
-                </div>
+            {activeTab === "learn" && (
+              <div id="progressive-syllabus-bento" className="animate-fade-in w-full">
+                <LearnView difficulty={difficulty} />
               </div>
             )}
-            {activeTab === "story" && <StoryView />}
+            {activeTab === "quiz" && (
+              <div id="general-championship-quiz-bento" className="animate-fade-in w-full max-w-4xl mx-auto">
+                <QuizView difficulty={difficulty} />
+              </div>
+            )}
+            {activeTab === "story" && <StoryView difficulty={difficulty} />}
+            {activeTab === "videos" && <VideosView />}
           </ErrorBoundary>
         </div>
 

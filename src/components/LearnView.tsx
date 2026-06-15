@@ -2,12 +2,16 @@ import { useState, useEffect } from "react";
 import { TOPICS, getProceduralScreens } from "../data";
 import { useAuth } from "../lib/AuthContext";
 import { useLanguage } from "../lib/LanguageContext";
-import { Screen, Topic, Subtopic, DifficultyLevel } from "../types";
+import { Screen, Topic, Subtopic, DifficultyLevel, StorySlide } from "../types";
 import VideoPlayer from "./VideoPlayer";
 import VoiceInput from "./VoiceInput";
 import QuizView from "./QuizView";
 import StoryView from "./StoryView";
 import { ArrowLeft, Check, Eye, HelpCircle, Trophy, Sparkles, Mic, PlayCircle, BookOpen, Dumbbell, Award, ArrowRight, Compass, ShieldAlert } from "lucide-react";
+import QuizVisualAid from "./QuizVisualAid";
+import StoryVisualAid from "./StoryVisualAid";
+import { generateInteractiveSrcDoc as generateInteractiveSrcDocHelper } from "./CustomSimulators";
+import { getPracticeDrillVariants, getStoryQuestVariants, getConceptQuizVariants } from "../variants";
 
 interface LearnViewProps {
   difficulty: DifficultyLevel;
@@ -32,6 +36,9 @@ export default function LearnView({ difficulty }: LearnViewProps) {
   const [questStoryAnswered, setQuestStoryAnswered] = useState(false);
   const [questStoryOpt, setQuestStoryOpt] = useState<number | null>(null);
   const [conceptSlideIdx, setConceptSlideIdx] = useState(0);
+  const [questQuizQuestions, setQuestQuizQuestions] = useState<any[]>([]);
+  const [questQuizLoading, setQuestQuizLoading] = useState(false);
+  const [activeVariantIndex, setActiveVariantIndex] = useState(0);
 
   // Trigger loading procedural screens if we enter deep learning subtopics
   useEffect(() => {
@@ -47,6 +54,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       setQuestStoryAnswered(false);
       setQuestStoryOpt(null);
       setConceptSlideIdx(0);
+      setActiveVariantIndex(0);
     }
   }, [selectedTopic, selectedSubtopic]);
 
@@ -87,283 +95,50 @@ export default function LearnView({ difficulty }: LearnViewProps) {
   const handleMarkScreenComplete = (screenId: string) => {
     if (!stats.completedScreens.includes(screenId)) {
       const nextDoneList = [...stats.completedScreens, screenId];
-      // Earn +5 XP coins on completion!
+      
+      let rewardXp = 5;
+      if (screenId.includes("_step_practice")) {
+        rewardXp = 20;
+      } else if (screenId.includes("_step_story")) {
+        rewardXp = 25;
+      } else if (screenId.includes("_step_quiz")) {
+        rewardXp = 30;
+      } else if (screenId.includes("_step_mastery")) {
+        rewardXp = 50;
+      } else if (screenId.includes("_step_concept")) {
+        rewardXp = 15;
+      } else if (screenId.includes("_practice_variant_")) {
+        rewardXp = 20;
+        // Auto-complete the parent practice step key
+        if (selectedTopic && selectedSubtopic) {
+          const practiceKey = `${selectedTopic.id}_${selectedSubtopic.id}_step_practice`;
+          if (!nextDoneList.includes(practiceKey)) {
+            nextDoneList.push(practiceKey);
+          }
+        }
+      } else if (screenId.includes("_story_variant_") || screenId.includes("_story_slide_")) {
+        rewardXp = 25;
+        // Auto-complete the parent story step key
+        if (selectedTopic && selectedSubtopic) {
+          const storyKey = `${selectedTopic.id}_${selectedSubtopic.id}_step_story`;
+          if (!nextDoneList.includes(storyKey)) {
+            nextDoneList.push(storyKey);
+          }
+        }
+      }
+
       updateStats({
         completedScreens: nextDoneList,
-        xp: stats.xp + 5
+        xp: stats.xp + rewardXp
       });
     }
   };
 
   // Generate Interactive srcDoc text matching the topic and type!
   const generateInteractiveSrcDoc = (screen: Screen) => {
-    const isCompleted = stats.completedScreens.includes(screen.id);
-    const heading = screen.conceptHeading || screen.title;
-    const bodyText = screen.explanation || "";
-    const type = screen.interactiveType || "none";
-    const bgAmberCol = "#FFFDF0";
-
-    // Build responsive interactive widget HTML strings
-    let widgetHtml = "";
-    if (type === "point_hunt") {
-      widgetHtml = `
-        <div style="border: 3px solid black; background: white; border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 2px 2px 0px 0px black;">
-          <h4 style="margin: 0 0 10px 0; font-family: sans-serif; font-weight: bold; font-size: 13px;">🎯 POINT HUNT ACTIVITY: find the hidden points!</h4>
-          <p style="font-size: 11px; color: #555; margin: 0 0 10px 0;">Below is an empty Cartesian Plane. Click anywhere to mark coordinate points (Bindus) with UPPERCASE names!</p>
-          <div id="plane" style="height: 120px; background: #EBF8FF; border: 2px dashed black; position: relative; cursor: crosshair;">
-            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #A0AEC0;"></div>
-            <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #A0AEC0;"></div>
-          </div>
-          <p id="plane-log" style="font-size: 11px; font-weight: bold; margin: 10px 0 0 0; color: #E53E3E;">No points logged yet. Click the plane above!</p>
-        </div>
-        <script>
-          let pointCount = 0;
-          const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-          const plane = document.getElementById('plane');
-          const planeLog = document.getElementById('plane-log');
-          plane.addEventListener('click', (e) => {
-            const rect = plane.getBoundingClientRect();
-            const x = Math.round(e.clientX - rect.left);
-            const y = Math.round(e.clientY - rect.top);
-            const name = alphabet[pointCount % 26];
-            pointCount++;
-            
-            const dot = document.createElement('div');
-            dot.style.position = 'absolute';
-            dot.style.left = (x - 6) + 'px';
-            dot.style.top = (y - 6) + 'px';
-            dot.style.width = '12px';
-            dot.style.height = '12px';
-            dot.style.borderRadius = '50%';
-            dot.style.background = '#FF5722';
-            dot.style.border = '1px solid black';
-            
-            const label = document.createElement('span');
-            label.innerText = name + ' (' + (x-100) + ',' + (100-y) + ')';
-            label.style.fontSize = '8px';
-            label.style.position = 'absolute';
-            label.style.top = '-14px';
-            label.style.left = '10px';
-            label.style.background = 'black';
-            label.style.color = 'white';
-            label.style.padding = '1px 3px';
-            label.style.borderRadius = '3px';
-            label.style.fontFamily = 'monospace';
-            dot.appendChild(label);
-            
-            plane.appendChild(dot);
-            planeLog.innerText = 'Log: Bindu ' + name + ' created! Standard high uppercase naming rule verified!';
-            planeLog.style.color = 'green';
-            showDoneBtn();
-          });
-        </script>
-      `;
-    } else if (type === "line_touch") {
-      widgetHtml = `
-        <div style="border: 3px solid black; background: white; border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 2px 2px 0px 0px black;">
-          <h4 style="margin: 0 0 10px 0; font-family: sans-serif; font-weight: bold; font-size: 13px;">📏 INFINITE LINE ACTIVITY: Rekha touches infinity</h4>
-          <p style="font-size: 11px; text-align: left; color: #555; margin: 0 0 10px 0;">Drag slider to see children points align to form an infinite straight line running endlessly!</p>
-          <input type="range" id="line-slider" min="20" max="180" value="50" style="width: 100%; margin: 10px 0;" />
-          <div style="height: 60px; background: #FFF; border: 2px dashed black; position: relative;">
-            <div id="connecting-line" style="position: absolute; left: 0; right: 0; height: 4px; background: red; top: 28px;"></div>
-            <div id="dot1" style="position: absolute; left: 40px; top: 24px; width: 12px; height: 12px; border-radius: 50%; background: blue;"></div>
-            <div id="dot2" style="position: absolute; left: 160px; top: 24px; width: 12px; height: 12px; border-radius: 50%; background: blue;"></div>
-          </div>
-          <p id="line-feedback" style="font-size: 11px; font-weight: bold; color: green; margin-top: 10px;">Move slider to verify infinite arrows point in both directions! ⇆</p>
-        </div>
-        <script>
-          const slider = document.getElementById('line-slider');
-          slider.addEventListener('input', (e) => {
-            document.getElementById('dot1').style.left = e.target.value + 'px';
-            document.getElementById('line-feedback').innerHTML = 'Verifying: Collection of infinitely many points running together!';
-            showDoneBtn();
-          });
-        </script>
-      `;
-    } else if (type === "range_slider") {
-      widgetHtml = `
-        <div style="border: 3px solid black; background: white; border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 2px 2px 0px 0px black;">
-          <h4 style="margin: 0 0 10px 0; font-family: sans-serif; font-weight: bold; font-size: 13px;">🔍 RANGE EXPERIMENT: calculate the fasla (gap)</h4>
-          <div style="display: flex; justify-content: space-between; font-size: 11px;">
-            <div>Min samosa price: <b id="min-lbl">Rs 12</b></div>
-            <div>Max samosa price: <b id="max-lbl">Rs 35</b></div>
-          </div>
-          <input type="range" id="range-slider-opt" min="35" max="100" value="35" style="width: 100%; margin: 10px 0;" />
-          <p style="font-size: 12px; font-weight: bold; background: #EBF8FF; padding: 10px; border-radius: 4px; text-align: center; border:1px solid black;">
-            Fasla (Range) = Max (<span id="max-num">35</span>) - Min (12) = <span style="color: red; font-size: 14px;" id="range-calc">Rs 23</span>
-          </p>
-        </div>
-        <script>
-          const rSlider = document.getElementById('range-slider-opt');
-          rSlider.addEventListener('input', (e) => {
-            const maxVal = parseInt(e.target.value);
-            document.getElementById('max-lbl').innerText = 'Rs ' + maxVal;
-            document.getElementById('max-num').innerText = maxVal;
-            document.getElementById('range-calc').innerText = 'Rs ' + (maxVal - 12);
-            showDoneBtn();
-          });
-        </script>
-      `;
-    } else if (type === "decimal_battle") {
-      widgetHtml = `
-        <div style="border: 3px solid black; background: white; border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 2px 2px 0px 0px black;">
-          <h4 style="margin: 0 0 10px 0; font-family: sans-serif; font-weight: bold; font-size: 13px;">🐊 DECIMALS BATTLE: Mouth chooses the bigger value!</h4>
-          <p style="font-size: 11px; text-align: left;">Click the correct symbol targeting numbers comparison: <b>0.5</b> vs <b>0.05</b></p>
-          <div style="display: flex; justify-content: center; gap: 15px; margin: 15px 0;">
-            <button id="dec-less" onclick="checkDec('<')" style="padding: 10px; font-weight: bold; border: 2px solid black; background: white; cursor: pointer; border-radius: 4px;">0.5 &lt; 0.05</button>
-            <button id="dec-more" onclick="checkDec('>')" style="padding: 10px; font-weight: bold; border: 2px solid black; background: #FFCC00; cursor: pointer; border-radius: 4px;">0.5 &gt; 0.05</button>
-          </div>
-          <p id="dec-feedback" style="font-size: 11px; font-weight: bold; text-align: center;"></p>
-        </div>
-        <script>
-          function checkDec(sym) {
-            const feed = document.getElementById('dec-feedback');
-            if (sym === '>') {
-              feed.innerText = '✓ Bahut badhiya! Crocodile opens mouth to eat 0.5 because 5 tenths is larger than 0 tenths!';
-              feed.style.color = 'green';
-              document.getElementById('dec-more').style.background = '#48BB78';
-              showDoneBtn();
-            } else {
-              feed.innerText = '✘ Arre re! 0.50 is larger than 0.05. Try again!';
-              feed.style.color = 'red';
-            }
-          }
-        </script>
-      `;
-    } else if (type === "rounding_match") {
-      widgetHtml = `
-        <div style="border: 3px solid black; background: white; border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 2px 2px 0px 0px black;">
-          <h4 style="margin: 0 0 10px 0; font-family: sans-serif; font-weight: bold; font-size: 13px;">🎯 ROUNDING ARENA: Nearest Rupee Challenge</h4>
-          <p style="font-size: 11px; text-align: left;">The lassi cost is <b>Rs 35.80</b>. What is nearest rounded rupee value?</p>
-          <div style="display: flex; gap: 10px; justify-content: center; margin: 15px 0;">
-            <button onclick="checkRnd(35)" style="padding: 10px; width: 70px; font-weight: bold; border: 2px solid black; border-radius: 4px; cursor: pointer;">Rs 35</button>
-            <button onclick="checkRnd(36)" style="padding: 10px; width: 70px; font-weight: bold; border: 2px solid black; background: #FFCC00; border-radius: 4px; cursor: pointer;">Rs 36</button>
-          </div>
-          <p id="rnd-feedback" style="font-size: 11px; font-weight: bold; text-align: center;"></p>
-        </div>
-        <script>
-          function checkRnd(val) {
-            const feed = document.getElementById('rnd-feedback');
-            if (val === 36) {
-              feed.innerText = '✓ Bilkul sahi! Since .80 is greater than .50, we shove it UP to Rs 36!';
-              feed.style.color = 'green';
-              showDoneBtn();
-            } else {
-              feed.innerText = '✘ Nope! .80 means we round UP to nearest rupee.';
-              feed.style.color = 'red';
-            }
-          }
-        </script>
-      `;
-    }
-
-    return `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          body {
-            background-color: ${bgAmberCol};
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            padding: 15px;
-            margin: 0;
-            color: #1A202C;
-          }
-          .card {
-            border: 4px solid black;
-            box-shadow: 4px 4px 0px 0px black;
-            background: #FFEAA7;
-            border-radius: 12px;
-            padding: 20px;
-            max-width: 100%;
-          }
-          .title {
-            font-size: 18px;
-            font-weight: 800;
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            border-bottom: 3px double black;
-            padding-bottom: 8px;
-          }
-          .heading {
-            font-size: 14px;
-            font-weight: 700;
-            color: #DD6B20;
-            margin-top: 10px;
-          }
-          .explanation {
-            font-size: 12.5px;
-            line-height: 1.6;
-            margin: 10px 0;
-            font-weight: 500;
-          }
-          #claim-btn {
-            display: none;
-            width: 100%;
-            margin-top: 15px;
-            padding: 12px;
-            background: #48BB78;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: 3px solid black;
-            box-shadow: 2px 2px 0px 0px black;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: monospace;
-          }
-          #claim-btn:active {
-            transform: translate(1px, 1px);
-            box-shadow: 1px 1px 0px 0px black;
-          }
-        </style>
-        <script>
-          function showDoneBtn() {
-            document.getElementById('claim-btn').style.display = 'block';
-          }
-          function claimXp() {
-            window.parent.postMessage({ type: 'COMPLETE_SCREEN', screenId: "${screen.id}" }, '*');
-            document.getElementById('claim-btn').style.background = '#81E6D9';
-            document.getElementById('claim-btn').innerText = 'CLAIMED! +5 XP Added';
-            document.getElementById('claim-btn').disabled = true;
-          }
-        </script>
-      </head>
-      <body>
-        <div class="card">
-          <h2 class="title">📐 STUDY CARD</h2>
-          <h3 class="heading">${heading}</h3>
-          <p class="explanation">${bodyText}</p>
-          
-          ${widgetHtml}
-
-          <!-- Completion indicator / fallback trigger button -->
-          <button id="claim-btn" onclick="claimXp()">
-            🎉 BOHOT BADHIYA! Claim +5 XP Coins
-          </button>
-          
-          <div style="margin-top: 15px; font-size: 10px; text-align: center; color: #4A5568; font-family: monospace;">
-            MathsGuru interactive sandbox iframe — level: ${difficulty.toUpperCase()}
-          </div>
-        </div>
-        
-        <script>
-          // Automatically enable the Complete buttons on static pages so users are never stuck!
-          if ("${type}" === "none") {
-            showDoneBtn();
-          }
-          if (${isCompleted}) {
-            document.getElementById('claim-btn').style.display = 'block';
-            document.getElementById('claim-btn').style.background = '#81E6D9';
-            document.getElementById('claim-btn').innerText = '✓ COMPLETE (Marked)';
-          }
-        </script>
-      </body>
-      </html>
-    `;
+    return generateInteractiveSrcDocHelper(screen, stats.completedScreens, difficulty);
   };
+
 
   // Render Topic List Select
   if (!selectedTopic) {
@@ -770,6 +545,45 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     ];
   };
 
+  const loadQuestQuizPool = async (tId: string, sId: string) => {
+    setQuestQuizLoading(true);
+    try {
+      const response = await fetch("/api/generate-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          topicId: tId,
+          subtopicId: sId,
+          difficulty: difficulty,
+          topicName: selectedTopic?.name || tId,
+          subtopicName: selectedSubtopic?.name || sId
+        })
+      });
+      const data = await response.json();
+      if (data && Array.isArray(data.questions) && data.questions.length > 0) {
+        let finalQs = data.questions;
+        if (finalQs.length < 20) {
+          const originalLength = finalQs.length;
+          while (finalQs.length < 20) {
+            finalQs.push({ ...finalQs[finalQs.length % originalLength] });
+          }
+        } else if (finalQs.length > 20) {
+          finalQs = finalQs.slice(0, 20);
+        }
+        setQuestQuizQuestions(finalQs);
+      } else {
+        throw new Error("Invalid format");
+      }
+    } catch (e) {
+      console.error("Failed loading 20 subtopic quiz questions pool in LearnView:", e);
+      // Use our brand new high-quality 20-variant generator!
+      const fallbackQs = getConceptQuizVariants(tId, sId, difficulty);
+      setQuestQuizQuestions(fallbackQs);
+    } finally {
+      setQuestQuizLoading(false);
+    }
+  };
+
   // --- SUBTOPIC QUEST CONTAINER RENDERING ---
   if (selectedSubtopic) {
     const isSpecialSyllabusQuiz = selectedSubtopic.id.includes("_panga") || selectedSubtopic.name.toLowerCase().includes("panga") || selectedSubtopic.name.toLowerCase().includes("quiz");
@@ -823,7 +637,20 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     const progressPercent = Math.round((completedCount / 5) * 100);
 
     // active step content
-    const storyData = getSubtopicStory(selectedSubtopic.id);
+    const storyVariantsList = getStoryQuestVariants(selectedTopic.id, selectedSubtopic.id);
+    const rawFallbackStory = getSubtopicStory(selectedSubtopic.id);
+    const storyData: StorySlide = storyVariantsList[activeVariantIndex] || {
+      id: "emergency_fallback",
+      emoji: "📖",
+      title: rawFallbackStory.title,
+      narration: rawFallbackStory.story,
+      choices: rawFallbackStory.options.map((opt, i) => ({
+        text: opt,
+        correct: i === rawFallbackStory.correct,
+        rewardXp: 25
+      })),
+      explanation: rawFallbackStory.explanation
+    };
     const quizQuestions = getSubtopicQuiz(selectedSubtopic.id);
 
     // Concept illustration renderer for chalkboard
@@ -893,6 +720,16 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                     </div>
                   </div>
                   <span className="text-[11px] text-zinc-300 mt-1">"Vertex (Shikhar): Pointy corner apex!"</span>
+                </>
+              )}
+              {/* Fallback for other subtopics like video, practice, story, etc */}
+              {(!subId.includes("bindu") && !subId.includes("rekha") && !subId.includes("khand") && !subId.includes("kiran") && !subId.includes("shikhar")) && (
+                <>
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-xs font-black text-amber-300">📐 GEOMETRY LESSON SUMMARY</span>
+                    <span className="text-[10px] text-zinc-200">Point = 0D Hero A • Line = Infinite ⇆</span>
+                    <span className="text-[10px] text-zinc-200">Segment = Fixed Limits • Ray = One End origin 👉</span>
+                  </div>
                 </>
               )}
             </div>
@@ -1061,7 +898,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               }`}>
                 <div className="flex-1">
                   <span className="text-[10px] font-bold text-emerald-600 block uppercase mb-1">
-                    Pillar 3: Practice Zone 🏋️ {!isConceptDone && "• LOCKED 🔒"}
+                    Step 3: Practice Drills 🏋️ {!isConceptDone && "• LOCKED 🔒"}
                   </span>
                   <h4 className="font-sans font-black text-sm uppercase text-black mb-0.5">Interactive Playgrounds</h4>
                   <p className="text-[11px] text-zinc-500 font-semibold leading-normal">
@@ -1100,7 +937,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               }`}>
                 <div className="flex-1">
                   <span className="text-[10px] font-bold text-red-600 block uppercase mb-1">
-                    Pillar 4: Desi Kahani 📖 {!isPracticeDone && "• LOCKED 🔒"}
+                    Step 4: Story Quests 📖 {!isPracticeDone && "• LOCKED 🔒"}
                   </span>
                   <h4 className="font-sans font-black text-sm uppercase text-black mb-0.5">Bargaining Scenario Quest</h4>
                   <p className="text-[11px] text-zinc-500 font-semibold leading-normal">
@@ -1143,11 +980,11 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               }`}>
                 <div className="flex-1">
                   <span className="text-[10px] font-bold text-blue-600 block uppercase mb-1">
-                    Pillar 5: Panga Quiz 🎯 {!isStoryDone && "• LOCKED 🔒"}
+                    Step 5: Concept Quiz 🎯 {!isStoryDone && "• LOCKED 🔒"}
                   </span>
                   <h4 className="font-sans font-black text-sm uppercase text-black mb-0.5">Fight Panga Challenge</h4>
                   <p className="text-[11px] text-zinc-500 font-semibold leading-normal">
-                    Conquer 3 adaptive conceptual questions to solidify your CBSE credentials.
+                    Conquer 20 adaptive conceptual questions to solidify your CBSE credentials.
                   </p>
                 </div>
                 <div className="flex items-center gap-3 self-stretch md:self-auto justify-between border-t border-black/5 md:border-none pt-2.5 md:pt-0">
@@ -1156,12 +993,13 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                   </span>
                   <button
                     disabled={!isStoryDone}
-                    onClick={() => {
+                    onClick={async () => {
                       setQuestQuizIdx(0);
                       setQuestQuizScore(0);
                       setQuestQuizAnswered(false);
                       setQuestQuizOpt(null);
                       setActiveQuestStep("quiz");
+                      await loadQuestQuizPool(selectedTopic.id, selectedSubtopic.id);
                     }}
                     className={`px-4 py-2.5 text-xs font-sans font-black uppercase tracking-wider rounded-xl border-2 border-black shadow-[2px_2px_0px_black] cursor-pointer ${
                       !isStoryDone
@@ -1461,39 +1299,80 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       );
     }
 
-    // STEP 2 UI: Interactive Practice Arena
+    // STEP 3 UI: Interactive Practice Arena
     if (activeQuestStep === "practice") {
-      const activeScreen = screensList[0] || {
-        id: `${selectedTopic.id}_proc_0`,
-        title: "Default Practice Sheet",
-        topicId: selectedTopic.id,
-        subtopicId: selectedSubtopic.id,
-        conceptHeading: "Dynamic Math Grid Practice",
-        explanation: "Interact with the math elements to master concepts!",
-        interactiveType: "none"
+      const drillVariantsList = getPracticeDrillVariants(selectedTopic.id, selectedSubtopic.id, difficulty);
+      const drillData = drillVariantsList[activeVariantIndex] || {
+        id: "default_drill",
+        title: "Dynamic Math Grid Practice",
+        instruction: "Interact with the math elements to master concepts!",
+        targetValue: null,
+        type: "none"
       };
+
+      const activeScreen = {
+        id: `${selectedSubtopic.id}_practice_variant_${activeVariantIndex}`,
+        title: drillData.title,
+        topicId: selectedTopic.id,
+        subtopicId: (drillData as any).conceptSubtopicId || selectedSubtopic.id,
+        conceptHeading: drillData.title,
+        explanation: drillData.instruction,
+        interactiveType: drillData.type as any,
+        targetValue: drillData.targetValue,
+        activeVariantIndex: activeVariantIndex
+      };
+
+      const isCurrentDrillCompleted = stats.completedScreens.includes(activeScreen.id);
 
       return (
         <div className="flex flex-col gap-6 animate-fade-in pb-12 font-mono text-black">
           
           <div className="flex justify-between items-center border-b-4 border-black pb-3">
-            <h4 className="font-sans font-black text-lg uppercase">🏋️ Step 2: Interactive Practice Arena</h4>
+            <h4 className="font-sans font-black text-lg uppercase font-sans">🏋️ Step 3: Interactive Practice drills</h4>
             <span className="bg-purple-100 border-2 border-black text-purple-700 px-3 py-1 text-xs font-black">+20 XP coins</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Drill variant selector */}
+          <div className="bg-amber-50/50 border-4 border-black p-4 rounded-2xl shadow-[4px_4px_0px_black] text-left">
+            <span className="font-sans font-black text-xs uppercase text-zinc-500 block mb-2 font-sans">🎯 SELECT FROM 20 HIGH-YIELD PRACTICE DRILLS:</span>
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
+              {Array.from({ length: 20 }).map((_, idx) => {
+                const isSelected = idx === activeVariantIndex;
+                const isDone = stats.completedScreens.includes(`${selectedSubtopic.id}_practice_variant_${idx}`);
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveVariantIndex(idx)}
+                    className={`p-2 font-mono text-xs font-black border-2 border-black rounded-lg text-center cursor-pointer shadow-[2px_2px_0px_black] active:translate-y-0.5 transition-all ${
+                      isSelected 
+                        ? "bg-[#FFEAA7] text-black ring-2 ring-black" 
+                        : isDone
+                          ? "bg-emerald-100 text-emerald-800"
+                          : "bg-white text-zinc-500"
+                    }`}
+                  >
+                    D{idx + 1}
+                    {isDone && <span className="block text-[8px] text-emerald-600">✓</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 font-sans">
             
             {/* Working dynamic Work Sheet Iframe */}
-            <div className="lg:col-span-3 bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <div className="lg:col-span-3 bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden font-mono">
               <div className="p-3 bg-neutral-100 border-b-4 border-black text-left flex justify-between items-center text-xs font-black">
-                <span>📍 MATH INTERACTIVE WORKSPACE</span>
-                <span className="bg-white border-2 border-black px-2 py-0.5 rounded text-[10px]">Active Grid</span>
+                <span className="font-sans font-extrabold uppercase">📍 PRACTICING: {activeScreen.title}</span>
+                <span className="bg-white border-2 border-black px-2 py-0.5 rounded text-[10px] uppercase font-mono">Drill {activeVariantIndex + 1} / 20</span>
               </div>
               <div className="relative">
                 <iframe
+                  key={activeVariantIndex}
                   title={`Math Workspace ${activeScreen.title}`}
                   srcDoc={generateInteractiveSrcDoc(activeScreen)}
-                  className="w-full h-[380px] border-none block"
+                  className="w-full h-[525px] sm:h-[480px] border-none block"
                   sandbox="allow-scripts allow-same-origin"
                 />
               </div>
@@ -1501,31 +1380,50 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
             {/* Settle task */}
             <div className="bg-white border-4 border-black p-5 rounded-2xl shadow-[6px_6px_0px_black] flex flex-col justify-between h-fit gap-4">
-              <div>
-                <span className="text-[10px] font-black text-purple-600 block mb-1">⚙️ WORKSPACE CONTROLS</span>
+              <div className="text-left font-sans">
+                <span className="text-[10px] font-black text-purple-600 block mb-1 font-mono">⚙️ WORKSPACE CONTROLS</span>
                 <h4 className="font-sans font-black text-sm uppercase text-black">Submit Exercise Data</h4>
                 <p className="text-[11px] text-zinc-500 font-bold mt-2 leading-relaxed">
-                  Interact with the slider/coordinates on the left. Click, adjust, and complete the exercise successfully!
+                  Use the yellow rulers, tap/drag nodes, adjust thresholds or compare negative dials on the left! Once the chalkboard tool shows success, click the button below to secure your grade.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <button
-                  onClick={async () => {
-                    const nextDoneList = stats.completedScreens.includes(practiceKey)
-                      ? stats.completedScreens
-                      : [...stats.completedScreens, practiceKey];
+              <div className="flex flex-col gap-2 font-sans">
+                {isCurrentDrillCompleted ? (
+                  <button
+                    onClick={() => {
+                      if (activeVariantIndex < 19) {
+                        setActiveVariantIndex((p) => p + 1);
+                      } else {
+                        setActiveQuestStep("overview");
+                      }
+                    }}
+                    className="w-full py-3 bg-[#10B981] text-white font-sans font-black text-xs uppercase tracking-wider border-3 border-black rounded-xl shadow-[3px_3px_0px_black] hover:bg-emerald-600 cursor-pointer text-center animate-pulse"
+                  >
+                    {activeVariantIndex < 19 ? "Next Drill ➡️" : "🎉 All Drills Complete!"}
+                  </button>
+                ) : (
+                  <button
+                    onClick={async () => {
+                      const nextDoneList = stats.completedScreens.includes(activeScreen.id)
+                        ? stats.completedScreens
+                        : [...stats.completedScreens, activeScreen.id];
 
-                    await updateStats({
-                      completedScreens: nextDoneList,
-                      xp: stats.completedScreens.includes(practiceKey) ? stats.xp : stats.xp + 20
-                    });
-                    setActiveQuestStep("overview");
-                  }}
-                  className="w-full py-3 bg-[#22C55E] text-white font-sans font-black text-xs uppercase tracking-wider border-3 border-black rounded-xl shadow-[3px_3px_0px_black] hover:bg-green-600 cursor-pointer"
-                >
-                  ✓ Submit Practice Data!
-                </button>
+                      // Also make sure to mark the global step as completed
+                      if (!nextDoneList.includes(practiceKey)) {
+                        nextDoneList.push(practiceKey);
+                      }
+
+                      await updateStats({
+                        completedScreens: nextDoneList,
+                        xp: stats.completedScreens.includes(activeScreen.id) ? stats.xp : stats.xp + 20
+                      });
+                    }}
+                    className="w-full py-3 bg-[#22C55E] text-white font-sans font-black text-xs uppercase tracking-wider border-3 border-black rounded-xl shadow-[3px_3px_0px_black] hover:bg-green-600 cursor-pointer"
+                  >
+                    ✓ Complete Drill {activeVariantIndex + 1} (+20 XP)
+                  </button>
+                )}
                 <button
                   onClick={() => setActiveQuestStep("overview")}
                   className="w-full py-3 bg-zinc-150 border-3 border-black rounded-xl text-xs font-sans font-black uppercase hover:bg-zinc-200 cursor-pointer text-center text-black"
@@ -1541,46 +1439,85 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       );
     }
 
-    // STEP 3 UI: Delhi Street Kahani
+    // STEP 4 UI: Delhi Street Kahani
     if (activeQuestStep === "story") {
+      const isCurrentStoryCompleted = stats.completedScreens.includes(`${selectedSubtopic.id}_story_variant_${activeVariantIndex}`);
+
       return (
         <div className="max-w-3xl mx-auto w-full flex flex-col gap-6 animate-fade-in pb-12 text-black font-sans">
           
           <div className="flex justify-between items-center border-b-4 border-black pb-3 font-mono">
-            <h4 className="font-sans font-black text-lg uppercase">📖 Step 3: Delhi Street Bargaining Kahani</h4>
+            <h4 className="font-sans font-black text-lg uppercase font-sans">📖 Step 4: Delhi Street Story Quests</h4>
             <span className="bg-emerald-100 border-2 border-black text-emerald-700 px-3 py-1 text-xs font-black">+25 XP coins</span>
+          </div>
+
+          {/* Episode selector */}
+          <div className="bg-[#ECFDF5] border-4 border-black p-4 rounded-2xl shadow-[4px_4px_0px_black] text-left">
+            <span className="font-mono font-black text-xs uppercase text-[#103D30] block mb-2">⚡ CHOOSE DELHI STREET ADVENTURE (EP 1 - EP 20):</span>
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
+              {Array.from({ length: 20 }).map((_, idx) => {
+                const isSelected = idx === activeVariantIndex;
+                const isDone = stats.completedScreens.includes(`${selectedSubtopic.id}_story_variant_${idx}`);
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setActiveVariantIndex(idx);
+                      setQuestStoryAnswered(false);
+                      setQuestStoryOpt(null);
+                    }}
+                    className={`p-2 font-mono text-xs font-black border-2 border-black rounded-lg text-center cursor-pointer shadow-[2px_2px_0px_black] active:translate-y-0.5 transition-all ${
+                      isSelected 
+                        ? "bg-[#FFEAA7] text-black ring-2 ring-black" 
+                        : isDone
+                          ? "bg-emerald-100 text-emerald-800"
+                          : "bg-white text-zinc-500"
+                    }`}
+                  >
+                    EP{idx + 1}
+                    {isDone && <span className="block text-[8px] text-emerald-600">✓</span>}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="bg-white border-4 border-black p-6 sm:p-8 rounded-3xl shadow-[8px_8px_0px_rgba(0,0,0,1)] flex flex-col gap-6 text-left">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-100 border-3 border-black flex items-center justify-center text-3xl shadow-[3px_3px_0px_black]">
-                🛍️
+              <div className="w-14 h-14 rounded-2xl bg-[#FFEAA7] border-3 border-black flex items-center justify-center text-3xl shadow-[3px_3px_0px_black]">
+                {storyData.emoji || "🛍️"}
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase font-black text-zinc-400">Delhi Market Episode</span>
+                <span className="text-[10px] font-mono uppercase font-black text-zinc-400">Delhi Market Episode {activeVariantIndex + 1} / 20</span>
                 <h3 className="font-sans font-black text-xl text-black uppercase tracking-tight leading-none mt-0.5">{storyData.title}</h3>
               </div>
             </div>
 
-            <p className="text-sm sm:text-base font-bold text-zinc-700 leading-relaxed bg-[#F0FDF4] border-2 border-black p-4 rounded-xl border-dashed">
-              "{storyData.story}"
+            {/* Beautiful creative full-sized illustration representation */}
+            <div id="story-visual-aid-wrapper" className="w-full animate-fade-in shadow-[4px_4px_0px_black] border-3 border-black rounded-2xl overflow-hidden bg-white">
+              <StoryVisualAid subtopicId={selectedSubtopic.id} activeVariantIndex={activeVariantIndex} />
+            </div>
+
+            <p className="text-sm sm:text-lg font-bold text-[#103D30] leading-relaxed bg-[#F0FDF4] border-2 border-black p-4 rounded-xl border-dashed">
+              "{storyData.narration}"
             </p>
 
             <span className="font-mono text-[10px] uppercase font-black text-zinc-400">Choose Bhaiya's correct Hinglish guidance:</span>
             
             <div className="flex flex-col gap-3">
-              {storyData.options.map((opt, i) => {
+              {(storyData.choices || []).map((optDef, i) => {
+                const optText = optDef.text;
                 const isSelected = questStoryOpt === i;
-                const isCorrect = i === storyData.correct;
+                const isCorrect = optDef.correct === true;
                 
                 let btnStyle = "bg-white border-black text-black hover:bg-zinc-50";
-                if (questStoryAnswered) {
-                  if (isSelected) {
+                if (questStoryAnswered || isCurrentStoryCompleted) {
+                  if (isSelected || (isCurrentStoryCompleted && isCorrect)) {
                     btnStyle = isCorrect
                       ? "bg-[#22C55E] text-white border-black shadow-none scale-100"
                       : "bg-[#FF4D4D] text-white border-black shadow-none scale-100";
-                  } else if (i === storyData.correct) {
-                    btnStyle = "bg-[#22C55E]/20 text-black border-black border-dashed";
+                  } else if (isCorrect) {
+                     btnStyle = "bg-[#22C55E]/20 text-black border-black border-dashed";
                   } else {
                     btnStyle = "bg-white opacity-50 border-zinc-200 cursor-not-allowed";
                   }
@@ -1590,14 +1527,14 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
                 return (
                   <button
-                    key={opt}
-                    disabled={questStoryAnswered}
+                    key={optText}
+                    disabled={questStoryAnswered || isCurrentStoryCompleted}
                     onClick={() => setQuestStoryOpt(i)}
                     className={`py-3.5 px-4 rounded-xl border-3 text-left text-xs sm:text-sm font-black transition-all shadow-[3px_3px_0px_black] active:translate-y-0.5 cursor-pointer ${btnStyle}`}
                   >
                     <div className="flex justify-between items-center w-full">
-                      <span>{opt}</span>
-                      {questStoryAnswered && i === storyData.correct && <span className="font-mono text-[10px] font-black uppercase text-green-700 bg-green-55 border border-green-400 px-1.5 py-0.5 rounded">✓ RIGHT</span>}
+                      <span>{optText}</span>
+                      {isCorrect && (questStoryAnswered || isCurrentStoryCompleted) && <span className="font-mono text-[10px] font-black uppercase text-green-700 bg-green-55 border border-green-400 px-1.5 py-0.5 rounded">✓ RIGHT</span>}
                     </div>
                   </button>
                 );
@@ -1606,20 +1543,30 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
             {/* Story Prompt Action buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-3 border-t-2 border-black border-dashed">
-              {!questStoryAnswered ? (
+              {!questStoryAnswered && !isCurrentStoryCompleted ? (
                 <button
                   disabled={questStoryOpt === null}
                   onClick={async () => {
                     if (questStoryOpt === null) return;
                     setQuestStoryAnswered(true);
-                    if (questStoryOpt === storyData.correct) {
-                      const nextDoneList = stats.completedScreens.includes(storyKey)
+                    
+                    const choicesList = storyData.choices || [];
+                    const selectedChoice = choicesList[questStoryOpt];
+                    const isCorrect = selectedChoice?.correct === true;
+
+                    if (isCorrect) {
+                      const screenId = `${selectedSubtopic.id}_story_variant_${activeVariantIndex}`;
+                      const nextDoneList = stats.completedScreens.includes(screenId)
                         ? stats.completedScreens
-                        : [...stats.completedScreens, storyKey];
+                        : [...stats.completedScreens, screenId];
+
+                      if (!nextDoneList.includes(storyKey)) {
+                        nextDoneList.push(storyKey);
+                      }
 
                       await updateStats({
                         completedScreens: nextDoneList,
-                        xp: stats.completedScreens.includes(storyKey) ? stats.xp : stats.xp + 25
+                        xp: stats.completedScreens.includes(screenId) ? stats.xp : stats.xp + 25
                       });
                     }
                   }}
@@ -1633,15 +1580,29 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 </button>
               ) : (
                 <div className="flex-1 flex flex-col gap-4 text-left">
-                  <div className="p-4 bg-yellow-50 border-2 border-black rounded-xl text-xs sm:text-sm font-bold text-zinc-800 leading-relaxed">
-                    🙋‍♂️ <strong>Bhaiya ka Gyaan:</strong> {storyData.explanation}
+                  <div className="p-4 bg-yellow-50 border-2 border-black rounded-xl text-xs sm:text-sm font-bold text-zinc-800 leading-relaxed font-sans">
+                    🙋‍♂️ <strong>Bhaiya ka Gyaan:</strong> {storyData.explanation || "Bahut ache! Solving Delhi puzzles with algebra makes bargaining super easy. Learn how value placement reveals accurate prices!"}
                   </div>
-                  <button
-                    onClick={() => setActiveQuestStep("overview")}
-                    className="py-3 bg-black text-white hover:bg-neutral-800 border-3 border-black rounded-xl text-center text-xs font-sans font-black uppercase tracking-wider shadow-[3px_3px_0px_black] cursor-pointer"
-                  >
-                    ⏩ Return to Quest Overview
-                  </button>
+                  <div className="flex gap-2 w-full font-sans">
+                    <button
+                      onClick={() => setActiveQuestStep("overview")}
+                      className="flex-1 py-3 bg-zinc-200 hover:bg-zinc-350 border-3 border-black rounded-xl text-center text-xs font-sans font-black uppercase tracking-wider shadow-[3px_3px_0px_black] cursor-pointer text-black"
+                    >
+                      ⏪ Go to Overview
+                    </button>
+                    {activeVariantIndex < 19 && (
+                      <button
+                        onClick={() => {
+                          setActiveVariantIndex((p) => p + 1);
+                          setQuestStoryAnswered(false);
+                          setQuestStoryOpt(null);
+                        }}
+                        className="flex-1 py-3 bg-black text-white hover:bg-neutral-800 border-3 border-black rounded-xl text-center text-xs font-sans font-black uppercase tracking-wider shadow-[3px_3px_0px_black] cursor-pointer"
+                      >
+                        EP {activeVariantIndex + 2} Next ➡️
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -1654,7 +1615,17 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
     // STEP 4 UI: CBSE Panga Quiz
     if (activeQuestStep === "quiz") {
-      const activeQ = quizQuestions[questQuizIdx];
+      if (questQuizLoading) {
+        return (
+          <div className="max-w-2xl mx-auto w-full flex flex-col items-center justify-center p-12 text-center bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_black] font-mono text-black">
+            <div className="animate-spin h-8 w-8 border-4 border-t-transparent border-black rounded-full mx-auto mb-4"></div>
+            <p className="font-sans font-black uppercase text-sm">Generating 20-question custom CBSE quiz...</p>
+            <span className="text-[10px] text-zinc-500 mt-1 block uppercase">Gathering syllabus question pool, please wait!</span>
+          </div>
+        );
+      }
+
+      const activeQ = questQuizQuestions[questQuizIdx];
 
       return (
         <div className="max-w-2xl mx-auto w-full flex flex-col gap-6 animate-fade-in pb-12 text-black font-sans">
@@ -1669,13 +1640,28 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               
               {/* Question Index and Score tracker */}
               <div className="flex justify-between items-center font-mono text-[10px] font-black uppercase border-b-2 border-black pb-2 text-zinc-400">
-                <span>QUESTION {questQuizIdx + 1} OF 3</span>
-                <span>Score: {questQuizScore}/3</span>
+                <span>QUESTION {questQuizIdx + 1} OF {questQuizQuestions.length}</span>
+                <span>Score: {questQuizScore}/{questQuizQuestions.length}</span>
+              </div>
+
+              {/* Progress slider bar */}
+              <div className="h-3 w-full bg-zinc-100 border-2 border-black rounded-lg mb-2 overflow-hidden">
+                <div 
+                  className="h-full bg-[#22C55E] transition-all duration-300" 
+                  style={{ width: `${((questQuizIdx + 1) / questQuizQuestions.length) * 100}%` }}
+                />
               </div>
 
               <h3 className="font-sans font-black text-base sm:text-lg text-black uppercase leading-tight tracking-tight">
                 {activeQ.question}
               </h3>
+
+              {/* Dynamic Creative Math Visual Aid Representation */}
+              {activeQ && (
+                <div id="panga-quiz-visual-aid" className="mb-2 animate-fade-in shadow-[3px_3px_0px_black] rounded-2xl overflow-hidden border-3 border-black">
+                  <QuizVisualAid question={activeQ} />
+                </div>
+              )}
 
               <div className="flex flex-col gap-2.5">
                 {activeQ.options.map((opt, i) => {
@@ -1736,7 +1722,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                     
                     <button
                       onClick={async () => {
-                        const isLast = questQuizIdx >= 2;
+                        const isLast = questQuizIdx >= questQuizQuestions.length - 1;
                         if (isLast) {
                           // Complete Panga quiz step!
                           const nextDoneList = stats.completedScreens.includes(quizKey)
@@ -1757,7 +1743,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                       }}
                       className="py-3.5 bg-black text-white hover:bg-neutral-800 border-3 border-black rounded-xl text-center text-xs font-sans font-black uppercase tracking-wider shadow-[3px_3px_0px_black] cursor-pointer"
                     >
-                      {questQuizIdx >= 2 ? "Finish Quiz & Check In" : "Next Question ➡️"}
+                      {questQuizIdx >= questQuizQuestions.length - 1 ? "Finish Quiz & Check In" : "Next Question ➡️"}
                     </button>
                   </div>
                 )}

@@ -67,7 +67,8 @@ service cloud.firestore {
         && data.topicId is string
         && data.subtopicId is string
         && data.difficulty is string
-        && data.questions is list;
+        && data.questions is list
+        && (data.createdAt == null || data.createdAt is string);
     }
 
     // Helper validation for Story
@@ -75,7 +76,8 @@ service cloud.firestore {
       return data.id is string
         && data.topicId is string
         && data.subtopicId is string
-        && data.slides is list;
+        && data.slides is list
+        && (data.createdAt == null || data.createdAt is string);
     }
 
     match /quizzes/{quizId} {

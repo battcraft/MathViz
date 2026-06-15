@@ -6,6 +6,7 @@ import { QuizQuestion, DifficultyLevel } from "../types";
 import { Sparkles, Trophy, Lightbulb, AlertTriangle, ArrowRight, RotateCcw, ArrowLeft, BookOpen, Brain, Zap } from "lucide-react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../lib/AuthContext";
+import QuizVisualAid from "./QuizVisualAid";
 
 interface QuizViewProps {
   topicId?: string;
@@ -369,9 +370,16 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
       </div>
 
       {/* Active Question Statement */}
-      <h3 className="font-sans font-black text-sm leading-relaxed text-black bg-amber-50/50 p-4 border-3 border-black rounded-2xl mb-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+      <h3 className="font-sans font-black text-sm leading-relaxed text-black bg-amber-50/50 p-4 border-3 border-black rounded-2xl mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
         {currentQuestion?.question}
       </h3>
+
+      {/* Dynamic Creative Math Visual Aid Representation */}
+      {currentQuestion && (
+        <div id="quiz-visual-aid-container" className="mb-5 animate-fade-in shadow-[3px_3px_0px_black] rounded-2xl overflow-hidden border-3 border-black">
+          <QuizVisualAid question={currentQuestion} />
+        </div>
+      )}
 
       {/* Answer Options list */}
       <div className="flex flex-col gap-3 mb-5">

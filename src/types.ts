@@ -15,6 +15,8 @@ export interface Screen {
   explanation?: string;
   pangaHint?: string;
   interactiveType?: "point_hunt" | "line_touch" | "range_slider" | "decimal_battle" | "rounding_match" | "none";
+  targetValue?: any;
+  activeVariantIndex?: number;
 }
 
 export interface Subtopic {
@@ -47,6 +49,7 @@ export interface StorySlide {
     correct: boolean;
     rewardXp: number;
   }[];
+  explanation?: string;
 }
 
 export interface QuizQuestion {
