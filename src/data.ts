@@ -429,7 +429,7 @@ export const EXPLICIT_SCREENS: Screen[] = [
   {
     id: "compare_video_1",
     title: "🎬 Comparing Numbers Intro Lesson",
-    videoFile: "FINAL_maxmin_intro.mp4",
+    videoFile: "FINAL_compare_intro.mp4",
     topicId: "compare",
     subtopicId: "compare_video",
     conceptHeading: "Chalo Numbers Compare Karein!",
