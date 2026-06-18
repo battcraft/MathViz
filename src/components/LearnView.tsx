@@ -151,7 +151,12 @@ export default function LearnView({ difficulty }: LearnViewProps) {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {TOPICS.map((topic) => {
-            const relevantSubs = topic.subtopics.filter(sub => !sub.id.includes("_video") && !sub.id.includes("_skills") && !sub.id.includes("_panga") && !sub.id.includes("_kahani") && !sub.id.includes("_mastery"));
+            const relevantSubs = topic.subtopics.filter(sub => !sub.id.includes("_video") && !sub.id.includes("_skills") && !sub.id.includes("_panga") && !sub.id.includes("_kahani") && !sub.id.includes("_mastery") && (() => {
+              const id = sub.id;
+              if (difficulty === "beginner") return !id.includes("_kiran") && !id.includes("_shikhar") && !id.includes("_range") && !id.includes("_rounding") && !id.includes("_place") && !id.includes("_order");
+              if (difficulty === "intermediate") return !id.includes("_order");
+              return true;
+            })());
             let completedCount = 0;
             relevantSubs.forEach((sub) => {
               const steps = ["_step_video", "_step_concept", "_step_practice", "_step_story", "_step_quiz", "_step_mastery"];
@@ -224,13 +229,30 @@ export default function LearnView({ difficulty }: LearnViewProps) {
         if (s.id.includes("_kahani")) return 8;
         if (s.id.includes("_panga")) return 9;
         if (s.id.includes("_mastery")) return 10;
-        return 6; // other custom items
+        return 6;
       };
       return getWeight(a) - getWeight(b);
     });
 
-    const videoSubtopics = sortedSubtopics.filter(sub => sub.id.includes("_video"));
-    const conceptSubtopics = sortedSubtopics.filter(sub => !sub.id.includes("_video") && !sub.id.includes("_skills"));
+    // Filter subtopics by difficulty (class 6/7/8)
+    const isDifficultyAppropriate = (sub: Subtopic): boolean => {
+      const id = sub.id;
+      // Beginner (Class 6): basic concepts
+      if (difficulty === "beginner") {
+        return !id.includes("_kiran") && !id.includes("_shikhar") && !id.includes("_skills")
+          && !id.includes("_range") && !id.includes("_rounding") && !id.includes("_place")
+          && !id.includes("_order");
+      }
+      // Intermediate (Class 7): mid-level concepts
+      if (difficulty === "intermediate") {
+        return !id.includes("_skills") && !id.includes("_order");
+      }
+      // Expert (Class 8): everything including skills
+      return true;
+    };
+
+    const videoSubtopics = sortedSubtopics.filter(sub => sub.id.includes("_video") && isDifficultyAppropriate(sub));
+    const conceptSubtopics = sortedSubtopics.filter(sub => !sub.id.includes("_video") && !sub.id.includes("_skills") && isDifficultyAppropriate(sub));
 
     return (
       <div className="flex flex-col gap-6 animate-fade-in pb-12 text-black font-mono">

@@ -23,6 +23,7 @@ import { BADGES, RIDDLES, checkUnlockedBadges } from "../data";
 import { useAuth, DEFAULT_STATS } from "../lib/AuthContext";
 import { useLanguage } from "../lib/LanguageContext";
 import { DifficultyLevel, UserStats } from "../types";
+import Mascot from "./Mascot";
 
 interface HomeViewProps {
   difficulty: DifficultyLevel;
@@ -175,9 +176,11 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
       
       {/* 1. Mascot Banner (Neo-Brutalist Bento Card) */}
       <div className="bg-white border-4 border-black p-6 rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden flex flex-col md:flex-row items-center gap-6">
-        <div className="w-20 h-20 bg-[#4D96FF] border-4 border-black rounded-2xl flex items-center justify-center text-4xl shadow-[4px_4px_0px_black] select-none flex-shrink-0 animate-bounce">
-          😎
-        </div>
+        <Mascot
+          mood={mascotIndex % 4 === 0 ? "happy" : mascotIndex % 4 === 1 ? "thinking" : mascotIndex % 4 === 2 ? "teaching" : "celebrating"}
+          className="flex-shrink-0"
+          size={100}
+        />
         <div className="flex-1 text-center md:text-left">
           <h3 className="font-sans font-black text-xl text-black uppercase tracking-tight mb-1.5 flex items-center justify-center md:justify-start gap-2">
             <span>Abki Baar, Geometry Paar! 📏</span>
