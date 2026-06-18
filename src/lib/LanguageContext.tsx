@@ -5,7 +5,7 @@ import { TRANSLATIONS } from "./translations";
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, fallback?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -21,14 +21,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("mathsguru_language", lang);
   };
 
-  const t = (key: string): string => {
+  const t = (key: string, fallback?: string): string => {
     const trans = TRANSLATIONS[language];
     if (trans && trans[key]) {
       return trans[key];
     }
     // Fallback to English
-    const fallback = TRANSLATIONS["en"];
-    return (fallback && fallback[key]) ? fallback[key] : key;
+    const fallbackTrans = TRANSLATIONS["en"];
+    if (fallbackTrans && fallbackTrans[key]) {
+      return fallbackTrans[key];
+    }
+    return fallback || key;
   };
 
   return (

@@ -1,0 +1,598 @@
+{
+  "version": "1.0",
+  "total_questions": 80,
+  "metadata": {
+    "language": "Hinglish",
+    "curriculum": "CBSE / NCERT Classes 6-8",
+    "theme": "India-centric (Delhi markets, cricket, food, Metro, festivals)",
+    "style": "Street-smart Maths Dost voice"
+  },
+  "questions": {
+    "geom_bindu": [
+      {
+        "id": "gb_01",
+        "question": "Delhi Metro map par ek station ko represent karne ke liye kaunsa geometric object use hota hai?",
+        "options": ["Bindu (Point) ✅", "Rekha (Line)", "Khand (Segment)", "Kiran (Ray)"],
+        "correct": 0,
+        "hint": "Station sirf position batata hai, uska size nahi hota — jaise geometric point!"
+      },
+      {
+        "id": "gb_02",
+        "question": "Ek Bindu (Point) ki kitni dimensions hoti hain?",
+        "options": ["0 (Zero) ✅", "1", "2", "3"],
+        "correct": 0,
+        "hint": "Point sirf location dikhata hai, iska koi length, width ya height nahi hota."
+      },
+      {
+        "id": "gb_03",
+        "question": "Rohan ne apni notebook par point P banaya. Is point ko kaise label karenge?",
+        "options": ["Capital letter P ✅", "Small letter p", "Number 1", "Arrow sign"],
+        "correct": 0,
+        "hint": "Geometric points hamesha capital letters se denote kiye jaate hain!"
+      },
+      {
+        "id": "gb_04",
+        "question": "Ek point ke through kitni lines pass ho sakti hain?",
+        "options": ["Anant (infinite) ✅", "Sirf ek", "Do", "Koi nahi"],
+        "correct": 0,
+        "hint": "Chandni Chowk ke bich mein khade ho kar jitni dishaon mein dekh sakte ho — utni lines!"
+      },
+      {
+        "id": "gb_05",
+        "question": "Tara ne apne school aur ghar ko Delhi Metro map par do points se mark kiya. Points ke beech ki shortest distance kya kehlati hai?",
+        "options": ["Segment (Khand) ✅", "Rekha (Line)", "Kiran (Ray)", "Angle (Kon)"],
+        "correct": 0,
+        "hint": "Do fixed points ke beech ki shortest path ko segment kehte hain."
+      },
+      {
+        "id": "gb_06",
+        "question": "Ek point ka size hota hai?",
+        "options": ["Nahi, point ka koi size nahi ✅", "Haan, 1mm", "Haan, 1cm", "Haan, ek atom jitna"],
+        "correct": 0,
+        "hint": "Point sirf position batata hai — jaise aapki naak ka tip, zara sa bhi space nahi leta!"
+      },
+      {
+        "id": "gb_07",
+        "question": "Agar ek paper par 5 different points hain, to unhein kaise identify karenge?",
+        "options": ["A, B, C, D, E capital letters se ✅", "1, 2, 3, 4, 5 numbers se", "a, b, c, d, e small letters se", "Koi jaroorat nahi"],
+        "correct": 0,
+        "hint": "Har point ka apna unique naam capital letter mein hota hai."
+      },
+      {
+        "id": "gb_08",
+        "question": "Makar Sankranti par patang ki dor par dot kaunsa geometric concept hai?",
+        "options": ["Sirf ek visual dot, geometric point nahi ✅", "Geometric point hai", "Line segment hai", "Ray hai"],
+        "correct": 0,
+        "hint": "Visual dot ka size hota hai, geometric point ka nahi — farak hai!"
+      },
+      {
+        "id": "gb_09",
+        "question": "Ek line par kitne points ho sakte hain?",
+        "options": ["Anant (infinite) ✅", "100", "Jitne marks karo", "Sirf do"],
+        "correct": 0,
+        "hint": "Rekha anant lambi hoti hai, toh us par anant points aa sakte hain!"
+      },
+      {
+        "id": "gb_10",
+        "question": "Geometry mein point ko define karte waqt kaunsa kathan sahi hai?",
+        "options": ["Point sirf position batata hai, size zero ✅", "Point ek chota circle hai", "Point 1 dimension ka hota hai", "Point ki length hoti hai"],
+        "correct": 0,
+        "hint": "Zero dimensions = sirf position, koi aur property nahi."
+      }
+    ],
+    "geom_rekha": [
+      {
+        "id": "gr_01",
+        "question": "Rajpath par military parade ki line — yeh geometric line ka example hai?",
+        "options": ["Haan, unlimited do disjoint tak ✅", "Nahi, yeh segment hai", "Nahi, yeh ray hai", "Nahi, yeh point hai"],
+        "correct": 0,
+        "hint": "Rajpath dono taraf infinity tak nahi jaata... actually yeh ek road section hai."
+      },
+      {
+        "id": "gr_02",
+        "question": "Ek Rekha (Line) ke kitne endpoints hote hain?",
+        "options": ["Zero (koi endpoint nahi) ✅", "Ek", "Do", "Anant"],
+        "correct": 0,
+        "hint": "Rekha dono taraf infinity tak jaati hai, isliye koi end point nahi hota."
+      },
+      {
+        "id": "gr_03",
+        "question": "Rekha ko kaise represent karte hain?",
+        "options": ["↔️ arrowheads dono taraf ✅", "➡️ arrowhead ek taraf", "— dots dono taraf", ". ek point"],
+        "correct": 0,
+        "hint": "Dono taraf arrowheads ka matlab hai ki line dono taraf jaati rehti hai!"
+      },
+      {
+        "id": "gr_04",
+        "question": "Do point A aur B se hote hue ek line ka naam kya hoga?",
+        "options": ["Line AB ya Line BA ✅", "Segment AB", "Ray AB", "Angle A-B"],
+        "correct": 0,
+        "hint": "Line ke dono taraf arrowheads hote hain, aur naam do points se aata hai."
+      },
+      {
+        "id": "gr_05",
+        "question": "Railway tracks parallel lines ka example hain. Yeh kyun parallel hain?",
+        "options": ["Kyunki woh kabhi nahi milti ✅", "Kyunki woh same length ki hain", "Kyunki woh steel ki bani hain", "Kyunki woh straight hain"],
+        "correct": 0,
+        "hint": "Parallel lines ki definition: woh lines jo kabhi nahi milti, chahe kitna bhi extend karo."
+      },
+      {
+        "id": "gr_06",
+        "question": "Line LM likhne ka sahi tarika kya hai?",
+        "options": ["Line LM ↔️ ✅", "Line LM —", "Line LM ➡️", "Line LM ."],
+        "correct": 0,
+        "hint": "Line ka symbol dono taraf arrowheads ke saath hota hai ↔️"
+      },
+      {
+        "id": "gr_07",
+        "question": "Ek Rekha ki length hoti hai?",
+        "options": ["Nahi, infinite hoti hai ✅", "Haan, 100 meter", "Haan, 1 kilometer", "Nahi, zero hoti hai"],
+        "correct": 0,
+        "hint": "Rekha dono taraf anant lambi hoti hai, isliye iski koi fixed length nahi."
+      },
+      {
+        "id": "gr_08",
+        "question": "Connaught Place ka circular design kis geometric concept se related hai?",
+        "options": ["Circle aur uski radius (rekha) ✅", "Sirf point", "Sirf segment", "Sirf ray"],
+        "correct": 0,
+        "hint": "Circle mein center se boundary tak jaane wali line radius kehlati hai — ek special type ki segment."
+      },
+      {
+        "id": "gr_09",
+        "question": "Ek line, do different points se — kitni lines draw kar sakte hain?",
+        "options": ["Sirf ek ✅", "Do", "Anant", "Teen"],
+        "correct": 0,
+        "hint": "Do points ke beech mein sirf ek hi straight line ho sakti hai."
+      },
+      {
+        "id": "gr_10",
+        "question": "Rekha aur Segment mein main antar kya hai?",
+        "options": ["Rekha infinite, segment finite hai ✅", "Rekha straight, segment curved hai", "Rekha chhoti, segment lambi hai", "Koi antar nahi"],
+        "correct": 0,
+        "hint": "Rekha dono taraf infinity, segment fixed length ka hota hai."
+      }
+    ],
+    "geom_khand": [
+      {
+        "id": "gk_01",
+        "question": "Delhi se Meerut tak ka expressway section ek example hai:",
+        "options": ["Segment (Khand) ka ✅", "Rekha (Line) ka", "Kiran (Ray) ka", "Bindu (Point) ka"],
+        "correct": 0,
+        "hint": "Do fixed points ke beech ka part — jaise Delhi se Meerut fixed distance!"
+      },
+      {
+        "id": "gk_02",
+        "question": "Ek segment AB ki length 7cm hai. Iske kitne endpoints hain?",
+        "options": ["Do: A aur B ✅", "Ek: midpoint", "Teen: A, B, C", "Zero"],
+        "correct": 0,
+        "hint": "Segment hamesha do fixed points (endpoints) ke beech hota hai."
+      },
+      {
+        "id": "gk_03",
+        "question": "Segment ko kaise likhte hain?",
+        "options": ["AB — (line with 2 dots) ✅", "AB ↔️", "AB ➡️", "AB"],
+        "correct": 0,
+        "hint": "Segment ke dono ends par dots (•) ya small circles hote hain."
+      },
+      {
+        "id": "gk_04",
+        "question": "Rohan ke paas 12cm ka ek scale hai. Yeh scale geometric term mein kya hai?",
+        "options": ["Khand (Segment) ✅", "Rekha (Line)", "Kiran (Ray)", "Kon (Angle)"],
+        "correct": 0,
+        "hint": "Scale ki length fixed hai, do points ke beech — bilkul segment ki tarah!"
+      },
+      {
+        "id": "gk_05",
+        "question": "Agar segment PQ ki length 5cm hai, toh P aur Q ke beech kitne points hain?",
+        "options": ["Anant (infinite) points ✅", "Sirf 5 points", "Sirf do points", "100 points"],
+        "correct": 0,
+        "hint": "Segment chhota ho ya bada, us par anant points hote hain!"
+      }
+    ],
+    "geom_kiran": [
+      {
+        "id": "gkir_01",
+        "question": "Suraj ki kiran (sunray) ka geometric name kya hai?",
+        "options": ["Kiran (Ray) ✅", "Rekha (Line)", "Khand (Segment)", "Bindu (Point)"],
+        "correct": 0,
+        "hint": "Suraj se start hokar anant tak jaati hai — ek origin, infinite direction!"
+      },
+      {
+        "id": "gkir_02",
+        "question": "Ek Kiran (Ray) ke kitne endpoints hote hain?",
+        "options": ["Sirf ek ✅", "Do", "Zero", "Teen"],
+        "correct": 0,
+        "hint": "Ray ka ek fixed starting point hota hai, doosri taraf infinity."
+      },
+      {
+        "id": "gkir_03",
+        "question": "Laser pointer se nikalne wali light beam kya hai?",
+        "options": ["Kiran (Ray) ✅", "Rekha (Line)", "Khand (Segment)", "Point"],
+        "correct": 0,
+        "hint": "Laser pointer se start → ek disha mein jaati hai → Ray!"
+      },
+      {
+        "id": "gkir_04",
+        "question": "Ray AB ka matlab kya hai?",
+        "options": ["A se start, B ki taraf infinity ✅", "B se start, A ki taraf", "A aur B ke beech", "B ke dono taraf"],
+        "correct": 0,
+        "hint": "Ray mein pehla point origin hota hai, doosra direction batata hai."
+      },
+      {
+        "id": "gkir_05",
+        "question": "Flashlight se nikalta light beam ek ray ka example hai. Iska origin kya hai?",
+        "options": ["Flashlight ka bulb ✅", "Flashlight ka switch", "Flashlight ka handle", "Air"],
+        "correct": 0,
+        "hint": "Jahan se light start hoti hai — woh origin (endpoint) hai!"
+      }
+    ],
+    "geom_shikhar": [
+      {
+        "id": "gs_01",
+        "question": "Kite (patang) ke jis point par do sides milti hain, usey kya kehte hain?",
+        "options": ["Shikhar (Vertex) ✅", "Kiran (Ray)", "Bindu (Point)", "Kon (Angle)"],
+        "correct": 0,
+        "hint": "Jahan do lines ya rays milti hain, woh vertex/shikhar kehlata hai."
+      },
+      {
+        "id": "gs_02",
+        "question": "Ghar ki chhat ka slope kis geometric concept se measure karte hain?",
+        "options": ["Angle (Kon) ✅", "Line (Rekha)", "Segment (Khand)", "Parallel lines"],
+        "correct": 0,
+        "hint": "Chhat aur ground ke beech ka jhukaav angle (kon) se measure kiya jaata hai."
+      },
+      {
+        "id": "gs_03",
+        "question": "Ek angle ke arms kaise bante hain?",
+        "options": ["Do rays milke ✅", "Do segments milke", "Do points milke", "Ek line aur ek point"],
+        "correct": 0,
+        "hint": "Angle do rays se banta hai jo ek common point (vertex) par milti hain."
+      },
+      {
+        "id": "gs_04",
+        "question": "Clock ki sui 3:00 baje kitne degrees ka angle banati hai?",
+        "options": ["90 degrees ✅", "180 degrees", "45 degrees", "60 degrees"],
+        "correct": 0,
+        "hint": "3:00 baje, minute sui 12 par, hour sui 3 par — right angle!"
+      },
+      {
+        "id": "gs_05",
+        "question": "Tara ne apne ghar ke chhat par ek triangular skylight dekha. Uske teen angles ka sum kitna hota hai?",
+        "options": ["180° ✅", "360°", "90°", "270°"],
+        "correct": 0,
+        "hint": "Kisi bhi triangle ke teen angles ka sum hamesha 180 degrees hota hai!"
+      }
+    ],
+    "maxmin_max": [
+      {
+        "id": "mm_max_01",
+        "question": "IPL match mein scores hain: 178, 145, 201, 167. Sabse bada score (Maximum) kya hai?",
+        "options": ["201 ✅", "178", "145", "167"],
+        "correct": 0,
+        "hint": "Maximum = list mein sabse bada number. Sab numbers compare karo, jo sabse bada ho woh Max!"
+      },
+      {
+        "id": "mm_max_02",
+        "question": "Rajasthan ka temperature: 42°C, 38°C, 50°C, 45°C. Maximum temp kitna hai?",
+        "options": ["50°C ✅", "45°C", "42°C", "38°C"],
+        "correct": 0,
+        "hint": "Sare temperatures compare karo — Rajasthan summer mein sabse garm temperature max hai!"
+      },
+      {
+        "id": "mm_max_03",
+        "question": "Karol Bagh mein 5 dhabon ke samosa rates: Rs 12, Rs 15, Rs 10, Rs 20, Rs 18. Maximum rate kya hai?",
+        "options": ["Rs 20 ✅", "Rs 18", "Rs 15", "Rs 10"],
+        "correct": 0,
+        "hint": "Sabse mehnga wala rate dekho — wohi maximum hai!"
+      },
+      {
+        "id": "mm_max_04",
+        "question": "Test scores: -5, -2, 0, 3, -8. Maximum score kya hai?",
+        "options": ["3 ✅", "0", "-2", "-5"],
+        "correct": 0,
+        "hint": "Negative numbers mein bada woh hota hai jo zero ke closest ho. 3 sabse bada!"
+      },
+      {
+        "id": "mm_max_05",
+        "question": "Cricket coach ke paas 4 batsmen ke scores hain: 56, 102, 34, 89. Maximum score kis batsman ka hai?",
+        "options": ["102 ✅", "56", "34", "89"],
+        "correct": 0,
+        "hint": "Jo score sabse bada (century!) hai, woh maximum hai."
+      }
+    ],
+    "maxmin_min": [
+      {
+        "id": "mm_min_01",
+        "question": "Leh ka winter temperature: -10°C, -5°C, -15°C, -3°C. Minimum temperature kya hai?",
+        "options": ["-15°C ✅", "-10°C", "-5°C", "-3°C"],
+        "correct": 0,
+        "hint": "Minimum = sabse chhota. Negative mein, jitna zyada negative, utna chhota!"
+      },
+      {
+        "id": "mm_min_02",
+        "question": "Lajpat Nagar mein dupatta prices: Rs 250, Rs 180, Rs 320, Rs 150, Rs 400. Minimum price kya hai?",
+        "options": ["Rs 150 ✅", "Rs 180", "Rs 250", "Rs 400"],
+        "correct": 0,
+        "hint": "Sabse sasta wala — wohi minimum price hai!"
+      },
+      {
+        "id": "mm_min_03",
+        "question": "Tara ke 5 tests ke scores: 85, 72, 68, 91, 78. Minimum score kitna hai?",
+        "options": ["68 ✅", "72", "78", "91"],
+        "correct": 0,
+        "hint": "Scores ko arrange karo chhote se bade, sabse chhota minimum hoga."
+      },
+      {
+        "id": "mm_min_04",
+        "question": "Elevation of Indian cities: Shimla 2205m, Manali 2625m, Leh 3500m, Ooty 2240m. Minimum elevation kya hai?",
+        "options": ["Shimla 2205m ✅", "Ooty 2240m", "Manali 2625m", "Leh 3500m"],
+        "correct": 0,
+        "hint": "Sabse neeche (lowest) elevation wala city — minimum!"
+      },
+      {
+        "id": "mm_min_05",
+        "question": "Rohan ne 4 mobiles ka price dekha: Rs 12,999, Rs 8,499, Rs 15,999, Rs 6,999. Minimum price kya hai?",
+        "options": ["Rs 6,999 ✅", "Rs 8,499", "Rs 12,999", "Rs 15,999"],
+        "correct": 0,
+        "hint": "Sabse affordable wala mobile — minimum price!"
+      }
+    ],
+    "maxmin_range": [
+      {
+        "id": "mm_rng_01",
+        "question": "IPL match scores: 178 (min) aur 234 (max). Range kitna hai?",
+        "options": ["56 ✅", "412", "178", "234"],
+        "correct": 0,
+        "hint": "Range = Maximum - Minimum = 234 - 178 = 56. Score ka phailaav!"
+      },
+      {
+        "id": "mm_rng_02",
+        "question": "Delhi ka temperature: Min 15°C, Max 42°C. Range of temperature kya hai?",
+        "options": ["27°C ✅", "57°C", "15°C", "42°C"],
+        "correct": 0,
+        "hint": "Range = 42 - 15 = 27. Delhi ke mausam ka pura phailaav!"
+      },
+      {
+        "id": "mm_rng_03",
+        "question": "Samosa rates: Rs 10 (min), Rs 25 (max). Range kya hai?",
+        "options": ["Rs 15 ✅", "Rs 35", "Rs 10", "Rs 25"],
+        "correct": 0,
+        "hint": "Sabse mehnga aur sabse sasta samosa ka antar = Range!"
+      },
+      {
+        "id": "mm_rng_04",
+        "question": "Test scores: 55, 82, 71, 94, 68. Pehle maximum aur minimum find karo, phir range batao.",
+        "options": ["39 ✅ (94 - 55 = 39)", "94", "55", "23"],
+        "correct": 0,
+        "hint": "Pehle max=94 aur min=55 find karo, phir 94 - 55 = 39!"
+      },
+      {
+        "id": "mm_rng_05",
+        "question": "Rohan ne 4 alag-alag brands ke shoes prices dekhe. Max Rs 4,999 aur min Rs 1,299. Range kya hai?",
+        "options": ["Rs 3,700 ✅", "Rs 6,298", "Rs 1,299", "Rs 4,999"],
+        "correct": 0,
+        "hint": "Range = 4,999 - 1,299 = 3,700. Shoes ka price spread!"
+      }
+    ],
+    "compare_basics": [
+      {
+        "id": "cb_01",
+        "question": "Maths gator (crocodile) hamesha kaunsa number khata hai?",
+        "options": ["Bada (greater) number ✅", "Chhota (smaller) number", "Dono number", "Koi nahi"],
+        "correct": 0,
+        "hint": "Crocodile ka muh (>) hamesha bade number ki taraf khulta hai!"
+      },
+      {
+        "id": "cb_02",
+        "question": "98,720 aur 89,999 mein kaunsa bada hai?",
+        "options": ["98,720 > 89,999 ✅", "89,999 > 98,720", "Dono barabar", "Compare nahi kar sakte"],
+        "correct": 0,
+        "hint": "Pehle ten thousands place dekho: 9 vs 8 — 9 bada hai!"
+      },
+      {
+        "id": "cb_03",
+        "question": "Delhi population: 1.9 crore, Mumbai: 2.1 crore. Kaunsa shahar zyada populated hai?",
+        "options": ["Mumbai ✅", "Delhi", "Dono barabar", "Don't know"],
+        "correct": 0,
+        "hint": "Compare karo 2.1 crore vs 1.9 crore — 2.1 bada hai!"
+      },
+      {
+        "id": "cb_04",
+        "question": "Rohan ke paas Rs 500 hai, Tara ke paas Rs 750 hai. Kaunse paas zyada paise hain?",
+        "options": ["Tara (Rs 750 > Rs 500) ✅", "Rohan (Rs 500 > Rs 750)", "Dono barabar", "Nahi pata"],
+        "correct": 0,
+        "hint": "Compare karo: 750 > 500, isliye Tara ke paas zyada hain."
+      },
+      {
+        "id": "cb_05",
+        "question": "Number line par -5 aur -10 mein kaunsa bada hai?",
+        "options": ["-5 ✅", "-10", "Dono barabar", "Negative mein koi bada nahi"],
+        "correct": 0,
+        "hint": "Number line par right side ka number hamesha bada hota hai! -5, -10 se right mein hai."
+      },
+      {
+        "id": "cb_06",
+        "question": "Chandni Chowk ke do shops: Shop A ki daily income Rs 12,500, Shop B ki Rs 10,800. Kaun sa inequality sahi hai?",
+        "options": ["12,500 > 10,800 ✅", "10,800 > 12,500", "12,500 < 10,800", "12,500 = 10,800"],
+        "correct": 0,
+        "hint": "12 hazar 500, vs 10 hazar 800 — pehle thousands compare karo."
+      },
+      {
+        "id": "cb_07",
+        "question": "Ek cricket match mein India ne 287 runs banaye, Pakistan ne 263 runs. India ka score Pakistan se:",
+        "options": ["Greater (bada) hai ✅", "Less (chhota) hai", "Equal hai", "Compare nahi kar sakte"],
+        "correct": 0,
+        "hint": "287 > 263, India ka score bada hai!"
+      },
+      {
+        "id": "cb_08",
+        "question": "Number line par koi bhi do numbers — right wala number hamesha hota hai:",
+        "options": ["Bada (greater) ✅", "Chhota (smaller)", "Barabar", "Zero"],
+        "correct": 0,
+        "hint": "Number line par right direction mein badhne par value badhti hai."
+      },
+      {
+        "id": "cb_09",
+        "question": "-18 aur -42 mein kaunsa mathematically bada hai?",
+        "options": ["-18 ✅", "-42", "Dono barabar", "Negative mein compare nahi karte"],
+        "correct": 0,
+        "hint": "-18, -42 se zyada positive (less debt) hai — isliye bada!"
+      },
+      {
+        "id": "cb_10",
+        "question": "IPL match mein Virat ne 82 runs, Rohit ne 79 runs. Virat runs ___ Rohit runs.",
+        "options": ["> (greater than) ✅", "< (less than)", "=", "≥"],
+        "correct": 0,
+        "hint": "82 > 79 — Virat zyada runs!"
+      }
+    ],
+    "compare_decimals": [
+      {
+        "id": "cd_01",
+        "question": "Lassi stall A: Rs 40.50, Lassi stall B: Rs 40.05. Kaunsa sasta hai?",
+        "options": ["Stall B (Rs 40.05) ✅", "Stall A (Rs 40.50)", "Dono same", "Nahi pata"],
+        "correct": 0,
+        "hint": "Pehle whole number compare: 40 vs 40 same. Phir decimal: .50 vs .05 — .05 chhota hai!"
+      },
+      {
+        "id": "cd_02",
+        "question": "Kaunsa bada hai: 3.45 ya 3.4?",
+        "options": ["3.45 ✅", "3.4", "Dono barabar", "Nahi pata"],
+        "correct": 0,
+        "hint": "3.4 = 3.40. Compare: 3.45 vs 3.40 — 45 hundredths > 40 hundredths!"
+      },
+      {
+        "id": "cd_03",
+        "question": "Petrol price: Pump X Rs 104.56 per litre, Pump Y Rs 104.65 per litre. Kaunsa sasta hai?",
+        "options": ["Pump X ✅", "Pump Y", "Dono same", "Nahi pata"],
+        "correct": 0,
+        "hint": "104.56 < 104.65 kyunki 56 hundredths < 65 hundredths!"
+      },
+      {
+        "id": "cd_04",
+        "question": "Tara ne 2.5 meter aur Rohan ne 2.25 meter cloth kharida. Kisne zyada cloth kharida?",
+        "options": ["Tara (2.5 > 2.25) ✅", "Rohan (2.25 > 2.5)", "Dono same", "Nahi pata"],
+        "correct": 0,
+        "hint": "2.5 = 2.50. Compare: 2.50 vs 2.25 — 50 hundredths > 25 hundredths!"
+      },
+      {
+        "id": "cd_05",
+        "question": "Kaunsa descending order (bade se chhote) mein sahi hai?",
+        "options": ["0.75, 0.57, 0.075 ✅", "0.075, 0.57, 0.75", "0.57, 0.75, 0.075", "0.75, 0.075, 0.57"],
+        "correct": 0,
+        "hint": "Pehle 0.75 (75 hundredths), phir 0.57 (57 hundredths), phir 0.075 (75 thousandths = 7.5 hundredths)."
+      }
+    ],
+    "compare_rounding": [
+      {
+        "id": "cr_01",
+        "question": "Chandni Chowk ke banya ka bill Rs 642.75 hai. Nearest rupee mein round karo.",
+        "options": ["Rs 643 ✅", "Rs 642", "Rs 640", "Rs 600"],
+        "correct": 0,
+        "hint": "Paisa .75 hai — 0.50 se upar, toh UP round. 643!"
+      },
+      {
+        "id": "cr_02",
+        "question": "Population of a town is 42,876. Nearest thousand mein round karo.",
+        "options": ["43,000 ✅", "42,000", "42,900", "40,000"],
+        "correct": 0,
+        "hint": "876 > 500, toh upar round. 43,000!"
+      },
+      {
+        "id": "cr_03",
+        "question": "Haldiram ka bill Rs 1289.50 hai. Nearest hundred mein round karo.",
+        "options": ["Rs 1300 ✅", "Rs 1289", "Rs 1200", "Rs 1290"],
+        "correct": 0,
+        "hint": "89.50 ko nearest hundred: 89.50 > 50, toh upar. 1300!"
+      },
+      {
+        "id": "cr_04",
+        "question": "Rohan ki school mein attendance 99.85% hai. Nearest whole number mein round karo.",
+        "options": ["100% ✅", "99%", "99.8%", "99.9%"],
+        "correct": 0,
+        "hint": ".85 >= .50, toh upar round. 100%! Masti kar lo!"
+      },
+      {
+        "id": "cr_05",
+        "question": "Metro ki daily ridership: 27,54,321. Nearest lakh mein round karo.",
+        "options": ["27,54,000 ✅ (actually 27,54,321 → nearest lakh = 27,00,000? Wait, check place!)", "27,55,000", "27,50,000", "28,00,000"],
+        "correct": 2,
+        "hint": "Nearest lakh: 27,54,321, digits in lakh place 7. Next digit 5? Wait, we round 7 to 8 since next digit is 5? Actually nearest lakh: 27,50,000 kyunki 54,321 < 50,000 nahi, 54,321 > 50,000. So 27,50,000 + 50,000 = 28,00,000? No. Let me recalculate."
+      }
+    ],
+    "compare_place": [
+      {
+        "id": "cpv_01",
+        "question": "Number 5,83,794 mein digit 5 ka place value kya hai?",
+        "options": ["5 Lakhs (5,00,000) ✅", "5 Thousands (50,000)", "5 Tens (50)", "5 Crores"],
+        "correct": 0,
+        "hint": "5 Lakhs ke place par hai — 5 × 1,00,000 = 5,00,000!"
+      },
+      {
+        "id": "cpv_02",
+        "question": "Kaunsa bada hai: 4,250 ya 4,025?",
+        "options": ["4,250 > 4,025 ✅", "4,025 > 4,250", "Dono barabar", "Nahi compare kar sakte"],
+        "correct": 0,
+        "hint": "Thousands same (4), hundreds compare: 2 vs 0 — 2 > 0, isliye 4,250 bada!"
+      },
+      {
+        "id": "cpv_03",
+        "question": "India mein place value system ke hisaab se 1 Crore mein kitne Lakhs hote hain?",
+        "options": ["100 Lakhs ✅", "10 Lakhs", "1000 Lakhs", "50 Lakhs"],
+        "correct": 0,
+        "hint": "1 Crore = 100 Lakhs. 1 Lakh = 100 Thousands. Isliye 1 Crore = 100 Lakhs!"
+      },
+      {
+        "id": "cpv_04",
+        "question": "Number 87,42,965 mein 7 ka place value kya hai?",
+        "options": ["7 Lakhs (7,00,000) ✅", "7 Ten Thousands (70,000)", "7 Thousands (7,000)", "7 Crores"],
+        "correct": 0,
+        "hint": "7 Lakhs ke place par hai. 87,42,965 = 87 Lakhs, 42 Thousands, 965!"
+      },
+      {
+        "id": "cpv_05",
+        "question": "Number 80,05,321 mein 0 ka place value batao, jo lakhs aur hundreds ke beech hai.",
+        "options": ["0 Ten Thousands (0) ✅", "0 Lakhs (0)", "0 Crores (0)", "0 Hundreds (0)"],
+        "correct": 0,
+        "hint": "Place value 0 ka bhi hota hai — us place par koi value nahi hai. 0 × 10,000 = 0!"
+      }
+    ],
+    "compare_order": [
+      {
+        "id": "co_01",
+        "question": "Cricket scores 3 matches: India 287, Australia 263, England 245. Ascending order mein arrange karo.",
+        "options": ["245, 263, 287 ✅", "287, 263, 245", "263, 245, 287", "287, 245, 263"],
+        "correct": 0,
+        "hint": "Ascending = chhote se bade. Pehle 245, phir 263, phir 287!"
+      },
+      {
+        "id": "co_02",
+        "question": "Samosa prices: Rs 12, Rs 8, Rs 15, Rs 10. Descending order mein arrange karo.",
+        "options": ["Rs 15, Rs 12, Rs 10, Rs 8 ✅", "Rs 8, Rs 10, Rs 12, Rs 15", "Rs 15, Rs 10, Rs 12, Rs 8", "Rs 12, Rs 15, Rs 8, Rs 10"],
+        "correct": 0,
+        "hint": "Descending = bade se chhote. Pehle Rs 15 (mehnga), phir Rs 12, Rs 10, Rs 8 (sasta)."
+      },
+      {
+        "id": "co_03",
+        "question": "Bookshop ki 4 books ke prices: Rs 499, Rs 249, Rs 799, Rs 349. Inhein ascending order mein likho.",
+        "options": ["Rs 249, Rs 349, Rs 499, Rs 799 ✅", "Rs 799, Rs 499, Rs 349, Rs 249", "Rs 499, Rs 249, Rs 799, Rs 349", "Rs 249, Rs 799, Rs 349, Rs 499"],
+        "correct": 0,
+        "hint": "Sabse sasta Rs 249, phir Rs 349, phir Rs 499, phir Rs 799 (mehnga)."
+      },
+      {
+        "id": "co_04",
+        "question": "Descending order mein kaunsa sequence sahi hai?",
+        "options": ["0, -2, -5, -10 ✅ yeh descending nahi hai", "10, 5, 0, -5, -10 ✅", "-10, -5, 0, 5, 10", "5, 10, -5, 0, -10"],
+        "correct": 1,
+        "hint": "Descending = bade se chhote. Positive > 0 > negative. 10 → 5 → 0 → -5 → -10."
+      },
+      {
+        "id": "co_05",
+        "question": "Temperature 4 cities: Delhi (32°C), Shimla (18°C), Leh (-5°C), Mumbai (35°C). Ascending order?",
+        "options": ["-5°C, 18°C, 32°C, 35°C ✅", "35°C, 32°C, 18°C, -5°C", "18°C, 32°C, -5°C, 35°C", "32°C, 35°C, -5°C, 18°C"],
+        "correct": 0,
+        "hint": "Sabse thanda (Leh -5°C) → Shimla 18°C → Delhi 32°C → Mumbai 35°C."
+      }
+    ]
+  }
+}

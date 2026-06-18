@@ -290,7 +290,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
                         isSel ? "bg-[#22C55E] text-white border-black shadow-[2px_2px_0px_black]" : "bg-zinc-50 hover:bg-neutral-100 text-zinc-800"
                       }`}
                     >
-                      📖 {sub.name}
+                      📖 {t('subtopic_' + sub.id, sub.name)}
                     </button>
                   );
                 })}
@@ -315,7 +315,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
       <div className="p-12 text-center bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] font-mono max-w-sm mx-auto text-black">
         <div className="animate-spin h-8 w-8 border-4 border-t-transparent border-black rounded-full mx-auto mb-4"></div>
         <p className="font-black uppercase tracking-tight text-xs">Assembling full 20-Scenarios Storybook...</p>
-        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Please wait while Bhaiya compiles slides...</span>
+        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Please wait while Maths Dost compiles slides...</span>
       </div>
     );
   }

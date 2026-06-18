@@ -40,7 +40,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             Arey re! Panga Ho Gaya!
           </h2>
           <p className="text-sm font-mono text-gray-700 leading-relaxed mb-4">
-            Something crashed under the hood. "Bhaiya, system mein thoda load ho gaya lagta hai!"
+            Something crashed under the hood. "Maths Dost, system mein thoda load ho gaya lagta hai!"
           </p>
           <div className="p-3 bg-red-100 border-2 border-black rounded text-xs font-mono mb-4 text-left w-full overflow-auto max-h-24">
             {this.state.error?.message || "Unknown error"}

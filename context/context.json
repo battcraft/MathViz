@@ -1,0 +1,450 @@
+{
+  "app": {
+    "name": "MathsGuru AI",
+    "tagline": "Maths Dost ke sath — Socho, samjho, aur solve karo",
+    "target_classes": ["Class 6", "Class 7", "Class 8"],
+    "target_ages": ["11-12", "12-13", "13-14"],
+    "curriculum": "CBSE / NCERT",
+    "voice": "Maths Dost",
+    "mascot": "Rekha Didi",
+    "languages": ["Hinglish (HI)", "English (EN)", "Simple Hinglish"],
+    "default_language": "Hinglish (HI)",
+    "design_theme": "Desi Street-Pop Neo-Brutalist",
+    "bg_color": "#fbf9f3",
+    "primary_color": "#ff6b00",
+    "secondary_color": "#00c853",
+    "accent_color": "#e91e8c"
+  },
+
+  "difficulty_levels": [
+    {
+      "id": "beginner",
+      "label": "Beginner",
+      "class": "Class 6",
+      "age": "11-12",
+      "question_depth": "Recall + Understanding",
+      "min_questions": 10,
+      "max_questions": 20,
+      "emoji": "🟢"
+    },
+    {
+      "id": "intermediate",
+      "label": "Intermediate",
+      "class": "Class 7",
+      "age": "12-13",
+      "question_depth": "Understanding + Application",
+      "min_questions": 15,
+      "max_questions": 20,
+      "emoji": "🟡"
+    },
+    {
+      "id": "expert",
+      "label": "Expert",
+      "class": "Class 8",
+      "age": "13-14",
+      "question_depth": "Application + Analysis",
+      "min_questions": 20,
+      "max_questions": 20,
+      "emoji": "🔴"
+    }
+  ],
+
+  "characters": [
+    {
+      "id": "maths_dost",
+      "name": "Maths Dost",
+      "role": "Primary AI tutor / Math friend",
+      "catchphrase": "Socho, samjho, aur solve karo!",
+      "personality": "Street-smart Delhi friend, funny, encouraging",
+      "speech_style": "Hinglish with clear Hindi base",
+      "greetings": [
+        "Arre doston! Kya haal chaal?",
+        "Namaste! Main hoon aapka Maths Dost!",
+        "Kya baat hai, padhne ka mood hai aaj!"
+      ],
+      "praise": ["Sixer! 💥", "Shaabash! 👏", "100% correct, boss! 🎯", "Maza aa gaya!", "Kamaal kar diya!"],
+      "encouragement": ["Koshish karte raho!", "Galti se seekhte hain!", "Agli baar pakka sahi!"],
+      "error_responses": ["Oof! Thoda aur socho!", "Arre nahi, phir se try karo!", "Galti huee? Seekh mili!"]
+    },
+    {
+      "id": "rekha_didi",
+      "name": "Rekha Didi",
+      "role": "Warm older-sister mascot",
+      "personality": "Patient, encouraging, slow explanations",
+      "style": "Orange dupatta, cream kurta, pointing to objects",
+      "expressions": ["smiling", "thinking", "surprised", "proud"]
+    },
+    {
+      "id": "tara",
+      "name": "Tara",
+      "role": "Curious student (story protagonist)",
+      "personality": "Eager, asks 'Aisa kyun?'",
+      "setting": "Delhi, takes Metro to school, Class 7"
+    },
+    {
+      "id": "rohan",
+      "name": "Rohan",
+      "role": "Pragmatic student (Tara's classmate)",
+      "personality": "Practical, asks 'Yeh kahan use hota hai real life mein?'"
+    }
+  ],
+
+  "locations": [
+    { "id": "chandni_chowk", "name": "Chandni Chowk", "vibe": "Old Delhi, crowded, historic", "used_for": ["comparing", "spending", "rounding"] },
+    { "id": "cp", "name": "Connaught Place", "vibe": "Modern Delhi, round design", "used_for": ["geometry", "money"] },
+    { "id": "lajpat_nagar", "name": "Lajpat Nagar Market", "vibe": "Shopping hub, bargaining", "used_for": ["range", "prices", "comparing"] },
+    { "id": "chawri_bazar", "name": "Chawri Bazar", "vibe": "Hardware market", "used_for": ["measurement", "geometry"] },
+    { "id": "feroz_shah_kotla", "name": "Feroz Shah Kotla", "vibe": "Cricket stadium, IPL", "used_for": ["max", "min", "range", "statistics"] },
+    { "id": "sarojini_nagar", "name": "Sarojini Nagar", "vibe": "Bargain market", "used_for": ["comparing", "discounts"] },
+    { "id": "delhi_metro", "name": "Delhi Metro", "vibe": "Modern transit network", "used_for": ["number line", "integers", "movement"] },
+    { "id": "india_gate", "name": "India Gate", "vibe": "Monument, lawns, patriotic", "used_for": ["distance", "symmetry"] },
+    { "id": "karol_bagh", "name": "Karol Bagh", "vibe": "Shopping street", "used_for": ["budget", "percentages"] },
+    { "id": "yamuna_ghat", "name": "Yamuna Ghat", "vibe": "Riverside, kite flying", "used_for": ["angles", "distance"] },
+    { "id": "haldiram_cp", "name": "Haldiram CP", "vibe": "Famous sweet shop", "used_for": ["rounding", "money", "bills"] }
+  ],
+
+  "topics": [
+    {
+      "id": "geom",
+      "name": "Geometry (Geometry)",
+      "description": "Basic geometrical ideas — point, line, segment, ray, angle",
+      "icon": "📐",
+      "difficulty_breakdown": {
+        "beginner": {
+          "class": "Class 6",
+          "chapters": ["NCERT Ch 4: Basic Geometrical Ideas"],
+          "subtopics": ["geom_bindu", "geom_rekha", "geom_khand", "geom_kiran", "geom_shikhar"],
+          "question_style": "Recall shapes, name objects, count sides"
+        },
+        "intermediate": {
+          "class": "Class 7",
+          "chapters": ["NCERT Ch 5: Lines & Angles", "Ch 6: Triangles"],
+          "subtopics": ["geom_bindu", "geom_rekha", "geom_khand", "geom_kiran", "geom_shikhar"],
+          "question_style": "Apply angle properties, classify triangles"
+        },
+        "expert": {
+          "class": "Class 8",
+          "chapters": ["NCERT Ch 3: Quadrilaterals", "Ch 9: Mensuration"],
+          "subtopics": ["geom_bindu", "geom_rekha", "geom_khand", "geom_kiran", "geom_shikhar"],
+          "question_style": "Prove properties, calculate area, 3D reasoning"
+        }
+      }
+    },
+    {
+      "id": "maxmin",
+      "name": "Max, Min & Range (Data Handling)",
+      "description": "Statistical measures — maximum, minimum, range of data sets",
+      "icon": "📊",
+      "difficulty_breakdown": {
+        "beginner": {
+          "class": "Class 6",
+          "chapters": ["NCERT Ch 9: Data Handling"],
+          "subtopics": ["maxmin_max", "maxmin_min", "maxmin_range"],
+          "question_style": "Find max/min from list, calculate range"
+        },
+        "intermediate": {
+          "class": "Class 7",
+          "chapters": ["NCERT Ch 3: Data Handling"],
+          "subtopics": ["maxmin_max", "maxmin_min", "maxmin_range"],
+          "question_style": "Mean, median, mode alongside max/min"
+        },
+        "expert": {
+          "class": "Class 8",
+          "chapters": ["NCERT Ch 4: Data Handling"],
+          "subtopics": ["maxmin_max", "maxmin_min", "maxmin_range"],
+          "question_style": "Histograms, pie charts, probability with range"
+        }
+      }
+    },
+    {
+      "id": "compare",
+      "name": "Comparing Numbers",
+      "description": "Number comparison, decimals, rounding, place value, ordering",
+      "icon": "🔢",
+      "difficulty_breakdown": {
+        "beginner": {
+          "class": "Class 6",
+          "chapters": ["NCERT Ch 1: Knowing Our Numbers", "Ch 8: Decimals"],
+          "subtopics": ["compare_basics", "compare_decimals", "compare_rounding", "compare_place", "compare_order"],
+          "question_style": "Compare large numbers, basic decimal comparison, rounding"
+        },
+        "intermediate": {
+          "class": "Class 7",
+          "chapters": ["NCERT Ch 1: Integers", "Ch 2: Fractions", "Ch 9: Rational Numbers"],
+          "subtopics": ["compare_basics", "compare_decimals", "compare_rounding", "compare_place", "compare_order"],
+          "question_style": "Negative number comparison, unlike fractions, rational numbers"
+        },
+        "expert": {
+          "class": "Class 8",
+          "chapters": ["NCERT Ch 1: Rational Numbers", "Ch 10: Exponents", "Ch 11: Proportion"],
+          "subtopics": ["compare_basics", "compare_decimals", "compare_rounding", "compare_place", "compare_order"],
+          "question_style": "Dense set between numbers, exponents comparison, scientific notation"
+        }
+      }
+    }
+  ],
+
+  "subtopics": [
+    {
+      "id": "geom_bindu",
+      "name": "Bindu (Point)",
+      "topic_id": "geom",
+      "video": "FINAL_bindu.mp4",
+      "concepts": ["Definition of point", "No dimension", "Label with capital letter", "Position only"],
+      "real_life_examples": ["Delhi Metro station on map", "Dot on a notebook", "Star in the sky", "Tip of a pen"],
+      "story_scenarios": [
+        "Tara marks her school on a Delhi map with a point",
+        "Rohan counts points on a cricket field diagram",
+        "Chawri Bazar shopkeeper uses point for nail locations"
+      ],
+      "common_mistakes": ["Thinking a point has size", "Confusing point with dot (which has area)"],
+      "quiz_keywords": ["position", "0 dimensions", "capital letter", "dot", "coordinates"]
+    },
+    {
+      "id": "geom_rekha",
+      "name": "Rekha (Line)",
+      "topic_id": "geom",
+      "video": "FINAL_rekha.mp4",
+      "concepts": ["Infinite straight line", "Arrowheads at both ends", "Named by 2 points", "No endpoints"],
+      "real_life_examples": ["Rajpath road stretching straight", "Railway tracks (parallel lines)", "Light beam infinite"],
+      "story_scenarios": [
+        "Rajpath parade symmetry discussion",
+        "Metro line going from one end of Delhi to beyond"
+      ],
+      "common_mistakes": ["Thinking line has measurable length", "Confusing segment with line"],
+      "quiz_keywords": ["infinite", "straight", "arrowheads", "both directions", "no end"]
+    },
+    {
+      "id": "geom_khand",
+      "name": "Khand (Segment)",
+      "topic_id": "geom",
+      "video": "FINAL_segment.mp4",
+      "concepts": ["Part of a line", "2 fixed endpoints", "Measurable length", "Named by endpoints"],
+      "real_life_examples": ["Delhi-Meerut Expressway section", "Pencil length", "Bookshelf width"],
+      "common_mistakes": ["Calling a segment a 'line'", "Forgetting it has endpoints"],
+      "quiz_keywords": ["endpoints", "measurable", "part of line", "fixed length", "AB"]
+    },
+    {
+      "id": "geom_kiran",
+      "name": "Kiran (Ray)",
+      "topic_id": "geom",
+      "video": "FINAL_kiran_manim_chalkboard.mp4",
+      "concepts": ["One endpoint", "Extends infinitely in one direction", "Origin + direction"],
+      "real_life_examples": ["Suraj ki kiran (sunray)", "Laser pointer beam", "Flashlight beam"],
+      "common_mistakes": ["Confusing ray with segment", "Forgetting the infinite side"],
+      "quiz_keywords": ["one endpoint", "infinite direction", "origin", "sunray", "laser"]
+    },
+    {
+      "id": "geom_shikhar",
+      "name": "Shikhar (Vertex/Angle)",
+      "topic_id": "geom",
+      "video": "FINAL_shikhar.mp4",
+      "concepts": ["Two rays meeting at vertex", "Angle measure", "Naming angles"],
+      "real_life_examples": ["Kite (patang) ka kona", "Clock hands", "Roof slope of a house", "Open door angle"],
+      "common_mistakes": ["Calling vertex the whole angle", "Forgetting angle unit is degrees"],
+      "quiz_keywords": ["vertex", "rays", "meeting point", "degrees", "arms"]
+    },
+    {
+      "id": "maxmin_max",
+      "name": "Max (Maximum)",
+      "topic_id": "maxmin",
+      "video": "FINAL_max.mp4",
+      "concepts": ["Largest value in a set", "Comparing all elements", "Upper bound"],
+      "real_life_examples": ["IPL highest score in tournament", "Highest temperature in Rajasthan (50°C)", "Maximum samosa price in market"],
+      "common_mistakes": ["Confusing max with range", "Thinking max is always positive"],
+      "quiz_keywords": ["largest", "maximum", "highest", "upper bound", "most"]
+    },
+    {
+      "id": "maxmin_min",
+      "name": "Min (Minimum)",
+      "topic_id": "maxmin",
+      "video": "FINAL_min.mp4",
+      "concepts": ["Smallest value in a set", "Lower bound", "Common pitfall with negatives"],
+      "real_life_examples": ["Leh winter temperature (-10°C)", "Cheapest item in shop", "Lowest score in class test"],
+      "common_mistakes": ["Thinking -10 is 'bigger' than -5 (common confusion)"],
+      "quiz_keywords": ["smallest", "minimum", "lowest", "least", "minimum value"]
+    },
+    {
+      "id": "maxmin_range",
+      "name": "Range (Fasla)",
+      "topic_id": "maxmin",
+      "video": "FINAL_range.mp4",
+      "concepts": ["Range = Max - Min", "Spread of data", "Unit same as data"],
+      "real_life_examples": ["IPL score range in a match", "Temperature range Delhi (15°C to 42°C = range 27)", "Samosa price range across markets"],
+      "common_mistakes": ["Confusing range with average", "Forgetting unit of range", "Not subtracting correctly"],
+      "quiz_keywords": ["max minus min", "spread", "difference", "range", "fasla"]
+    },
+    {
+      "id": "compare_basics",
+      "name": "Comparing Basics",
+      "topic_id": "compare",
+      "video": "FINAL_compare_intro.mp4",
+      "concepts": ["Greater than (>), less than (<), equal to (=)", "Number line comparison", "Crocodile mouth trick"],
+      "real_life_examples": ["Comparing population of Delhi vs Mumbai", "Cricket score comparison", "Metro ridership data"],
+      "common_mistakes": ["Forgetting crocodile eats bigger number", "Confusing < and > direction"],
+      "quiz_keywords": ["greater than", "less than", "equal to", "crocodile", "number line"]
+    },
+    {
+      "id": "compare_decimals",
+      "name": "Decimals Comparison",
+      "topic_id": "compare",
+      "video": "FINAL_compare_intro.mp4",
+      "concepts": ["Comparing tenths, hundredths, thousandths", "Place value after decimal", "Money as decimals"],
+      "real_life_examples": ["Lassi prices (Rs 40.50 vs Rs 40.05)", "Petrol price per liter", "GST rate decimals"],
+      "common_mistakes": ["Comparing only decimal part without whole", "Not aligning decimal points"],
+      "quiz_keywords": ["decimal", "tenths", "hundredths", "thousandths", "dot ke baad"]
+    },
+    {
+      "id": "compare_rounding",
+      "name": "Rounding Arena",
+      "topic_id": "compare",
+      "video": "FINAL_compare_intro.mp4",
+      "concepts": ["Rounding to nearest ten, hundred, thousand", "Round half up rule", "Significant places"],
+      "real_life_examples": ["Kirana bill rounding", "Petrol pump rounding", "Population approximation", "Crowd estimates at rallies"],
+      "common_mistakes": ["Rounding when digit is 5 (should round up)", "Rounding to wrong place"],
+      "quiz_keywords": ["round", "nearest", "approximate", "estimate", "~"]
+    },
+    {
+      "id": "compare_place",
+      "name": "Place Value Power",
+      "topic_id": "compare",
+      "video": "FINAL_compare_intro.mp4",
+      "concepts": ["Indian place value system (Crores, Lakhs, Thousands)", "Comparing by place value", "Digit significance"],
+      "real_life_examples": ["Population of India (Crores)", "Budget amounts (Lakhs, Crores)", "Book prices at shop"],
+      "common_mistakes": ["Mixing up Lakh and Crore", "Not comparing highest place first"],
+      "quiz_keywords": ["place value", "crore", "lakh", "thousand", "hundred", "tens", "ones"]
+    },
+    {
+      "id": "compare_order",
+      "name": "Order (Kram)",
+      "topic_id": "compare",
+      "video": "FINAL_compare_intro.mp4",
+      "concepts": ["Ascending (chhota → bada)", "Descending (bada → chhota)", "Ordering multiple numbers"],
+      "real_life_examples": ["Cricket scorecard ordering", "Price list sorting", "Temperature ordering across cities"],
+      "common_mistakes": ["Ascending vs descending confusion", "Not handling negative numbers in ordering"],
+      "quiz_keywords": ["ascending", "descending", "order", "kram", "chhota se bada", "bada se chhota"]
+    }
+  ],
+
+  "story_scenarios_by_topic": {
+    "geom": [
+      {
+        "title": "Metro Map Adventure",
+        "setting": "Delhi Metro network",
+        "characters_used": ["tara", "rohan"],
+        "concepts_covered": ["geom_bindu", "geom_rekha"],
+        "vibe": "Modern Delhi, transit"
+      },
+      {
+        "title": "Kite Festival at Yamuna",
+        "setting": "Yamuna Ghat, Makar Sankranti",
+        "characters_used": ["tara", "rohan", "Kite Flyer Chacha"],
+        "concepts_covered": ["geom_shikhar", "geom_kiran", "geom_rekha"],
+        "vibe": "Festive, outdoor, colorful"
+      },
+      {
+        "title": "Banyas Measurement Challenge",
+        "setting": "Chawri Bazar",
+        "characters_used": ["Banya (Shopkeeper)", "rohan"],
+        "concepts_covered": ["geom_khand", "geom_bindu"],
+        "vibe": "Busy market, practical"
+      }
+    ],
+    "maxmin": [
+      {
+        "title": "IPL Score Analysis",
+        "setting": "Feroz Shah Kotla, IPL match",
+        "characters_used": ["Cricket Coach", "tara", "rohan"],
+        "concepts_covered": ["maxmin_max", "maxmin_min", "maxmin_range"],
+        "vibe": "Stadium, excitement, competition"
+      },
+      {
+        "title": "Delhi Heatwave Challenge",
+        "setting": "Delhi summer across multiple locations",
+        "characters_used": ["tara"],
+        "concepts_covered": ["maxmin_max", "maxmin_min", "maxmin_range"],
+        "vibe": "Seasonal, relatable, daily life"
+      },
+      {
+        "title": "Samosa Price Survey",
+        "setting": "Karol Bagh, multiple food stalls",
+        "characters_used": ["Samosa Master", "rohan"],
+        "concepts_covered": ["maxmin_max", "maxmin_min"],
+        "vibe": "Market, food, fun"
+      }
+    ],
+    "compare": [
+      {
+        "title": "Chandni Chowk Shopping Challenge",
+        "setting": "Chandni Chowk market",
+        "characters_used": ["Banya (Shopkeeper)", "tara"],
+        "concepts_covered": ["compare_basics", "compare_place", "compare_order"],
+        "vibe": "Traditional market, bargaining"
+      },
+      {
+        "title": "Lassi Price Decimal Battle",
+        "setting": "Two lassi stalls at Chandni Chowk",
+        "characters_used": ["Lassi Wale Dost", "tara"],
+        "concepts_covered": ["compare_decimals"],
+        "vibe": "Food stall, friendly competition"
+      },
+      {
+        "title": "Haldiram Bill Rounding",
+        "setting": "Haldiram CP",
+        "characters_used": ["Haldiram Cashier", "rohan", "tara"],
+        "concepts_covered": ["compare_rounding"],
+        "vibe": "Busy sweet shop, billing counter"
+      },
+      {
+        "title": "Bookshop Place Value Mystery",
+        "setting": "Bookshop, CP",
+        "characters_used": ["tara", "rohan"],
+        "concepts_covered": ["compare_place", "compare_order"],
+        "vibe": "Quiet shop, academic curiosity"
+      }
+    ]
+  },
+
+  "quiz_generation_rules": {
+    "min_options": 4,
+    "max_options": 4,
+    "exactly_one_correct": true,
+    "correct_index_range": "0 to 3",
+    "language": "Hinglish (Hindi base + English math terms)",
+    "requires_cultural_reference": true,
+    "requires_real_life_scenario": true,
+    "max_words_per_question": 35,
+    "max_words_per_option": 12,
+    "hint_style": "Step-by-step in Hinglish with analogy",
+    "question_distribution": {
+      "recall": 0.3,
+      "application": 0.5,
+      "analysis": 0.2
+    }
+  },
+
+  "story_generation_rules": {
+    "min_slides": 10,
+    "max_slides": 20,
+    "locations_per_story": 2,
+    "characters_per_story": 2,
+    "every_slide_has_choice": true,
+    "choices_per_slide": 4,
+    "exactly_one_correct_per_slide": true,
+    "correct_reward_xp": 15,
+    "language": "Hinglish",
+    "requires_delhi_reference": true,
+    "structure": "walk through places → meet locals → solve math → progress"
+  },
+
+  "chat_rules": {
+    "max_response_sentences": 5,
+    "tone": "friendly, street-smart, encouraging",
+    "must_use_cultural_analogy": true,
+    "language": "Hinglish",
+    "never_use": ["hence", "thus", "thereupon", "therefore", "formally"],
+    "preferred_openers": ["Arre!", "Doston!", "Dekho!", "Socho!", "Kya baat hai!"],
+    "when_correct": "Praise with cricket/food metaphor + explain why",
+    "when_incorrect": "Gentle correction + simpler analogy + another chance"
+  }
+}

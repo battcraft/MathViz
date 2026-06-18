@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { QUIZ_QUESTIONS, TOPICS } from "../data";
+import { QUIZ_QUESTIONS, TOPICS, QUESTION_TOPIC_MAP } from "../data";
 import { useAuth } from "../lib/AuthContext";
 import { useLanguage } from "../lib/LanguageContext";
 import { QuizQuestion, DifficultyLevel } from "../types";
@@ -89,8 +89,10 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
       }
     } catch (e) {
       console.error("Failed loading 20 subtopic quiz questions pool:", e);
-      // Fallback local shuffle of static data if connection fails
-      const shuffled = [...QUIZ_QUESTIONS].sort(() => Math.random() - 0.5);
+      // Fallback local shuffle — filter by topic first to avoid mixed-subtopic questions
+      const topicFiltered = QUIZ_QUESTIONS.filter(q => QUESTION_TOPIC_MAP[q.id] === tId);
+      const pool = topicFiltered.length >= 5 ? topicFiltered : QUIZ_QUESTIONS;
+      const shuffled = [...pool].sort(() => Math.random() - 0.5);
       setActiveQuestions(shuffled.slice(0, 20));
     } finally {
       setLoading(false);
@@ -242,7 +244,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
                         isSel ? "bg-[#FF6B6B] text-white border-black shadow-[2px_2px_0px_black]" : "bg-zinc-50 hover:bg-neutral-100 text-zinc-800"
                       }`}
                     >
-                      {sub.name}
+                      {t('subtopic_' + sub.id, sub.name)}
                     </button>
                   );
                 })}
@@ -267,7 +269,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
       <div className="p-12 text-center bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] font-mono max-w-sm mx-auto text-black">
         <div className="animate-spin h-8 w-8 border-4 border-t-transparent border-black rounded-full mx-auto mb-4"></div>
         <p className="font-black uppercase tracking-tight text-xs">Generating 20-question syllabus challenges from DB...</p>
-        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Wait, Bhaiya is setting up cards...</span>
+        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Wait, Maths Dost is setting up cards...</span>
       </div>
     );
   }
@@ -430,7 +432,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
         <div className="bg-amber-50 border-3 border-black p-4 rounded-xl mb-5 flex gap-3 animate-fade-in text-xs font-mono text-black leading-relaxed shadow-[3px_3px_0px_black]">
           <Lightbulb className="h-6 w-6 text-[#FFC700] fill-[#FFC700] flex-shrink-0" />
           <div>
-            <p className="font-black text-xs text-amber-950">Bhaiya ki Hint:</p>
+            <p className="font-black text-xs text-amber-950">Maths Dost ki Hint:</p>
             <p className="font-bold italic mt-0.5 text-zinc-700">"{currentQuestion?.hint}"</p>
           </div>
         </div>
@@ -448,7 +450,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
               : "bg-white hover:bg-neutral-50 text-black"
           } ${isAnswered ? "opacity-30 cursor-not-allowed shadow-none" : ""}`}
         >
-          💡 Hint de do Bhaiya!
+          💡 Hint de do Maths Dost!
         </button>
 
         <div className="flex gap-2">
