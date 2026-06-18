@@ -829,7 +829,7 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
           <span className="text-lg grow-0 shrink-0 select-none animate-bounce">🧔</span>
           <p className="text-[10.5px] leading-relaxed font-sans text-emerald-200">
             {stepRatio < 0.50 ? (
-              <span><strong>Bhaiya says:</strong> "{lessonData.hinglish.slice(0, 100)}..."</span>
+              <span><strong>Rekha Didi kahte hain:</strong> "{lessonData.hinglish.slice(0, 100)}..."</span>
             ) : (
               <span><strong>In English:</strong> "{lessonData.english.slice(0, 110)}..."</span>
             )}

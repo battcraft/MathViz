@@ -29,7 +29,7 @@ const DEFAULT_LESSONS: VideoLesson[] = [
     topicName: "📐 Geometry Basics",
     duration: "2:45 min",
     tag: "Class 6",
-    description: "Points (Bindu), Lines (Rekha) & Rays (Kiran) are introduced using Delhi Metro maps, cricket pitches and samosas! Watch Bhaiya draw on the green board.",
+    description: "Points (Bindu), Lines (Rekha) & Rays (Kiran) are introduced using Delhi Metro maps, cricket pitches and samosas! Watch Rekha Didi draw on the green board.",
     isSimulated: true
   },
   {
@@ -703,7 +703,7 @@ export default function VideosView() {
             <div className="bg-[#FFFDF0] p-4 text-left border-t-4 border-black">
               <h4 className="font-sans font-black text-xs text-black uppercase tracking-tight flex items-center gap-1.5 mb-1.5">
                 <Sparkles className="h-4 w-4 text-orange-500 fill-orange-300" />
-                <span>Bhaiya's Core Study Summary Notes</span>
+                <span>Rekha Didi ke Core Study Summary Notes</span>
               </h4>
               <p className="font-sans text-xs text-zinc-700 leading-relaxed font-semibold bg-white p-3 rounded-lg border border-black/10">
                 {activePlayVideo.description}

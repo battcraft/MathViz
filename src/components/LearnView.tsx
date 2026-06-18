@@ -303,7 +303,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                   {videoSubtopics[0].name}
                 </h4>
                 <p className="text-[11px] text-zinc-650 font-extrabold mt-1 max-w-md leading-relaxed">
-                  Watch Bhaiya's high-octane Hinglish story animation to master this topic's street-smart fundamentals!
+                  Watch Rekha Didi's high-octane Hinglish story animation to master this topic's street-smart fundamentals!
                 </p>
               </div>
             </div>
@@ -891,7 +891,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                   <span className="text-[10px] font-bold text-amber-600 block uppercase mb-1">Pillar 1: Video Class 🎬</span>
                   <h4 className="font-sans font-black text-sm uppercase text-black mb-0.5">Watch Video Lesson</h4>
                   <p className="text-[11px] text-zinc-500 font-semibold leading-normal">
-                    Watch Bhaiya's high-energy chalk animation class introducing coordinates and secrets.
+                    Watch Rekha Didi's high-energy chalk animation class introducing coordinates and secrets.
                   </p>
                 </div>
                 <div className="flex items-center gap-3 self-stretch md:self-auto justify-between border-t border-black/5 md:border-none pt-2.5 md:pt-0">
@@ -1302,7 +1302,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
             <div className="md:col-span-2 bg-[#FFFDF0] border-4 border-black p-6 rounded-2xl shadow-[6px_6px_0px_black] text-left">
               <h4 className="font-sans font-black text-base text-black mb-1.5 uppercase tracking-tight flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-amber-500 fill-amber-300" />
-                <span>Bhaiya's Hinglish Chalk Notes: {selectedSubtopic.name}</span>
+                <span>Rekha Didi ke Hinglish Chalk Notes: {selectedSubtopic.name}</span>
               </h4>
               <hr className="border-t-2 border-black border-dashed mb-4" />
               
@@ -1371,7 +1371,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 )}
                 {(!selectedSubtopic.id.includes("bindu") && !selectedSubtopic.id.includes("rekha") && !selectedSubtopic.id.includes("khand") && !selectedSubtopic.id.includes("kiran") && !selectedSubtopic.id.includes("shikhar") && !(!selectedSubtopic.id.includes("video") && !selectedSubtopic.id.includes("practice") && !selectedSubtopic.id.includes("kahani") && !selectedSubtopic.id.includes("panga") && !selectedSubtopic.id.includes("mastery") && (selectedTopic.id === "maxmin" || selectedTopic.id === "compare"))) && (
                   <>
-                    <p>✨ <strong>Bhaiya Says:</strong> Math is pure gold when you run transactions in daily bazaar! Play the IPL stakes tracking, compare decimal ratings, and check ranges to be standard market gurus.</p>
+                    <p>✨ <strong>Maths Dost Kahte Hain:</strong> Math is pure gold when you run transactions in daily bazaar! Play the IPL stakes tracking, compare decimal ratings, and check ranges to be standard market gurus.</p>
                   </>
                 )}
               </div>
@@ -1391,7 +1391,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 <span className="text-[10px] font-black text-amber-600 block mb-1">✓ SUBMIT ASSIGNMENT</span>
                 <h4 className="font-sans font-black text-sm uppercase text-black">Finish & earn rewards</h4>
                 <p className="text-[11px] text-zinc-500 font-bold mt-2 leading-relaxed">
-                  Have you played the brief lesson clip and understood Bhaiya's custom Hinglish chalk boards? Press settle below!
+                  Have you played the brief lesson clip and understood Rekha Didi ke custom Hinglish chalk boards? Press settle below!
                 </p>
               </div>
 
@@ -1630,7 +1630,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               "{storyData.narration}"
             </p>
 
-            <span className="font-mono text-[10px] uppercase font-black text-zinc-400">Choose Bhaiya's correct Hinglish guidance:</span>
+            <span className="font-mono text-[10px] uppercase font-black text-zinc-400">Choose Maths Dost ki correct Hinglish guidance:</span>
             
             <div className="flex flex-col gap-3">
               {(storyData.choices || []).map((optDef, i) => {
@@ -1709,7 +1709,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               ) : (
                 <div className="flex-1 flex flex-col gap-4 text-left">
                   <div className="p-4 bg-yellow-50 border-2 border-black rounded-xl text-xs sm:text-sm font-bold text-zinc-800 leading-relaxed font-sans">
-                    🙋‍♂️ <strong>Bhaiya ka Gyaan:</strong> {storyData.explanation || "Bahut ache! Solving Delhi puzzles with algebra makes bargaining super easy. Learn how value placement reveals accurate prices!"}
+                    🙋‍♂️ <strong>Maths Dost ka Gyaan:</strong> {storyData.explanation || "Bahut ache! Solving Delhi puzzles with algebra makes bargaining super easy. Learn how value placement reveals accurate prices!"}
                   </div>
                   <div className="flex gap-2 w-full font-sans">
                     <button

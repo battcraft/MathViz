@@ -509,7 +509,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
               <span className={`text-[9px] uppercase tracking-wider mb-1 font-black ${
                 msg.sender === "user" ? "text-zinc-500" : "text-[#FFC700]"
               }`}>
-                {msg.sender === "user" ? "You (Sawaal)" : "MathsGuru Bhaiya (Jawaab)"}
+                {msg.sender === "user" ? "You (Sawaal)" : "Maths Dost (Jawaab)"}
               </span>
               <div
                 className={`p-3 rounded-2xl border-2 border-black leading-relaxed shadow-[3px_3px_0px_black] text-sm ${
@@ -525,7 +525,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
           {chatLoading && (
             <div className="self-start text-[#FFC700] flex items-center gap-2 animate-pulse text-xs font-mono font-bold px-1">
               <span className="w-2 h-2 rounded-full bg-[#FFC700] animate-bounce"></span>
-              <span>Bhaiya dimaag laga rahe hain... Podcaster mode ON!</span>
+              <span>Rekha Didi dimaag laga rahi hain... Podcaster mode ON!</span>
             </div>
           )}
         </div>
