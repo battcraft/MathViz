@@ -894,3 +894,15 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     hint: "8,005 has 0 in tens place, whereas 8,050 has 5 in tens place. So 8,005 is smaller."
   }
 ];
+
+// Maps each question ID to its primary topic for subtopic filtering
+export const QUESTION_TOPIC_MAP: Record<string, string> = {
+  q1: "geom", q4: "geom", q8: "geom", q10: "geom", q11: "geom",
+  q12: "geom", q17: "geom", q20: "geom", q22: "geom", q24: "geom",
+  q26: "geom", q29: "geom",
+  q2: "compare", q5: "compare", q6: "compare", q7: "compare",
+  q14: "compare", q16: "compare", q19: "compare", q21: "compare",
+  q25: "compare", q27: "compare", q30: "compare",
+  q3: "maxmin", q9: "maxmin", q13: "maxmin", q15: "maxmin",
+  q18: "maxmin", q23: "maxmin", q28: "maxmin"
+};
