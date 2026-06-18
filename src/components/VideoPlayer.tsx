@@ -15,11 +15,113 @@ const BHAIYA_LESSONS: Record<string, { topic: string; english: string; hinglish:
     hinglish: "Aao bacho! Aaj hum geometry ke basic dhasu concepts seekhenge. Bindu matlab point, Rekha matlab line aur Kiran matlab Ray. Inke bina cartesian coordinate system adhura hai! Sabse pehle, dhyan se boards ko dekho aur rules samjho.",
     elements: ["Point (0D)", "Line (1D Infinite)", "Segment (Fixed Ends)", "Ray (Half Infinite)"]
   },
+  "FINAL_geom_video.mp4": {
+    topic: "Geometry Intro Whiteboard",
+    english: "Welcome to Delhi street geometry basics math class. Let's study points, lines, segments, and rays across bazaar roadmaps and samsosas!",
+    hinglish: "Doston, chalo Delhi street math class me geometry ke basics seekhein! Points, lines, segments aur rays ka mool swaroop samjhein rustic style me.",
+    elements: ["Geometry Basics", "Bindu & Rekha", "Khand", "Kiran & Angle"]
+  },
+  "FINAL_geom_bindu.mp4": {
+    topic: "Bindu: Point",
+    english: "A Point represents coordinate pinpoint location with absolutely zero dimensions—no height, width, or length.",
+    hinglish: "Point yaani Bindu ek zero-dimensional (0D) shakti h, jo kisi map par fixed position darshata hai. Iska uppercase letters jaise A, B ya C standard label hota hai.",
+    elements: ["Zero Dimensions (0D)", "Capital Letter Label", "Location marker", "Cartesian Point x, y"]
+  },
+  "FINAL_geom_rekha.mp4": {
+    topic: "Rekha: Infinite Line",
+    english: "An infinite line curves or stretches straight forever in both directions without any endpoints.",
+    hinglish: "Rekha yaani infinite line dono directions me endless age stretch hoti hai! Iska koi start ya endpoint nhi hota. Ham isko double sided arrows se show karte hain.",
+    elements: ["Endless stretch", "Double arrows", "No endpoints", "Parallel rails"]
+  },
+  "FINAL_geom_khand.mp4": {
+    topic: "Khand: Line Segment",
+    english: "A Line Segment is a subset of a line bounded by two distinct fixed endpoints that you can measure with a ruler.",
+    hinglish: "Line segment matlab Rekha-Khand jiske do clear boundary points hote hain. Iski length fixed hoti h aur isko ruler se measure kiya jata h.",
+    elements: ["Fixed length", "Two endpoints", "Ruler measurement", "Samosa side line"]
+  },
+  "FINAL_geom_kiran.mp4": {
+    topic: "Kiran: Half-infinite Ray",
+    english: "A ray has exactly one originating root point but shoots outwardly in the other direction endlessly.",
+    hinglish: "Kiran matlab ek side locked origin point, aur dusri side endless shooting vector arrow! Flashlight ke beam ki tarah dynamic math path.",
+    elements: ["One start endpoint", "エンドレス direction", "Laser flashlight ray", "Angle ray side"]
+  },
+  "FINAL_geom_shikhar.mp4": {
+    topic: "Shikhar: Corner Vertex",
+    english: "A vertex is the pointy corner intersection where two distinct lines, rays, or segments meet.",
+    hinglish: "Shikhar matlab corner point jaha 2 straight segments milkar math angle banate hain. Samosa me 3 shikhar hote hain!",
+    elements: ["Pointy corner vertex", "Segment intersection", "Angle origin point", "A, B, C positions"]
+  },
+  "FINAL_geom_practice.mp4": {
+    topic: "Interactive Geometry Sandbox practice",
+    english: "Let's practice coordinate nodes plotting, stretching polygon shapes like triangles and rectangles live on our grid.",
+    hinglish: "Chalo geometry sandbox me coordinates aur vertices drag karke samantaryayat aur varg shapes live create karna seekhein algebra rules se!",
+    elements: ["Coordinate graph", "Interactive Nodes drag", "Shape classifies", "Success checks"]
+  },
   "FINAL_maxmin_intro.mp4": {
     topic: "Maximum, Minimum and Range",
     english: "Let's learn Max, Min and the Range! Maximum is the absolute highest peak value in any dataset, and Minimum represents the absolute lowest value. Subtract minimum from maximum to calculate the local Range boundary!",
     hinglish: "Doston, chalo Maximum, Minimum aur Range, yaani fasla nikalna seekhein. Max matlab sabse uncha value! Min matlab sabse chhota aur sasta number! Jab hum Max me se Min minus karte hain, toh milta hai Range!",
     elements: ["Highest Value (Max)", "Lowest Value (Min)", "Subtract Max - Min", "Fasla / Boundary Range"]
+  },
+  "FINAL_maxmin_video.mp4": {
+    topic: "Extreme values analysis Intro",
+    english: "Every business transaction requires picking the best profit points or lowest expenses.",
+    hinglish: "Aao seekhein business transactions me max/min nikalne ka real trick! Profit limit aur raw cost base select kijiye.",
+    elements: ["Extreme values", "Absolute Max", "Absolute Min", "Market spread"]
+  },
+  "FINAL_maxmin_max.mp4": {
+    topic: "Maximum Margin Limit",
+    english: "Find the peak element in a list of items by iterating and comparing each element in sequence.",
+    hinglish: "Maximum ka matlab sabse bada value! Score list ko ascending check karke peak element filter karo easily.",
+    elements: ["Peak Ceiling", "Highest Score", "Upper bound limit", "Loop Compare records"]
+  },
+  "FINAL_maxmin_min.mp4": {
+    topic: "Minimum cost point",
+    english: "Learn how sorting in ascending order aligns the smallest baseline value at the first index.",
+    hinglish: "Minimum ka matlab sabse chhota base floor value! Sabase sasti dealing ke liye list ka lowest number compare karo.",
+    elements: ["Base Floor", "Lowest rate", "Min limit boundary", "Ascending first element"]
+  },
+  "FINAL_maxmin_range.mp4": {
+    topic: "Range (Fasla) calculation",
+    english: "Query the Range spread easily using formula: subtract the minimum value from the maximum value.",
+    hinglish: "Range nikalne ka simple formula: Maximum me se minus kijiye Minimum value! Ye data spread yaani fasla batata h.",
+    elements: ["Range spread", "Max - Min", "Volatility value", "Pricing limit boundaries"]
+  },
+  "FINAL_maxmin_practice.mp4": {
+    topic: "Max/Min practice zone",
+    english: "Compare warehouse temperatures and find extreme records on dynamic slider lines.",
+    hinglish: "Chalo data sets me slider drag karke maximums aur minimums identify karne ki digital drills solve karein!",
+    elements: ["Data sets", "Slider boundaries", "Sort ascending", "Range spread calculation"]
+  },
+  "FINAL_compare_basics.mp4": {
+    topic: "Gator Comparing Basics",
+    english: "The greedy crocodile always points its large open mouth toward the bigger absolute value.",
+    hinglish: "Hamesha gator crocodile, yaani bade number khane ka trick dhyan rakhein! Greater than (>) ka open muh sabase bade value ki taraf open hota h.",
+    elements: ["Gator mouth", "Greater symbol (>)", "Less symbol (<)", "Positive compared integers"]
+  },
+  "FINAL_compare_decimals.mp4": {
+    topic: "Decimals Place weight battles",
+    english: "Avoid the length trap! 0.5 is far larger than 0.05 because the first column Tenths place is stronger.",
+    hinglish: "Decimal value comparing traps se bachein! 0.5 sabase bada h 0.05 se, kyuki iske tenths place par direct 5 h. Place values master karein.",
+    elements: ["Decimal columns", "Tenths place", "Hundredths place", "Saffron gram comparing"]
+  },
+  "FINAL_compare_rounding.mp4": {
+    topic: "Bazaar Rounding off hacks",
+    english: "If the decimals part of paise score ends in .5 or more, slide it up to next rupee, else round it down.",
+    hinglish: "Chawri Bazar payment fast rounding off rules! Agar value points .50 ya usse upar hain, toh direct higher currency round karein.",
+    elements: ["Rounding boundary", "5-or-Up rules", "Rounding down", "Kachori ledger estimates"]
+  },
+  "FINAL_compare_place.mp4": {
+    topic: "Place Value lock codes",
+    english: "Understand values across Ones, Tens, Hundreds, and Thousands columns left to right.",
+    hinglish: "Sikhye Hazaar, Saikda aur Kayam columns ke power! Ek single cell digital columns me left side shifting se ten times larger ho jata h.",
+    elements: ["Ones & Tens", "Hundreds column", "Thousands (Hazaar)", "Lock digit decode"]
+  },
+  "FINAL_compare_order.mp4": {
+    topic: "Ordering Kram sequences",
+    english: "Arrange mixed entries smoothly from smallest ascending base to highest peak descending sequences.",
+    hinglish: "MIX numbers ko ascending (Sabse chhota pahle) aur descending (Sabase bada pahle) kram me align karne ka dhasu class!",
+    elements: ["Arohi Kram", "Avrohi Kram", "Mixed array sort", "Rankings align"]
   }
 };
 
@@ -84,22 +186,28 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
     if (!synthRef.current) return;
     synthRef.current.cancel(); // clean existing lines
 
-    // Speech text combining English & Hinglish details
-    const speakText = `Class starting now! Topic is ${lessonData.topic}. Bhaiya says: ${lessonData.hinglish}. In english: ${lessonData.english}`;
+    // Speech text in pure warm Hinglish/Hindi so the voice synthesizer handles it with a native accent
+    const speakText = `Namaste doston! Chalo shuru karte hain hamara math class. Aaj ka topic hai: ${lessonData.topic || "Maths Class"}. Maths Dost kehta hai: ${lessonData.hinglish}. Saath milkar socho, samjho, aur solve karo!`;
     
     const utterance = new SpeechSynthesisUtterance(speakText);
     utteranceRef.current = utterance;
 
-    // Search for suitable Hinglish or Indian/British English voices for a sweet Hinglish experience
+    // Search for suitable native Hindi/Hinglish or Indian English voices for a sweet native experience
     const voices = synthRef.current.getVoices();
-    const optimalVoice = voices.find(v => v.lang.includes("en-IN") || v.lang.includes("hi") || v.lang.includes("en-GB")) || voices[0];
+    const optimalVoice = voices.find(v => v.lang.startsWith("hi") || v.lang.includes("hi-IN")) 
+      || voices.find(v => v.lang.includes("en-IN")) 
+      || voices.find(v => v.lang.includes("en-GB")) 
+      || voices[0];
+      
     if (optimalVoice) {
       utterance.voice = optimalVoice;
+      // Set lang property to trigger native pronunciation on Chrome and iOS Safari
+      utterance.lang = optimalVoice.lang;
     }
 
     utterance.volume = isMuted ? 0 : volume;
-    utterance.rate = 1.05; // conversational energetic speed
-    utterance.pitch = 1.1; // energetic tone
+    utterance.rate = 1.0; // natural conversational pacing
+    utterance.pitch = 1.05; // warm, welcoming pitch
 
     utterance.onend = () => {
       setIsPlaying(false);

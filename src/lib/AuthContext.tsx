@@ -97,7 +97,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const saved = localStorage.getItem("mathsguru_stats_offline");
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        return { ...DEFAULT_STATS(parsed.userId || "guest"), ...parsed };
       } catch (e) {
         return DEFAULT_STATS("guest");
       }
@@ -138,22 +139,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 const localData = JSON.parse(localSaved) as UserStats;
                 if (localData.xp > cloudData.xp) {
                   // Local copy is newer/better, overwrite cloud
-                  const merged = { ...localData, userId: currentUser.uid };
+                  const merged = { ...DEFAULT_STATS(currentUser.uid), ...localData, userId: currentUser.uid };
                   await setDoc(userDocRef, merged);
                   setStats(merged);
                   localStorage.setItem("mathsguru_stats_offline", JSON.stringify(merged));
                 } else {
                   // Cloud copy wins
-                  setStats(cloudData);
-                  localStorage.setItem("mathsguru_stats_offline", JSON.stringify(cloudData));
+                  const syncedCloud = { ...DEFAULT_STATS(currentUser.uid), ...cloudData };
+                  setStats(syncedCloud);
+                  localStorage.setItem("mathsguru_stats_offline", JSON.stringify(syncedCloud));
                 }
               } catch (e) {
-                setStats(cloudData);
-                localStorage.setItem("mathsguru_stats_offline", JSON.stringify(cloudData));
+                const syncedCloud = { ...DEFAULT_STATS(currentUser.uid), ...cloudData };
+                setStats(syncedCloud);
+                localStorage.setItem("mathsguru_stats_offline", JSON.stringify(syncedCloud));
               }
             } else {
-              setStats(cloudData);
-              localStorage.setItem("mathsguru_stats_offline", JSON.stringify(cloudData));
+              const syncedCloud = { ...DEFAULT_STATS(currentUser.uid), ...cloudData };
+              setStats(syncedCloud);
+              localStorage.setItem("mathsguru_stats_offline", JSON.stringify(syncedCloud));
             }
           } else {
             // First time user, register current stats
@@ -162,7 +166,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             if (localSaved) {
               try {
                 const parsed = JSON.parse(localSaved);
-                initialUserStats = { ...parsed, userId: currentUser.uid };
+                initialUserStats = { ...DEFAULT_STATS(currentUser.uid), ...parsed, userId: currentUser.uid };
               } catch (e) {}
             }
             await setDoc(userDocRef, initialUserStats);
@@ -181,7 +185,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             if (parsed.userId !== "guest") {
               setStats(DEFAULT_STATS("guest"));
             } else {
-              setStats(parsed);
+              setStats({ ...DEFAULT_STATS("guest"), ...parsed });
             }
           } catch (e) {
             setStats(DEFAULT_STATS("guest"));
@@ -217,7 +221,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updateStats = async (newStats: Partial<UserStats>) => {
     setStats((prev) => {
-      const updated = { ...prev, ...newStats };
+      const updated = { ...DEFAULT_STATS(prev.userId), ...prev, ...newStats };
       
       // Save locally first for instant feedback (offline capacity)
       localStorage.setItem("mathsguru_stats_offline", JSON.stringify(updated));
@@ -237,7 +241,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (user) {
       const path = `users/${user.uid}`;
       try {
-        await setDoc(doc(db, "users", user.uid), stats);
+        const fullStats = { ...DEFAULT_STATS(user.uid), ...stats };
+        await setDoc(doc(db, "users", user.uid), fullStats);
       } catch (err) {
         handleFirestoreError(err, OperationType.WRITE, path);
       }

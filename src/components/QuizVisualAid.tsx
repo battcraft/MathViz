@@ -339,6 +339,36 @@ export default function QuizVisualAid({ question }: QuizVisualAidProps) {
     );
   }
 
+  // 10. Ascending / Kram order staircases representation
+  if (text.includes("ascending") || text.includes("kram") || text.includes("order") || text.includes("sort")) {
+    return (
+      <div className="w-full h-36 bg-[#040C1A] border-2 border-black rounded-2xl relative overflow-hidden flex items-center justify-center p-3 text-white">
+        <svg className="w-full h-full" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+          {/* 3 staircase steps */}
+          <rect x="50" y="80" width="50" height="20" rx="3" fill="#3B82F6" stroke="#fff" strokeWidth="1" />
+          <text x="65" y="94" className="text-[9.5px] font-mono font-black fill-white">-15</text>
+          
+          <rect x="110" y="60" width="50" height="40" rx="3" fill="#10B981" stroke="#fff" strokeWidth="1" />
+          <text x="130" y="85" className="text-[9.5px] font-mono font-black fill-white">0</text>
+          
+          <rect x="170" y="40" width="50" height="60" rx="3" fill="#F59E0B" stroke="#fff" strokeWidth="1" />
+          <text x="188" y="75" className="text-[9.5px] font-mono font-black fill-white">+24</text>
+          
+          {/* Climbing arrow */}
+          <path d="M 40 100 Q 110 35 230 35" fill="none" stroke="#EC4899" strokeWidth="2" strokeDasharray="3 3" />
+          <polygon points="230,30 240,35 230,40" fill="#EC4899" />
+          
+          <text x="75" y="25" className="text-[9px] font-mono font-black fill-pink-400">
+            📈 ASCENDING KRAM: DEBT TO PEAK
+          </text>
+        </svg>
+        <span className="absolute bottom-2 left-3 text-[8.5px] font-mono font-black uppercase text-pink-400 bg-black/40 px-1.5 rounded">
+          🪜 STAIR ASCENT ASCENDING QUEUE
+        </span>
+      </div>
+    );
+  }
+
   // 10. Default beautiful blackboard blueprint drawing
   return (
     <div className="w-full h-36 bg-[#142A22] border-2 border-emerald-950 rounded-2xl relative overflow-hidden flex items-center justify-center p-3 text-emerald-100">

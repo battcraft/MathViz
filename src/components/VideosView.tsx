@@ -243,7 +243,9 @@ export default function VideosView() {
 
   // Keep track of watched video IDs
   const [watchedList, setWatchedList] = useState<string[]>(() => {
-    return stats.screensViewed.filter(s => s.startsWith("video_checked_"));
+    return stats.screensViewed
+      .filter(s => s.startsWith("video_checked_"))
+      .map(s => s.replace("video_checked_", ""));
   });
 
   const [activePlayVideo, setActivePlayVideo] = useState<VideoLesson | null>(null);

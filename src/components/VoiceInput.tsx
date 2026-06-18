@@ -3,7 +3,7 @@ import { Mic, MicOff, Info } from "lucide-react";
 import { useLanguage } from "../lib/LanguageContext";
 
 interface VoiceInputProps {
-  onCommand: (command: "next" | "prev" | "done") => void;
+  onCommand: (command: "next" | "prev" | "done" | "select_0" | "select_1" | "select_2" | "select_3") => void;
 }
 
 export default function VoiceInput({ onCommand }: VoiceInputProps) {
@@ -27,13 +27,21 @@ export default function VoiceInput({ onCommand }: VoiceInputProps) {
         const transcript = event.results[lastIndex][0].transcript.toLowerCase().trim();
         setLastSpeech(transcript);
         
-        // Parse Hinglish voice commands
+        // Parse Hinglish voice navigation and choice selection commands
         if (transcript.includes("agla") || transcript.includes("next")) {
           onCommand("next");
         } else if (transcript.includes("pichla") || transcript.includes("prev") || transcript.includes("back") || transcript.includes("piche")) {
           onCommand("prev");
         } else if (transcript.includes("ho gaya") || transcript.includes("done") || transcript.includes("complete") || transcript.includes("sahi")) {
           onCommand("done");
+        } else if (transcript.includes("pehla") || transcript.includes("first") || transcript.includes("one") || transcript === "1" || transcript.includes("option 1") || transcript.includes("option one")) {
+          onCommand("select_0");
+        } else if (transcript.includes("doosra") || transcript.includes("dusra") || transcript.includes("second") || transcript.includes("two") || transcript === "2" || transcript.includes("option 2") || transcript.includes("option two")) {
+          onCommand("select_1");
+        } else if (transcript.includes("teesra") || transcript.includes("tisra") || transcript.includes("third") || transcript.includes("three") || transcript === "3" || transcript.includes("option 3") || transcript.includes("option three")) {
+          onCommand("select_2");
+        } else if (transcript.includes("chautha") || transcript.includes("fourth") || transcript.includes("four") || transcript === "4" || transcript.includes("option 4") || transcript.includes("option four")) {
+          onCommand("select_3");
         }
       };
 
@@ -123,28 +131,54 @@ export default function VoiceInput({ onCommand }: VoiceInputProps) {
           <Info className="h-3.5 w-3.5" />
           <span>Hinglish Speech Trainer commands:</span>
         </div>
-        <div className="grid grid-cols-3 gap-2 text-center mt-1.5">
+        <div className="grid grid-cols-3 gap-2 text-center mt-1.5 mb-2">
           <button
             id="voice-simulate-prev"
             onClick={() => { setLastSpeech("pichla"); onCommand("prev"); }}
-            className="p-1 px-1.5 bg-zinc-200 text-black font-semibold border border-black rounded hover:bg-zinc-300"
+            className="p-1 px-1.5 bg-zinc-200 text-black font-semibold border border-black rounded hover:bg-zinc-300 text-[10px]"
           >
             "pichla" ⏪
           </button>
           <button
             id="voice-simulate-done"
             onClick={() => { setLastSpeech("ho gaya"); onCommand("done"); }}
-            className="p-1 px-1.5 bg-green-200 text-black font-semibold border border-black rounded hover:bg-green-300"
+            className="p-1 px-1.5 bg-green-200 text-black font-semibold border border-black rounded hover:bg-green-300 text-[10px]"
           >
             "ho gaya" ✅
           </button>
           <button
             id="voice-simulate-next"
             onClick={() => { setLastSpeech("agla"); onCommand("next"); }}
-            className="p-1 px-1.5 bg-zinc-200 text-black font-semibold border border-black rounded hover:bg-zinc-300"
+            className="p-1 px-1.5 bg-zinc-200 text-black font-semibold border border-black rounded hover:bg-zinc-300 text-[10px]"
           >
             "agla" ⏩
           </button>
+        </div>
+        <div className="flex items-center justify-between gap-2.5 mb-1 bg-white/50 p-1.5 rounded border border-black/10">
+          <span className="text-[9.5px] font-black uppercase text-zinc-600">Simulate Choice Voice Input:</span>
+          <div className="flex gap-1">
+            <button
+              id="voice-simulate-opt1"
+              onClick={() => { setLastSpeech("pehla option"); onCommand("select_0"); }}
+              className="p-1 px-1.5 bg-amber-100 font-bold border border-black rounded shadow-[1px_1px_0px_black] text-[9px]"
+            >
+              "pehla"
+            </button>
+            <button
+              id="voice-simulate-opt2"
+              onClick={() => { setLastSpeech("doosra option"); onCommand("select_1"); }}
+              className="p-1 px-1.5 bg-amber-100 font-bold border border-black rounded shadow-[1px_1px_0px_black] text-[9px]"
+            >
+              "doosra"
+            </button>
+            <button
+              id="voice-simulate-opt3"
+              onClick={() => { setLastSpeech("teesra option"); onCommand("select_2"); }}
+              className="p-1 px-1.5 bg-amber-100 font-bold border border-black rounded shadow-[1px_1px_0px_black] text-[9px]"
+            >
+              "teesra"
+            </button>
+          </div>
         </div>
         {error && <p className="text-red-600 font-sans mt-2">{error}</p>}
       </div>

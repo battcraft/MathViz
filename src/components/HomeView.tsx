@@ -99,11 +99,11 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
     }
   };
 
-  // 5. Bhaiya ka Chaupal AI Chatbot
+  // 5. Maths Dost ka Chaupal AI Chatbot
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ sender: "user" | "bhaiya"; text: string }[]>([
-    { sender: "bhaiya", text: "Namaste! Main hoon aapka MathsGuru Bhaiya. Math ka panga ho ya homework ka tension, bina sharmaye yahan poocho!" }
+    { sender: "bhaiya", text: "Namaste pyare dost! Main hoon aapka Maths Dost. Chalo, saath mein socho, samjho, aur solve karo! Math ka panga ho ya geometry ka tension, bina ghabraye poocho!" }
   ]);
 
   // Seedeed instant Hinglish answers for the 8 standard questions
@@ -112,7 +112,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
     "What is the difference between Rekha (Line) & Segment?": "Arey waah! Bohot badhiya panga liya! Rekha (Line) infinite hoti hai—yeh dono directions mein bina ruke aage badhti chali jati hai (iski lambai anant hai). Line Segment (Khand) usi Rekha ka ek chhota piece hota hai jiske do endpoints fixed hote hain, jaise scale se kheenchi gayi 5 cm ki line!",
     "How is negative number compared?": "Iskey liye simple 'Samosa udhaar check' trick yaad rakho! Agar tum par Rs. 50 udhaar hai (-50) aur dost par Rs. 10 (-10) udhaar hai, toh kaun zyada ameer hai? Sahi pakde! Dost richer hai kyunki uspar kam udhaar hai. Isliye -10 is GREATER than -50! Negative numbers mein, digit jitna chhota, value utni badi!",
     "What does Range mean in real life?": "Range ko simple Hinglish mein kehte hain FASLA! Kisi cheez ki extreme limits. For example, Chandni Chowk mein samosa starts at Rs. 10 (Minimum) and goes up to Rs. 35 (Maximum). Toh samosa rates ka range (fasla) hoga: Maximum - Minimum = 35 - 10 = Rs. 25!",
-    "Suggest a trick to round off numbers quickly.": "Bhaiya ka super simple rule suno: '5 or above, give it a shove (UP)! Below 5, keep it alive (DOWN)!'. Jaise Rs. 44.60 ko round off karoge toh fractional part (.60) is equal/higher than 50 paisa, isliye Rs 45 banega!",
+    "Suggest a trick to round off numbers quickly.": "Maths Dost ka super simple rule suno: '5 or above, give it a shove (UP)! Below 5, keep it alive (DOWN)!'. Jaise Rs. 44.60 ko round off karoge toh fractional part (.60) is equal/higher than 50 paisa, isliye Rs 45 banega!",
     "How does Place Value protect our money?": "Arey, place value hi toh decide karta hai ki Rs. 5,000 badhiya hai ya Rs. 500! Zero ki position bohot keemti hoti hai. 5,000 mein '5' is in Thousands place, meaning 5 * 1000 = Five thousand. Agar local market mein koi zero khajaye, toh nuksaan ho jata hai!",
     "Why do parallel lines never clash?": "Parallel lines bilkul rail ki patriyon ki tarah hoti hain! Unke beech ki doori hamesha barabar rehti hai. Isliye woh stretch hone par bhi kabhi bheed nahi karti aur hamesha parallel chalti hain bina panga kiye!",
     "How does IPL use Max/Min values?": "IPL mein stats hi sab kuch hain! Har player ke analytics mein 'Highest Score' (Max runs in an innings) aur 'Best Economy' (Minimum runs conceded per over) check kiya jata hai. Auction mein Maximum bid budget points ko range limit mein predict karne ke liye Max/Min equations use hoti hain!"
@@ -157,7 +157,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
         // Fallback response if Server is not fully completed or errors out
         setChatMessages((prev) => [
           ...prev,
-          { sender: "bhaiya", text: "Bhaiya ka system thoda busy hai. Par yaad rakho - 'Practice makes progress!' Koi aur simple sawaal ho toh dhabe pe click karo!" }
+          { sender: "bhaiya", text: "Maths Dost thoda dimaag laga rahe hain. Tab tak lessons and practices explore karo, doston!" }
         ]);
       }
     } catch (e) {
@@ -181,7 +181,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
         <div className="flex-1 text-center md:text-left">
           <h3 className="font-sans font-black text-xl text-black uppercase tracking-tight mb-1.5 flex items-center justify-center md:justify-start gap-2">
             <span>Abki Baar, Geometry Paar! 📏</span>
-            <span className="text-xs bg-[#FFC700] border-2 border-black text-black px-2 py-0.5 rounded-md rotate-1">Bhaiya Says</span>
+            <span className="text-[10px] bg-[#FFC700] border-2 border-black text-black px-1.5 py-0.5 font-sans font-black uppercase rounded-md rotate-1">Maths Dost Says</span>
           </h3>
           <p className="font-sans text-sm sm:text-base text-zinc-700 font-bold leading-relaxed">
             "{t(`mascot_${mascotIndex}`)}"
@@ -310,6 +310,72 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
                 className="h-full bg-[#22C55E] border-r-2 border-black transition-all duration-300"
                 style={{ width: `${Math.min(((stats.xp % 1000) / 1000) * 100, 100)}%` }}
               />
+            </div>
+          </div>
+
+          {/* Championship Streak Milestones Card */}
+          <div className="bg-[#FFECC2] border-4 border-black p-5 rounded-2xl shadow-[4px_4px_0px_black] mt-3 text-left">
+            <h4 className="font-sans font-black text-xs uppercase text-amber-950 tracking-widest mb-3 flex items-center gap-2">
+              🔥 STREAK CHAMPION ROOMS
+            </h4>
+            <p className="text-[11px] text-amber-900 font-bold mb-3 font-sans leading-normal">
+              Keep practicing daily to unlock awesome title rooms! Active streak is <span className="underline decoration-2 font-black">{stats.streak} {stats.streak === 1 ? "day" : "days"}</span>!
+            </p>
+            
+            <div className="flex flex-col gap-2">
+              {/* Milestone 1: 3-Day Streak */}
+              <div className={`p-2 border-2 border-black rounded-lg flex items-center justify-between transition-all ${
+                stats.streak >= 3 ? "bg-emerald-100 border-emerald-400" : "bg-neutral-50/80"
+              }`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🏆</span>
+                  <div>
+                    <h5 className="font-sans font-black text-[11px] text-black">3-Day Champion Room</h5>
+                    <p className="text-[9px] text-zinc-500 font-bold uppercase">Badge: Rising Star ⭐️</p>
+                  </div>
+                </div>
+                {stats.streak >= 3 ? (
+                  <span className="text-[9px] bg-emerald-500 border border-black text-white px-1.5 py-0.5 rounded font-black">✓ UNLOCKED</span>
+                ) : (
+                  <span className="text-[9px] bg-zinc-200 text-zinc-600 px-1.5 py-0.5 rounded font-bold font-mono">Progress: {Math.min(stats.streak, 3)}/3</span>
+                )}
+              </div>
+
+              {/* Milestone 2: 7-Day Streak */}
+              <div className={`p-2 border-2 border-black rounded-lg flex items-center justify-between transition-all ${
+                stats.streak >= 7 ? "bg-amber-100 border-amber-400" : "bg-neutral-50/80"
+              }`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🌟</span>
+                  <div>
+                    <h5 className="font-sans font-black text-[11px] text-black">7-Day Champion Room</h5>
+                    <p className="text-[9px] text-zinc-500 font-bold uppercase">Badge: Master Solver 👑</p>
+                  </div>
+                </div>
+                {stats.streak >= 7 ? (
+                  <span className="text-[9px] bg-amber-500 border border-black text-black px-1.5 py-0.5 rounded font-black">✓ UNLOCKED</span>
+                ) : (
+                  <span className="text-[9px] bg-zinc-200 text-zinc-600 px-1.5 py-0.5 rounded font-bold font-mono">Progress: {Math.min(stats.streak, 7)}/7</span>
+                )}
+              </div>
+
+              {/* Milestone 3: 30-Day Streak */}
+              <div className={`p-2 border-2 border-black rounded-lg flex items-center justify-between transition-all ${
+                stats.streak >= 30 ? "bg-indigo-100 border-indigo-400" : "bg-neutral-50/80"
+              }`}>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">⚡</span>
+                  <div>
+                    <h5 className="font-sans font-black text-[11px] text-black">30-Day Maths Champ</h5>
+                    <p className="text-[9px] text-zinc-500 font-bold uppercase">Badge: Absolute Legend 🎓</p>
+                  </div>
+                </div>
+                {stats.streak >= 30 ? (
+                  <span className="text-[9px] bg-indigo-500 border border-black text-white px-1.5 py-0.5 rounded font-black">✓ UNLOCKED</span>
+                ) : (
+                  <span className="text-[9px] bg-zinc-200 text-zinc-600 px-1.5 py-0.5 rounded font-bold font-mono">Progress: {Math.min(stats.streak, 30)}/30</span>
+                )}
+              </div>
             </div>
           </div>
 

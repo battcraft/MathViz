@@ -77,6 +77,20 @@ async function startServer() {
     const levelText = difficulty === "beginner" ? "Class 6" : difficulty === "intermediate" ? "Class 7" : "Class 8";
     
     for (let i = 1; i <= 20; i++) {
+      let activeSubId = subtopicId;
+      if (subtopicId.includes("panga")) {
+        if (topicId === "geom") {
+          const gSubs = ["geom_bindu", "geom_rekha", "geom_khand", "geom_kiran", "geom_shikhar"];
+          activeSubId = gSubs[(i - 1) % gSubs.length];
+        } else if (topicId === "maxmin") {
+          const mSubs = ["maxmin_max", "maxmin_min", "maxmin_range"];
+          activeSubId = mSubs[(i - 1) % mSubs.length];
+        } else {
+          const cSubs = ["compare_basics", "compare_decimals", "compare_rounding", "compare_place", "compare_order"];
+          activeSubId = cSubs[(i - 1) % cSubs.length];
+        }
+      }
+
       let question = "";
       let options: string[] = [];
       let correct = 0;
@@ -84,60 +98,124 @@ async function startServer() {
       
       if (topicId === "geom") {
         const val = i * 3;
-        question = `[${levelText}] Chawri Bazar road maps mein, agar hum point P aur point Q ko connect karein toh ek solid Khand (segment) banta hai. Agar PQ ki lambai ${val}cm hai, toh usey kitne endpoints hain?`;
-        options = ["Zero endpoints", "Exactly Ek (1) endpoint", "Do (2) endpoints - P aur Q!", "Infinite endpoints"];
-        correct = 2;
-        hint = "Segment (Khand) hamesha do fixed points ke beech chalta hai, isliye options check karo!";
         
-        if (i % 3 === 1) {
-          question = `[${levelText}] Ek single Bindu (Point) coordinate plane par banani hai (label: M). Kisi point ki kitni dimensions (bhaag) hoti hain, pyare?`;
+        if (activeSubId.includes("bindu")) {
+          question = `[${levelText}] Ek single Bindu (Point) coordinate plane par banani hai (label: M). Kisi point ki kitni dimensions (bhaag) hoti hain, pyare doston?`;
           options = ["0 dimensions (Zero size!)", "1 dimension", "2 dimensions", "3 dimensions"];
           correct = 0;
           hint = "Point sirf position dikhata hai, iska koi size ya dimension nahi hota.";
-        } else if (i % 3 === 2) {
-          question = `[${levelText}] MathsGuru Bhaiya kehta hai ki laser beam ek starting point se nikalkar anant (infinite) tak sidhi aage badhti jati hai. Is laser ray ko kya kahenge?`;
-          options = ["Khand (Line Segment)", "Kiran (Ray)", "Rekha (Infinite Line)", "Bindu (Point)"];
+        } else if (activeSubId.includes("kiran")) {
+          question = `[${levelText}] Maths Dost kehta hai ki laser beam ek starting point se nikalkar anant (infinite) tak sidhi aage badhti jati hai. Is laser ray को क्या कहेंगे?`;
+          options = ["Khand (Line Segment)", "Kiran (Ray) - 1 origin to infinity!", "Rekha (Infinite Line)", "Bindu (Point)"];
           correct = 1;
           hint = "Ek side blocked, doosri side infinite... yaani dhoop ki Kiran ya laser beam!";
+        } else if (activeSubId.includes("rekha")) {
+          question = `[${levelText}] Chandni Chowk road map par, ek sidhi Rekha (Line) ko extend kiya jata hai. Is endless line ke kitne endpoints hote hain?`;
+          options = ["Zero endpoints (Endlessly runs!)", "Exactly 1 endpoint", "Exactly 2 endpoints", "Varies"];
+          correct = 0;
+          hint = "Rekha ka koi finite end nahi hota, dono taraf arrow heads hote hain!";
+        } else if (activeSubId.includes("khand")) {
+          question = `[${levelText}] Chawri Bazar road maps mein, agar PQ ki lambai ${val}cm hai, PQ line segment (Khand) ko draw karne ke liye kitne endpoints hote hain?`;
+          options = ["Zero endpoints", "Exactly Ek (1) endpoint", "Do (2) endpoints - P aur Q!", "Infinite endpoints"];
+          correct = 2;
+          hint = "Segment (Khand) hamesha do fixed points ke beech chalta hai, isliye coordinates fixed hote hain!";
+        } else {
+          // shikhar
+          question = `[${levelText}] Ek samosa ya triangular cricket boundary grid in Delhi mein kitne Shikhar / Corner vertices hote hain?`;
+          options = ["Ek Corner", "Do Corners", "Teen corners (3 Vertices) - Jahan segments cross karein!", "Chaar Corners"];
+          correct = 2;
+          hint = "Triangle has three vertices/corners where straight segments meet!";
         }
       } else if (topicId === "maxmin") {
-        const num1 = 10 + i;
-        const num2 = 40 + i * 2;
-        const num3 = 5 + i;
-        const arr = [num1, num2, num3].sort((a,b) => a-b);
-        const min = arr[0];
-        const max = arr[2];
-        const range = max - min;
-        
-        question = `[${levelText}] Chandni Chowk ke teen dhabon par samosa rates hain: Rs ${min}, Rs ${max}, aur Rs ${num2}. In rates ka accurate Range (Fasla) nikalein!`;
-        options = [`Rs ${range} (Maximum - Minimum)`, `Rs ${max}`, `Rs ${min}`, `Rs ${max + min}`];
-        correct = 0;
-        hint = `Formula yaad rakho: Range (Fasla) = Maximum values (${max}) minus Minimum value (${min}).`;
-        
-        if (i % 2 === 1) {
-          question = `[${levelText}] Rohan ne IPL match statistics dekhe: [${min}, ${num2}, ${max}, ${max + 10}]. Is score list ka sabse uncha (Maximum) score dhoondhein!`;
-          options = [`${min}`, `${max}`, `${max + 10}`, `${num2}`];
+        if (activeSubId.includes("max")) {
+          const v1 = i * 12 + 10;
+          const v2 = i * 5 + 40;
+          const v3 = i * 15 + 120;
+          const expectedMax = Math.max(v1, v2, v3);
+          question = `[${levelText}] Delhi Cricket Academy scouts logged these bowling scores: [${v1}, ${v2}, ${v3}]. What is the peak Maximum score?`;
+          options = [`${v1}`, `${v2}`, `${expectedMax} runs (The peak value!)`, `${v3}`];
           correct = 2;
-          hint = "Maximum yaani collection ki sabse unchi limit!";
+          hint = "Maximum score is the highest digit in the comparison collection!";
+        } else if (activeSubId.includes("min")) {
+          const valA = -(i * 2);
+          const valB = -(i * 3 + 4);
+          const valC = 0;
+          const expectedMin = valB;
+          question = `[${levelText}] Metro cargo tracks cooling temperatures in Okhla: [${valC}°C, ${valA}°C, ${valB}°C]. Identify the absolute Minimum floor.`;
+          options = [`${valC}°C`, `${valA}°C`, `${expectedMin}°C (Furthest left from zero on the debt line!)`, `${valA - 5}°C`];
+          correct = 2;
+          hint = "On the negative scale, the quantity with the larger absolute digit represents the lowest value.";
+        } else {
+          // range / fasla
+          const maxVal = i * 15 + 110;
+          const minVal = i * 3 + 20;
+          const rangeVal = maxVal - minVal;
+          question = `[${levelText}] A merchant sells winter shawls from a minimum of Rs ${minVal} to a maximum of Rs ${maxVal}. Calculate the Range (Fasla) of these figures.`;
+          options = [`Rs ${rangeVal} (Max minus Min!)`, `Rs ${maxVal}`, `Rs ${minVal}`, `Rs ${maxVal + minVal}`];
+          correct = 0;
+          hint = "Formula for Fasla is simple: Subtract the absolute Minimum from the absolute Maximum value!";
         }
       } else {
-        const baseNum = 35 + i * 0.4;
-        const roundedUp = Math.round(baseNum);
-        const dec1 = (baseNum).toFixed(2);
-        const dec2 = (baseNum - 0.1).toFixed(2);
-        
-        question = `[${levelText}] Crocodile mouth rule lagao! ${dec1} aur ${dec2} mein se alligator kis number ko choose karega khane ke liye?`;
-        options = [`${dec1}`, `${dec2}`, "Dono barabar hain", "Kisi ko nahi khayega"];
-        correct = 0;
-        hint = "Decimals mein tenths aur hundredths place compare karein, bada number gator ka favorite hai!";
-        
-        if (i % 2 === 1) {
-          const roundInput = (35.4 + i * 0.15).toFixed(2);
-          const expectedVal = Math.round(parseFloat(roundInput));
-          question = `[${levelText}] Humare pass bills value Rs ${roundInput} hai. Isko nearest whole Rupee (rupaya) mein round off karein!`;
-          options = [`Rs ${expectedVal}`, `Rs ${Math.floor(parseFloat(roundInput))}`, `Rs ${Math.ceil(parseFloat(roundInput)) + 1}`, `Rs ${expectedVal + 2}`];
+        // compare topic
+        if (activeSubId.includes("basics")) {
+          const val1 = -(i * 4);
+          const val2 = -(i * 2 + 1);
+          const larger = val2;
+          question = `[${levelText}] Lizard vs Crocodile math rule! Alligator compares integer balances: ${val1} and ${val2}. Choose the larger value.`;
+          options = [`${val1}`, `${larger} (Since smaller negative debt lies closer to zero!)`, "Both values are equivalent", "Zero is smaller than both"];
+          correct = 1;
+          hint = "Check which negative number lies further to the right on a horizontal axis.";
+        } else if (activeSubId.includes("decimals")) {
+          const dec1 = (1.2 + i * 0.05).toFixed(2);
+          const dec2 = (1.02 + i * 0.05).toFixed(2);
+          question = `[${levelText}] Weight scales at Daryaganj display Packet A: ${dec1}kg and Packet B: ${dec2}kg. Match the correct comparator.`;
+          options = [
+            `${dec1} is greater than ${dec2} (Tenths place digit comparison)`,
+            `${dec1} is smaller than ${dec2}`,
+            "They measure perfectly equal",
+            "Both are lighter than 1.0kg"
+          ];
           correct = 0;
-          hint = "Paisa .50 ya usse bada ho toh upar kheencho (UP), nahi toh usi rupee par rehne do (DOWN)!";
+          hint = "Compare digit by digit starting with units, then the tenths place decimal value.";
+        } else if (activeSubId.includes("rounding")) {
+          const roundInput = (49.3 + i * 0.25).toFixed(2);
+          const expectedVal = Math.round(parseFloat(roundInput));
+          question = `[${levelText}] Your groceries billing is Rs ${roundInput}. Correctly round this value to the nearest whole rupee integer.`;
+          options = [
+            `Rs ${expectedVal} (Calculated nearest round index!)`,
+            `Rs ${Math.floor(parseFloat(roundInput))}`,
+            `Rs ${Math.ceil(parseFloat(roundInput)) + 2}`,
+            "Rs 0"
+          ];
+          correct = 0;
+          hint = "If paise coins value is .50 paise or more, round UP to next rupee. Otherwise round DOWN.";
+        } else if (activeSubId.includes("place")) {
+          const original = 72400 + i * 110;
+          const hundredsDigit = Math.floor((original % 1000) / 105); // dynamic extraction
+          question = `[${levelText}] For street ledger coordinate value ${original}, what is the place value of the digit in the Hundreds (Sada) column?`;
+          options = [
+            `Exactly ${hundredsDigit * 100} units`,
+            "Only 1 unit",
+            "8,000 units",
+            "Zero units"
+          ];
+          correct = 0;
+          hint = "Extract the third column from the right (Hundreds place) and multiply it by 100.";
+        } else {
+          // compare_order
+          const val1 = i + 12;
+          const val2 = -i;
+          const val3 = -(i * 3);
+          const seq = `${val3}, ${val2}, 0, ${val1}`;
+          question = `[${levelText}] Sort these integers in logical ascending kram (least value to peak value): [${val1}, 0, ${val2}, ${val3}].`;
+          options = [
+            `[${val1}, 0, ${val2}, ${val3}]`,
+            `[${seq}] (Correctly sorted from deepest sub-zero debt up to positive!)`,
+            `[0, ${val2}, ${val3}, ${val1}]`,
+            `[${val1}, ${val3}, ${val2}, 0]`
+          ];
+          correct = 1;
+          hint = "The greatest negative value has the lowest absolute magnitude. Stack it first!";
         }
       }
       
@@ -168,39 +246,138 @@ async function startServer() {
       let choices: any[] = [];
       
       if (topicId === "geom") {
-        emoji = i % 2 === 0 ? "🪁" : "📐";
-        title = `${char}'s Geometry Puzzle # ${i}`;
-        narration = `Aap ${place} ghum rahe hain! Tabhi ${char} aapse panga leta hai aur kehta hai: "Beta, is math object ko dekho jo ek specific point se shuru hokar dusre end par infinity tak seedhi chali jati hai (jaise suraj ki kiran!). Iska kya naam hai?"`;
-        choices = [
-          { text: "Khand (Segment)", correct: false, rewardXp: 0 },
-          { text: "Kiran (Ray) - Sahi pakde!", correct: true, rewardXp: 15 },
-          { text: "Rekha (Line)", correct: false, rewardXp: 0 },
-          { text: "Bindu (Point)", correct: false, rewardXp: 0 }
-        ];
+        const subIndex = i % 5;
+        if (subIndex === 0) {
+          emoji = "📍";
+          title = `${char}'s Point Hunt at ${place} (#${i})`;
+          narration = `You are navigating near ${place}. ${char} marks a spot on the guide with a single sharp point. 'Bhaiya, how many physical dimensions does a mathematical Bindu (Point) have?'`;
+          choices = [
+            { text: "0 Dimensions (Only exact position, no size!)", correct: true, rewardXp: 15 },
+            { text: "1 Dimension (Flat line)", correct: false, rewardXp: 0 },
+            { text: "2 Dimensions (Flat Area)", correct: false, rewardXp: 0 }
+          ];
+        } else if (subIndex === 1) {
+          emoji = "🛣️";
+          title = `${char}'s Infinite Rekha at ${place} (#${i})`;
+          narration = `While tracking straight lanes in ${place}, ${char} asks you: 'A straight infinite line (Rekha) stretches endlessly on both sides. Tell me, how many endpoints does it have?'`;
+          choices = [
+            { text: "0 endpoints (It goes endlessly!)", correct: true, rewardXp: 15 },
+            { text: "Exactly 1 endpoint", correct: false, rewardXp: 0 },
+            { text: "Exactly 2 endpoints", correct: false, rewardXp: 0 }
+          ];
+        } else if (subIndex === 2) {
+          emoji = "📏";
+          title = `${char}'s Segment Cut at ${place} (#${i})`;
+          narration = `To wrap cardboard packages in ${place}, ${char} cuts a finite rope of exactly ${i + 5} cm. He asks: 'A Line Segment (Khand) is bounded by how many fixed endpoints?'`;
+          choices = [
+            { text: "Exactly 2 fixed endpoints!", correct: true, rewardXp: 15 },
+            { text: "Exactly 1 endpoint", correct: false, rewardXp: 0 },
+            { text: "Zero endpoints", correct: false, rewardXp: 0 }
+          ];
+        } else if (subIndex === 3) {
+          emoji = "🔦";
+          title = `${char}'s Laser Ray Beam at ${place} (#${i})`;
+          narration = `At a festive light show in ${place}, ${char} points a laser light. The beam starts at one single lens origin and shoots straight into infinity. What is this structural ray named?`;
+          choices = [
+            { text: "A Ray (Kiran) - 1 starting point, flying infinitely!", correct: true, rewardXp: 15 },
+            { text: "A Line segment with 2 endpoints", correct: false, rewardXp: 0 },
+            { text: "An infinite line with 0 endpoints", correct: false, rewardXp: 0 }
+          ];
+        } else {
+          emoji = "📐";
+          title = `${char}'s Samosa Vertex at ${place} (#${i})`;
+          narration = `Sharing a snack near ${place}, ${char} asks you: 'What is the pointy intersection corner apex of this triangular samosa called in our geometry shastra?'`;
+          choices = [
+            { text: "A Shikhar (Vertex) - the meeting point!", correct: true, rewardXp: 15 },
+            { text: "An infinite parallel ray", correct: false, rewardXp: 0 },
+            { text: "A point of 3 dimensions", correct: false, rewardXp: 0 }
+          ];
+        }
       } else if (topicId === "maxmin") {
-        emoji = i % 2 === 0 ? "🪙" : "🍢";
-        title = `Delhi Haat Rates - Panga # ${i}`;
-        const minVal = 10 + i;
-        const maxVal = 50 + i * 2;
-        const diffRange = maxVal - minVal;
-        narration = `Aap ${place} pahuche! ${char} ne apne samosas aur lassi rates list dikhayi: Minimum Rs. ${minVal} se shuru bankar Maximum Rs. ${maxVal} tak jati hai. Woh aapse poochta hai: "Pyare bache, in rates ke beech ka absolute Range (Fasla) kya hai?"`;
-        choices = [
-          { text: `Rs. ${diffRange} (Maximum - Minimum)`, correct: true, rewardXp: 15 },
-          { text: `Rs. ${maxVal}`, correct: false, rewardXp: 0 },
-          { text: `Rs. ${minVal}`, correct: false, rewardXp: 0 },
-          { text: `Rs. ${maxVal + minVal}`, correct: false, rewardXp: 0 }
-        ];
+        const subIndex = i % 3;
+        const valA = 10 + i;
+        const valB = 40 + i * 2;
+        const valC = 5 + i * 3;
+        const arr = [valA, valB, valC].sort((x, y) => x - y);
+        const min = arr[0];
+        const max = arr[2];
+        const range = max - min;
+
+        if (subIndex === 0) {
+          emoji = "📈";
+          title = `${char}'s Max Peak at ${place} (#${i})`;
+          narration = `Collecting transaction ledgers in ${place}: [Rs. ${valA}, Rs. ${valB}, Rs. ${valC}]. ${char} asks: 'Which collection entry represents our peak Maximum sales number?'`;
+          choices = [
+            { text: `Rs. ${max} (The absolute highest value!)`, correct: true, rewardXp: 15 },
+            { text: `Rs. ${min}`, correct: false, rewardXp: 0 },
+            { text: `Rs. ${valA}`, correct: false, rewardXp: 0 }
+          ];
+        } else if (subIndex === 1) {
+          emoji = "📉";
+          title = `${char}'s Min Scale at ${place} (#${i})`;
+          narration = `Monitoring temperature logs for stock freezers at ${place}: [-10°C, -2°C, -${valA}°C]. ${char} asks: 'What is our absolute coldest Minimum value in this dataset?'`;
+          choices = [
+            { text: `-${valA}°C (Furthest left on the number line!)`, correct: true, rewardXp: 15 },
+            { text: "-10°C", correct: false, rewardXp: 0 },
+            { text: "-2°C", correct: false, rewardXp: 0 }
+          ];
+        } else {
+          emoji = "📏";
+          title = `${char}'s Price Range at ${place} (#${i})`;
+          narration = `Local market rates in ${place} range from a minimum Rs. ${min} up to a peak maximum Rs. ${max}. ${char} asks: 'Calculate the mathematical Range (Fasla) of these weights!'`;
+          choices = [
+            { text: `Rs. ${range} (Peak Max Rs. ${max} - Floor Min Rs. ${min}!)`, correct: true, rewardXp: 15 },
+            { text: `Rs. ${max}`, correct: false, rewardXp: 0 },
+            { text: `Rs. ${min}`, correct: false, rewardXp: 0 }
+          ];
+        }
       } else {
-        emoji = i % 2 === 0 ? "🐊" : "🍬";
-        title = `Rounding Battle at ${place} # ${i}`;
-        const decimalVal = (5.35 + i * 0.15).toFixed(2);
-        const expected = Math.round(parseFloat(decimalVal));
-        narration = `Aap ${place} bazaar mein shopping kar rahe hain. ${char} bolta hai ki is total bill Rs. ${decimalVal} ko nearest whole integer Rupee (Rupaye) mein round off karo, aur extra change chocolate lo! What is the correct rounded value?`;
-        choices = [
-          { text: `Rs. ${expected}`, correct: true, rewardXp: 15 },
-          { text: `Rs. ${Math.floor(parseFloat(decimalVal))}`, correct: false, rewardXp: 0 },
-          { text: `Rs. ${Math.ceil(parseFloat(decimalVal)) + 1}`, correct: false, rewardXp: 0 }
-        ];
+        const subIndex = i % 4;
+        if (subIndex === 0) {
+          emoji = "🐊";
+          title = `${char}'s Integer Gator at ${place} (#${i})`;
+          const negVal1 = -(i * 2 + 5);
+          const negVal2 = -(i * 2 + 15);
+          narration = `At a stall in ${place}, a crocodile math game lists: ${negVal1} coins vs ${negVal2} coins. Which value is mathematically larger (meaning less debt)?`;
+          choices = [
+            { text: `${negVal1} coins is larger!`, correct: true, rewardXp: 15 },
+            { text: `${negVal2} coins is larger`, correct: false, rewardXp: 0 },
+            { text: "Both are equal values", correct: false, rewardXp: 0 }
+          ];
+        } else if (subIndex === 1) {
+          emoji = "🍹";
+          title = `${char}'s Decimals Compare at ${place} (#${i})`;
+          const decA = (12.4 + i * 0.05).toFixed(2);
+          const decB = (12.04 + i * 0.05).toFixed(2);
+          narration = `A scale gauge at ${place} logs Lot A: ${decA} and Lot B: ${decB}. ${char} asks you: 'Which decimal coordinate represents the larger weight?'`;
+          choices = [
+            { text: `${decA} is greater than ${decB} (tenths 4 > 0!)`, correct: true, rewardXp: 15 },
+            { text: `${decB} is greater than ${decA}`, correct: false, rewardXp: 0 },
+            { text: "They are equivalent decimals", correct: false, rewardXp: 0 }
+          ];
+        } else if (subIndex === 2) {
+          emoji = "👛";
+          title = `${char}'s Bill Rounding at ${place} (#${i})`;
+          const rawBill = (299.75 + i * 0.05).toFixed(2);
+          const wholeRupee = Math.round(parseFloat(rawBill));
+          narration = `At a grocery billing desk of ${place}, the register prints Rs. ${rawBill}. ${char} says: 'Round the bill off to the nearest whole rupee integer!'`;
+          choices = [
+            { text: `Rs. ${wholeRupee} (Round up because decimal paise >= .50!)`, correct: true, rewardXp: 15 },
+            { text: `Rs. ${Math.floor(parseFloat(rawBill))}`, correct: false, rewardXp: 0 },
+            { text: `Rs. ${wholeRupee - 5}`, correct: false, rewardXp: 0 }
+          ];
+        } else {
+          emoji = "🔐";
+          title = `${char}'s Place Value Code at ${place} (#${i})`;
+          const codeVal = 84100 + i * 720;
+          const thouValue = Math.floor((codeVal % 10000) / 1000);
+          narration = `Unlocking a lock box at ${place} with digit ID ${codeVal}, ${char} asks you: 'Extract the place value of the digit sitting in the Thousands (Hazaar) column!'`;
+          choices = [
+            { text: `Exactly ${thouValue * 1000} units (position coordinate!)`, correct: true, rewardXp: 15 },
+            { text: `${thouValue * 100} units`, correct: false, rewardXp: 0 },
+            { text: "Exactly 80,000 units", correct: false, rewardXp: 0 }
+          ];
+        }
       }
       
       slides.push({

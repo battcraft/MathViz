@@ -30,15 +30,15 @@ service cloud.firestore {
 
     // Validation Blueprint for UserStats
     function isValidUserStats(data) {
-      return data.userId is string 
-        && data.userId == request.auth.uid // No status or identity spoofing
-        && data.xp is int && data.xp >= 0
-        && data.streak is int && data.streak >= 0
-        && (data.lastActiveDate == null || data.lastActiveDate is string)
-        && (data.screensViewed == null || data.screensViewed is list)
-        && (data.completedScreens == null || data.completedScreens is list)
-        && (data.badges == null || data.badges is list)
-        && (data.quizScores == null || data.quizScores is list);
+      return data.get('userId', '') is string 
+        && data.get('userId', '') == request.auth.uid // No status or identity spoofing
+        && (data.get('xp', 0) is int || data.get('xp', 0) is float) && data.get('xp', 0) >= 0
+        && (data.get('streak', 0) is int || data.get('streak', 0) is float) && data.get('streak', 0) >= 0
+        && (data.get('lastActiveDate', null) == null || data.get('lastActiveDate', null) is string)
+        && (data.get('screensViewed', null) == null || data.get('screensViewed', null) is list)
+        && (data.get('completedScreens', null) == null || data.get('completedScreens', null) is list)
+        && (data.get('badges', null) == null || data.get('badges', null) is list)
+        && (data.get('quizScores', null) == null || data.get('quizScores', null) is list);
     }
 
     // Match statement for the users collection
@@ -53,9 +53,9 @@ service cloud.firestore {
         
       allow update: if isOwner(userId)
         && isValidUserStats(incoming())
-        && incoming().userId == existing().userId // Immutable field
+        && incoming().get('userId', '') == existing().get('userId', '') // Immutable field
         && (
-          incoming().diff(existing()).affectedKeys().hasAny(['xp', 'streak', 'lastActiveDate', 'screensViewed', 'completedScreens', 'badges', 'quizScores'])
+          incoming().diff(existing()).affectedKeys().hasOnly(['xp', 'streak', 'lastActiveDate', 'screensViewed', 'completedScreens', 'badges', 'quizScores'])
         );
         
       allow delete: if isOwner(userId);

@@ -1,19 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { STORY_SLIDES, TOPICS } from "../data";
 import { useAuth } from "../lib/AuthContext";
 import { useLanguage } from "../lib/LanguageContext";
 import { StorySlide } from "../types";
-import { Trophy, Compass, RotateCcw, HelpCircle, CheckCircle2, ChevronRight, ArrowLeft, BookOpen, Star, Sparkles } from "lucide-react";
+import { 
+  Trophy, Compass, RotateCcw, HelpCircle, CheckCircle2, 
+  ChevronRight, ArrowLeft, BookOpen, Star, Sparkles, 
+  Volume2, VolumeX, Mic 
+} from "lucide-react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../lib/AuthContext";
+import { motion, AnimatePresence } from "motion/react";
+import StoryVisualAid from "./StoryVisualAid";
+import VoiceInput from "./VoiceInput";
 
 interface StoryViewProps {
   topicId?: string;
   subtopicId?: string;
   onBack?: () => void;
+  difficulty?: string;
 }
 
-export default function StoryView({ topicId: propTopicId, subtopicId: propSubtopicId, onBack }: StoryViewProps) {
+export default function StoryView({ topicId: propTopicId, subtopicId: propSubtopicId, onBack, difficulty }: StoryViewProps) {
   const { stats, updateStats } = useAuth();
   const { t } = useLanguage();
 
@@ -32,10 +40,77 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
   const [correctCount, setCorrectCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  // Text-to-Speech (TTS) Engine States & References
+  const [isPlayingTTS, setIsPlayingTTS] = useState(false);
+  const synthRef = useRef<SpeechSynthesis | null>(typeof window !== "undefined" ? window.speechSynthesis : null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  const speakNarration = (text: string) => {
+    if (!synthRef.current) return;
+    try {
+      synthRef.current.cancel(); // cancel existing speaker lines
+    } catch (e) {}
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utteranceRef.current = utterance;
+
+    // Search for suitable native Indian English or Hindi/Hinglish voices for a warm local accent
+    const voices = synthRef.current.getVoices();
+    const optimalVoice = voices.find(v => v.lang.startsWith("hi") || v.lang.includes("hi-IN")) 
+      || voices.find(v => v.lang.includes("en-IN")) 
+      || voices.find(v => v.lang.includes("en-GB")) 
+      || voices[0];
+      
+    if (optimalVoice) {
+      utterance.voice = optimalVoice;
+      utterance.lang = optimalVoice.lang;
+    }
+
+    utterance.volume = 1.0;
+    utterance.rate = 1.0; 
+    utterance.pitch = 1.05;
+
+    utterance.onstart = () => setIsPlayingTTS(true);
+    utterance.onend = () => setIsPlayingTTS(false);
+    utterance.onerror = () => setIsPlayingTTS(false);
+
+    synthRef.current.speak(utterance);
+  };
+
+  const stopNarration = () => {
+    if (synthRef.current) {
+      try {
+        synthRef.current.cancel();
+      } catch (e) {}
+    }
+    setIsPlayingTTS(false);
+  };
+
+  // Sync narration playback across slide changes
+  useEffect(() => {
+    const activeSlide = activeSlides[slideIdx];
+    if (storyStarted && activeSlide) {
+      const timer = setTimeout(() => {
+        speakNarration(activeSlide.narration);
+      }, 600);
+      return () => {
+        clearTimeout(timer);
+        stopNarration();
+      };
+    }
+  }, [slideIdx, storyStarted, activeSlides]);
+
+  // Clean play state on unmounting
+  useEffect(() => {
+    return () => {
+      stopNarration();
+    };
+  }, []);
+
   // Load 20-scenario story slides
   const loadStorySlides = async (tId: string, sId: string) => {
     setLoading(true);
-    const storyId = `${tId}_${sId}`;
+    const storyId = `${tId}_${sId}_${difficulty || "beginner"}`;
     try {
       // 1. Try Firestore cache first
       const docRef = doc(db, "stories", storyId);
@@ -59,7 +134,8 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
           topicId: tId,
           subtopicId: sId,
           topicName,
-          subtopicName: sId
+          subtopicName: sId,
+          difficulty: difficulty || "beginner"
         })
       });
 
@@ -310,7 +386,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
   }
 
   return (
-    <div className="bg-white border-4 border-black p-5 sm:p-6 rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-xl mx-auto font-mono animate-fade-in text-black">
+    <div className="bg-white border-4 border-black p-5 sm:p-6 rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] max-w-xl mx-auto font-mono text-black">
       {/* Progression Indicator */}
       <div className="flex items-center justify-between border-b-4 border-black pb-3 mb-4 text-xs font-bold uppercase text-black">
         <div className="flex items-center gap-2">
@@ -333,82 +409,162 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
         </span>
       </div>
 
-      {/* Narrative Board card */}
-      <div className="bg-[#FFECC2] border-3 border-black p-5 rounded-2xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-5 text-left relative overflow-hidden">
-        <div className="flex gap-4 items-start relative z-10">
-          <span className="text-4xl bg-white border-3 border-black p-2.5 rounded-2xl shadow-[3px_3px_0px_0px_black] leading-none flex-shrink-0">
-            {activeSlide.emoji || "🛺"}
-          </span>
-          <div className="flex-1">
-            <h4 className="font-sans font-black text-xs text-black uppercase mb-1 leading-tight border-b-2 border-black/10 pb-1">
-              {activeSlide.title}
-            </h4>
-            <p className="text-xs leading-relaxed text-black font-semibold italic mt-2 bg-white/45 p-2.5 border-2 border-black/5 rounded-xl">
-              "{activeSlide.narration}"
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Choice triggers */}
-      <div className="flex flex-col gap-3 mb-4">
-        {activeSlide.choices?.map((choice, idx) => {
-          const isSelected = selectedIdx === idx;
-          const isCorrect = choice.correct;
-          
-          let optionBg = "bg-white hover:bg-neutral-50 border-black shadow-[2px_2px_0px_black]";
-          
-          if (isDone) {
-            if (isCorrect) {
-              optionBg = "bg-green-50 border-3 border-[#22C55E] text-green-950 scale-[1.01] shadow-[3px_3px_0px_black]";
-            } else if (isSelected) {
-              optionBg = "bg-[#FF8A8A] border-3 border-red-650 text-red-950 shadow-[3px_3px_0px_black]";
-            } else {
-              optionBg = "opacity-45 bg-[#FAFAFA] border-zinc-205 shadow-none";
-            }
-          } else if (isSelected) {
-            optionBg = "bg-[#FFECC2] border-3 border-black text-black font-black shadow-[4px_4px_0px_black] ring-2 ring-black";
-          }
-
-          return (
-            <button
-              key={idx}
-              id={`story-option-${idx}-btn`}
-              disabled={isDone && isSelected && !isCorrect}
-              onClick={() => handleChoiceClick(idx, choice)}
-              className={`p-3.5 border-3 rounded-2xl text-left text-xs font-black transition-all cursor-pointer flex items-center justify-between text-black ${optionBg}`}
-            >
-              <span>{choice.text}</span>
-              {isDone && isCorrect && <CheckCircle2 className="h-5 w-5 text-[#22C55E] fill-green-50 flex-shrink-0 ml-2 stroke-[3px]" />}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Feedback notes */}
-      {correctionTip && (
-        <p className="bg-red-50 text-red-950 border-3 border-red-650 text-xs p-3 rounded-xl mb-4 text-center font-black shadow-[3px_3px_0px_black] animate-fade-in">
-          ❗ {correctionTip}
-        </p>
-      )}
-
-      {/* Slide Progression Control options */}
-      <div className="flex justify-end pt-3 border-t-4 border-black">
-        <button
-          id="story-next-btn"
-          disabled={!isDone || (selectedIdx !== null && !activeSlide.choices[selectedIdx]?.correct)}
-          onClick={handleNextSlide}
-          className={`px-5 py-2.5 text-xs font-black border-3 border-black rounded-xl flex items-center gap-1 shadow-[3px_3px_0px_black] transition-all hover:translate-y-[-1px] active:translate-y-[1px] cursor-pointer ${
-            isDone && (selectedIdx !== null && activeSlide.choices[selectedIdx]?.correct)
-              ? "bg-[#FFC700] text-black"
-              : "bg-zinc-100 text-zinc-400 border-zinc-300 cursor-not-allowed shadow-none"
-          }`}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={slideIdx}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.3 }}
         >
-          <span>{slideIdx === activeSlides.length - 1 ? "Finish Adventure" : t("nextBtn")}</span>
-          <ChevronRight className="h-4 w-4 stroke-[3px]" />
-        </button>
-      </div>
+          {/* Narrative Board card */}
+          <div className="bg-[#FFECC2] border-3 border-black p-5 rounded-2xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-5 text-left relative overflow-hidden">
+            <div className="flex gap-4 items-start relative z-10">
+              <div className="flex flex-col gap-2 items-center">
+                <span className="text-4xl bg-white border-3 border-black p-2.5 rounded-2xl shadow-[3px_3px_0px_0px_black] leading-none flex-shrink-0">
+                  {activeSlide.emoji || "🛺"}
+                </span>
+                {/* TTS Reader Aloud Button */}
+                <button
+                  onClick={() => isPlayingTTS ? stopNarration() : speakNarration(activeSlide.narration)}
+                  className={`p-1.5 border-2 border-black rounded-lg font-sans font-black text-[9px] uppercase cursor-pointer transition-all flex items-center gap-1 shadow-[2px_2px_0px_black] active:translate-y-0.5 ${
+                    isPlayingTTS ? "bg-[#FF6B6B] text-white animate-pulse" : "bg-white text-zinc-700 hover:bg-zinc-50"
+                  }`}
+                  title={isPlayingTTS ? "Mute Narration" : "Speak Story Aloud"}
+                >
+                  {isPlayingTTS ? <VolumeX className="h-3 w-3" /> : <Volume2 className="h-3 w-3" />}
+                  <span>{isPlayingTTS ? "Mute" : "Listen"}</span>
+                </button>
+              </div>
 
+              <div className="flex-1">
+                <h4 className="font-sans font-black text-xs text-black uppercase mb-1 leading-tight border-b-2 border-black/10 pb-1 flex items-center justify-between">
+                  <span>{activeSlide.title}</span>
+                  <span className="text-[9px] font-mono text-zinc-500 font-extrabold uppercase">STREET CHRONICLE</span>
+                </h4>
+                <p className="text-xs leading-relaxed text-black font-semibold italic mt-2 bg-white/45 p-2.5 border-2 border-black/5 rounded-xl">
+                  "{activeSlide.narration}"
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Animated Visual Aid / SVG Drawing Board */}
+          <div className="border-4 border-black rounded-2xl overflow-hidden mb-5 shadow-[4px_4px_0px_black]">
+            <div className="bg-neutral-100 p-2 border-b-3 border-black text-left text-[9px] font-black uppercase tracking-wider text-zinc-600">
+              📐 Visual Sketch Map Indicator:
+            </div>
+            <StoryVisualAid subtopicId={selectedSubtopicId} activeVariantIndex={slideIdx} />
+          </div>
+
+          {/* Choice triggers */}
+          <div className="flex flex-col gap-3 mb-4">
+            {activeSlide.choices?.map((choice, idx) => {
+              const isSelected = selectedIdx === idx;
+              const isCorrect = choice.correct;
+              
+              let optionBg = "bg-white hover:bg-neutral-50 border-black shadow-[2px_2px_0px_black]";
+              
+              if (isDone) {
+                if (isCorrect) {
+                  optionBg = "bg-green-50 border-3 border-[#22C55E] text-green-950 scale-[1.01] shadow-[3px_3px_0px_black]";
+                } else if (isSelected) {
+                  optionBg = "bg-[#FF8A8A] border-3 border-red-650 text-red-950 shadow-[3px_3px_0px_black]";
+                } else {
+                  optionBg = "opacity-45 bg-[#FAFAFA] border-zinc-205 shadow-none";
+                }
+              } else if (isSelected) {
+                optionBg = "bg-[#FFECC2] border-3 border-black text-black font-black shadow-[4px_4px_0px_black] ring-2 ring-black";
+              }
+
+              return (
+                <button
+                  key={idx}
+                  id={`story-option-${idx}-btn`}
+                  disabled={isDone && isSelected && !isCorrect}
+                  onClick={() => handleChoiceClick(idx, choice)}
+                  className={`p-3.5 border-3 rounded-2xl text-left text-xs font-black transition-all cursor-pointer flex items-center justify-between text-black ${optionBg}`}
+                >
+                  <span>{choice.text}</span>
+                  {isDone && isCorrect && <CheckCircle2 className="h-5 w-5 text-[#22C55E] fill-green-50 flex-shrink-0 ml-2 stroke-[3px]" />}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Feedback notes */}
+          {correctionTip && (
+            <p className="bg-red-50 text-red-950 border-3 border-red-650 text-xs p-3 rounded-xl mb-4 text-center font-black shadow-[3px_3px_0px_black] animate-fade-in">
+              ❗ {correctionTip}
+            </p>
+          )}
+
+          {/* Slide Progression Control options */}
+          <div className="flex justify-between items-center pt-3 border-t-4 border-black">
+            <span className="text-[10px] text-zinc-500 font-extrabold uppercase">💡 Press Options or say "agla"</span>
+            <button
+              id="story-next-btn"
+              disabled={!isDone || (selectedIdx !== null && !activeSlide.choices[selectedIdx]?.correct)}
+              onClick={handleNextSlide}
+              className={`px-5 py-2.5 text-xs font-black border-3 border-black rounded-xl flex items-center gap-1 shadow-[3px_3px_0px_black] transition-all hover:translate-y-[-1px] active:translate-y-[1px] cursor-pointer ${
+                isDone && (selectedIdx !== null && activeSlide.choices[selectedIdx]?.correct)
+                  ? "bg-[#FFC700] text-black"
+                  : "bg-zinc-100 text-zinc-400 border-zinc-300 cursor-not-allowed shadow-none"
+              }`}
+            >
+              <span>{slideIdx === activeSlides.length - 1 ? "Finish Adventure" : t("nextBtn")}</span>
+              <ChevronRight className="h-4 w-4 stroke-[3px]" />
+            </button>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Hands-Free voice control */}
+      <div className="mt-4 border-t-3 border-dashed border-zinc-200 pt-4">
+        <VoiceInput 
+          onCommand={(cmd) => {
+            if (cmd === "next") {
+              const canGoNext = isDone && (selectedIdx !== null && activeSlide.choices[selectedIdx]?.correct);
+              if (canGoNext) {
+                handleNextSlide();
+              } else {
+                speakNarration("Option select karo sahi waala dosto! Tabhi aage jaenge!");
+              }
+            } else if (cmd === "prev") {
+              if (slideIdx > 0) {
+                setSlideIdx(p => p - 1);
+                setSelectedIdx(null);
+                setIsDone(false);
+                setCorrectionTip(null);
+              }
+            } else if (cmd === "done") {
+              // Select correct choice instantly if not done
+              if (!isDone) {
+                const correctIdx = activeSlide.choices.findIndex(c => c.correct);
+                if (correctIdx !== -1) {
+                  handleChoiceClick(correctIdx, activeSlide.choices[correctIdx]);
+                }
+              }
+            } else if (cmd === "select_0") {
+              if (!isDone && activeSlide.choices && activeSlide.choices[0]) {
+                handleChoiceClick(0, activeSlide.choices[0]);
+              }
+            } else if (cmd === "select_1") {
+              if (!isDone && activeSlide.choices && activeSlide.choices[1]) {
+                handleChoiceClick(1, activeSlide.choices[1]);
+              }
+            } else if (cmd === "select_2") {
+              if (!isDone && activeSlide.choices && activeSlide.choices[2]) {
+                handleChoiceClick(2, activeSlide.choices[2]);
+              }
+            } else if (cmd === "select_3") {
+              if (!isDone && activeSlide.choices && activeSlide.choices[3]) {
+                handleChoiceClick(3, activeSlide.choices[3]);
+              }
+            }
+          }}
+        />
+      </div>
     </div>
   );
 }

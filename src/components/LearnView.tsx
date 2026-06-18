@@ -12,6 +12,8 @@ import QuizVisualAid from "./QuizVisualAid";
 import StoryVisualAid from "./StoryVisualAid";
 import { generateInteractiveSrcDoc as generateInteractiveSrcDocHelper } from "./CustomSimulators";
 import { getPracticeDrillVariants, getStoryQuestVariants, getConceptQuizVariants } from "../variants";
+import InteractiveSandbox from "./InteractiveSandbox";
+import { injectConceptTooltips } from "./MicroConceptTooltip";
 
 interface LearnViewProps {
   difficulty: DifficultyLevel;
@@ -475,6 +477,27 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       options: ["Stall A (Rs. 40.50)", "Stall B (Rs. 40.05 is cheaper and fits your budget!)", "Both are too cheap"],
       correct: 1,
       explanation: "Spot-on! Rs. 40.05 is smaller than Rs. 40.25 (since 5 hundredths is less than 25 hundredths)!"
+    },
+    compare_rounding: {
+      title: "🛒 Chhota-Bheem Grocery Bill",
+      story: "At Laxmi Nagar General Store, Rohan buys snacks worth Rs. 94.60. The shopkeeper says: 'Beta, round it off to the nearest Rupee integer and give change.' Rohan asks: 'Do I pay Rs. 94 or Rs. 95?'",
+      options: ["Rs. 94", "Rs. 95 (since 60 paise is >= 50 paise, round UP!)", "Rs. 94.60 exactly in coins"],
+      correct: 1,
+      explanation: "Sahi! 60 paise is greater than or equal to 50 paise, so we round UP to Rs. 95!"
+    },
+    compare_place: {
+      title: "🔐 Karol Bagh Safe Code",
+      story: "Tara is helping her uncle lock a secure document locker with passcode 38,419. Her uncle says: 'Tell me the place value of the digit 8.' What is the correct value of the thousands column digit?",
+      options: ["80 units", "800 units", "8,000 units (it is in the Thousands position!)"],
+      correct: 2,
+      explanation: "Shabaash! The digit 8 is in the Thousands (Hazaar) place, meaning its value is 8,000!"
+    },
+    compare_order: {
+      title: "🧗 Feroz Shah Kotla Stairs",
+      story: "Rohan is climbing down a historic stepwell. He sees floor levels inscribed with integer codes: [12, -4, 0, -15]. He wants to organize them in ascending order (deepest negative ledger first). Help Rohan!",
+      options: ["[-15, -4, 0, 12] (Smallest/deepest first!)", "[12, 0, -4, -15]", "[0, -4, 12, -15]"],
+      correct: 0,
+      explanation: "Dil khush kar diya! -15 is the smallest (deepest) value, followed by -4, then 0, and lastly 12."
     }
   };
 
@@ -523,6 +546,26 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       { question: "Compare: -80 is _______ than -8.", options: ["Smaller than (<)", "Greater than (>)", "Equal to (=)", "Same"], correct: 0, hint: "A bigger debt represents a lower net value (-80 < -8)." },
       { question: "Which integer comparison statement is mathematically correct?", options: ["-10 > 0", "0 > -5", "-5 > -1", "-50 > 5"], correct: 1, hint: "Zero is always greater than any negative integer value." },
       { question: "A student stands at -3 meters, another stands at -9 meters on the grid. Who is closer to 0?", options: ["Student at -3 meters (closer and larger!)", "Student at -9 meters", "Both same distance", "Bhaiya"], correct: 0, hint: "-3 is only 3 steps away from 0, further right, so it is larger." }
+    ],
+    compare_decimals: [
+      { question: "Which is smaller: 0.72 or 0.08?", options: ["0.72", "0.08 (8 hundredths is much smaller than 72 hundredths!)", "Both same", "0"], correct: 1, hint: "Compare Tenths digit: 7 tenths vs 0 tenths." },
+      { question: "Arrange in descending order: 0.5, 0.55, 0.05", options: ["0.05, 0.5, 0.55", "0.5, 0.05, 0.55", "0.55, 0.5, 0.05 (Largest first, matching 55 hundredths > 50 hundredths > 5 hundredths!)", "0.5, 0.55, 0.05"], correct: 2, hint: "Make them all hundredths: 0.50, 0.55, 0.05." },
+      { question: "If Stall A lassi costs Rs. 45.40 and Stall B lassi is Rs. 45.04, then:", options: ["Stall A is cheaper", "Stall B is cheaper (4 paise is less than 40 paise!)", "Both same price", "Stall B is 40 rupees"], correct: 1, hint: "45.04 has '0' in the tenths place, while 45.40 has '4'." }
+    ],
+    compare_rounding: [
+      { question: "If the bill is Rs. 149.35, what is the nearest whole rupee rounding?", options: ["Rs. 149 (Since 35 paise is less than 50, round DOWN!)", "Rs. 150", "Rs. 140", "Rs. 149.50"], correct: 0, hint: "Paisa is less than 50, so discard coins and keep baseline!" },
+      { question: "Round off 9.50 to the nearest integer.", options: ["9", "10 (Exactly 50 paise is rounded UP!)", "9.5", "11"], correct: 1, hint: "Exactly half (.50) rounds UP to next unit." },
+      { question: "A vegetable sack weighs 34.8 kg. Round it to the nearest whole kilogram.", options: ["34 kg", "35 kg (Tenths digit 8 is >= 5, round UP!)", "30 kg", "34.5 kg"], correct: 1, hint: "8 is closer to the next whole kilogram." }
+    ],
+    compare_place: [
+      { question: "What is the column name of the third digit from right in '7,432'?", options: ["Tens (Dahai)", "Thousands (Hazaar)", "Hundreds (Sau)", "Units (Ikai)"], correct: 2, hint: "Positions are: units (2), tens (3), hundreds (4)." },
+      { question: "In number 94,821, what is the face value of the thousands digit?", options: ["4,000", "4 (Face value is the digit itself!)", "400", "40"], correct: 1, hint: "Face value is the literal digit itself, while Place value is the positional quantity." },
+      { question: "Expand 509 into tens and units.", options: ["5 hundreds + 0 tens + 9 units", "50 tens + 9 units", "5 hundreds + 9 tens", "Both option 1 & 2 are correct representations!"], correct: 3, hint: "Either 5 hundreds + 9 units OR 50 tens + 9 units." }
+    ],
+    compare_order: [
+      { question: "Arrange smallest to largest: -50, 20, -100, 0.", options: ["-100, -50, 0, 20 (Deepest negative debt is the absolute smallest!)", "-50, -100, 0, 20", "0, 20, -50, -100", "20, 0, -50, -100"], correct: 0, hint: "-100 represents the most left side on a horizontal number line." },
+      { question: "Which collection is NOT sorted in ascending order?", options: ["[-10, -5, 0, 5]", "[-3, -8, 2, 7] (-8 must come before -3!)", "[-22, 1, 10, 15]", "[-100, -90, -80, -70]"], correct: 1, hint: "Ascending order means smallest to largest. -8 is smaller than -3." },
+      { question: "If Tara is standing on step -12 and Rohan on step -4, who is higher?", options: ["Tara", "Rohan (-4 is closer to 0, hence greater/higher!)", "Both are same height", "Bhaiya is higher"], correct: 1, hint: "Higher value on negative graph represents points closer to zero." }
     ]
   };
 
@@ -1114,13 +1157,17 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 </h4>
 
                 <p className="font-sans text-xs sm:text-sm font-medium text-zinc-800 leading-relaxed mb-6 bg-white p-4 rounded-xl border border-black/10">
-                  {activeScreen.explanation}
+                  {injectConceptTooltips(activeScreen.explanation)}
                 </p>
               </div>
 
               {/* Dynamic Retro Chalkboard illustration */}
               <div className="my-2">
-                {renderConceptIllustration()}
+                {selectedTopic.id === "geom" ? (
+                  <InteractiveSandbox subtopicId={selectedSubtopic.id} />
+                ) : (
+                  renderConceptIllustration()
+                )}
               </div>
 
               {/* Slider / Pager Navigation */}
@@ -1200,9 +1247,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
     // STEP 1 UI: Video whiteboard Class
     if (activeQuestStep === "video") {
-      const displayVideoFile = selectedSubtopic.id.includes("bindu") || selectedSubtopic.id.includes("basics")
-        ? "FINAL_geometry_intro.mp4"
-        : "FINAL_maxmin_intro.mp4";
+      const displayVideoFile = `FINAL_${selectedSubtopic.id}.mp4`;
 
       return (
         <div className="flex flex-col gap-6 animate-fade-in pb-12 font-mono text-black">

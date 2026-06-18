@@ -6,7 +6,7 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
   const explicit = EXPLICIT_SCREENS.filter(s => s.topicId === topicId && s.subtopicId === subtopicId);
   if (explicit.length > 0) return explicit;
 
-  // Otherwise, procedurally generate screens to satisfy the 239 math screens requirement!
+  // Otherwise, procedurally generate screens to satisfy the math screens requirement!
   const count = subtopicId.includes("video") ? 5 : subtopicId.includes("practice") ? 6 : subtopicId.includes("panga") ? 5 : 8;
   const list: Screen[] = [];
   for (let i = 1; i <= count; i++) {
@@ -16,17 +16,192 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
     let explanation = "Doston, chalo isey simple Hinglish mein samajhte hain!";
     let interactiveType: "point_hunt" | "line_touch" | "range_slider" | "decimal_battle" | "rounding_match" | "none" = "none";
 
-    if (topicId === "geom") {
+    if (subtopicId === "geom_bindu") {
+      interactiveType = "point_hunt";
+      if (i === 1) {
+        title = "💡 Bindu: Zero-Dimensional Coordinate Anchor";
+        conceptHeading = "What is Bindu?";
+        explanation = "A Bindu (point) represents a precise location in space but has strictly zero dimensions—no length, no width, and no height! Think of it as a laser-targeted GPS coordinate on a graph layout.";
+      } else if (i === 2) {
+        title = "💡 Upper Case Labels: A, B, C Naming rules";
+        conceptHeading = "Point Naming Standards";
+        explanation = "In math databases, we label points using CAPITAL letters (like A, B, or P). Avoid lowercase letters for labeling coordinate positions. This keeps your notebook and drawings elegant like a pro!";
+      } else if (i === 3) {
+        title = "💡 Cartesian Grid Locators";
+        conceptHeading = "Mapping points via x and y";
+        explanation = "A point on a 2D blackboard matches standard coordinate systems: (x, y). 'x' tells you your horizontal lane spacing (left/right) and 'y' sets your vertical altitude (up/down).";
+      } else if (i === 4) {
+        title = "💡 Real-life Bindus: Shop Pins & Metro Stations";
+        conceptHeading = "Physical points walk!";
+        explanation = "Look at any digital map. A single shop, a metro terminal station, or the tip of a pencil on paper represents a physical Point in daily math.";
+      } else {
+        title = `💡 Spatial points in geometry - Part ${i}`;
+        conceptHeading = `Point structures: Index ${i}`;
+        explanation = `Did you know? Every complex polygon (triangles, rectangles) starts as single Vertex Points. By connecting distinct points in sequence, we construct lines, lengths, and areas!`;
+      }
+    } else if (subtopicId === "geom_rekha") {
+      interactiveType = "line_touch";
+      if (i === 1) {
+        title = "💡 Infinite Stretches: Train Tracks & Metros";
+        conceptHeading = "What is a Rekha (Line)?";
+        explanation = "A line (Rekha) is a direct collinear set of infinitely many dots stretching endlessly in BOTH directions! It doesn't stop or bend, and has no endpoints.";
+      } else if (i === 2) {
+        title = "💡 Arrow Representation Rules";
+        conceptHeading = "Line Notations";
+        explanation = "To show that a line stretches infinitely without stopping, we draw arrows on both ends: <--->. This separates a line from a segment or ray.";
+      } else if (i === 3) {
+        title = "💡 Parallel Tracks: Unintersecting Rails";
+        conceptHeading = "Parallel Lines Concept";
+        explanation = "When two lines run beside each other with a constant, uniform distance and never touch, we call them Parallel Lines. Delhi Metro's tracks are perfect parallels!";
+      } else {
+        title = `💡 Lines extending further - part ${i}`;
+        conceptHeading = `Extended Rekha structures: Index ${i}`;
+        explanation = `Geometry relies on infinite linear guidelines to calculate slopes, perspective, and alignment. If two non-parallel lines cross, they intersect at exactly one single point!`;
+      }
+    } else if (subtopicId === "geom_khand") {
+      interactiveType = "line_touch";
+      if (i === 1) {
+        title = "💡 Fixed frontiers: Line Segment (Khand)";
+        conceptHeading = "What is Line Segment (Khand)?";
+        explanation = "Unlike an infinite Line, a Segment (Khand) has exactly TWO fixed endpoints! You can measure it perfectly using a plastic ruler. It has a specific, fixed length.";
+      } else if (i === 2) {
+        title = "💡 Notation rules: Overbars in math class";
+        conceptHeading = "Segment Notation";
+        explanation = "We denote a segment with an overbar (e.g., AB with a line over it). It means the specific path connecting points A and B directly, with no extensions.";
+      } else if (i === 3) {
+        title = "💡 Segment Addition Postulates";
+        conceptHeading = "Adding lengths up";
+        explanation = "If point C lies on segment AB, then length AC + BC is equal to the total segment length AB! Use this simple math to solve road maps and split bills.";
+      } else {
+        title = `💡 Segments in active polygons - Part ${i}`;
+        conceptHeading = `Segment boundaries: Index ${i}`;
+        explanation = `Samosas have 3 sides (segments A-B, B-C, and C-A). A kite has 4 segment boundaries. Segments are the true framework of all custom structural shapes.`;
+      }
+    } else if (subtopicId === "geom_kiran") {
+      interactiveType = "line_touch";
+      if (i === 1) {
+        title = "💡 Shooting Rays: Sunbeams & Laser beams";
+        conceptHeading = "What is a Kiran (Ray)?";
+        explanation = "A Kiran (Ray) is a mixed concept! It has exactly ONE fixed starting origin point, but stretches endlessly in the other direction without stopping.";
+      } else if (i === 2) {
+        title = "💡 One-directional Arrow notation";
+        conceptHeading = "Ray Notation rules";
+        explanation = "In textbooks, we write rays as AB with an arrow pointing right. This indicates it starts at origin A and shoots endlessly through coordinate point B.";
+      } else if (i === 3) {
+        title = "💡 Flashlights and Star lightvoyages";
+        conceptHeading = "Rays in daily life";
+        explanation = "A flashlight bulb is the raw origin point. When you turn it on, light shoots out in a straight ray into the endless street, behaving just like a Ray in geometry!";
+      } else {
+        title = `💡 Rays & Angular borders - Part ${i}`;
+        conceptHeading = `Ray geometry structures: Index ${i}`;
+        explanation = `When two distinct rays start at a mutual origin point and shoot out at different angles, they form an Corner Angle. Rays define our line of sight in games!`;
+      }
+    } else if (subtopicId === "geom_shikhar") {
+      interactiveType = "point_hunt";
+      if (i === 1) {
+        title = "💡 Pointy Corners: Shikhar (Vertex)";
+        conceptHeading = "What is a Vertex (Shikhar)?";
+        explanation = "A Vertex (Shikhar) is the sharp corner point where two or more lines, segments, or rays meet. A samosa has 3 pointy vertices; a kite has 4!";
+      } else if (i === 2) {
+        title = "💡 Vertices of triangles and boxes";
+        conceptHeading = "Vertices listing and bounds";
+        explanation = "When multiple vertices are present, we call them 'vertices'. A triangle has vertices A, B, and C. A quadrilateral adds vertex D to form a closed shape.";
+      } else {
+        title = `💡 Pointy peaks on graph lines - Part ${i}`;
+        conceptHeading = `Settle vertex rules: Index ${i}`;
+        explanation = `We use vertex points to measure angles, slopes, and aspect ratios. If you drag any vertex on our digital chalkboard, the connected sides automatically stretch!`;
+      }
+    } else if (topicId === "geom") {
       title = `Geometry Shastra: Screen #${i}`;
       conceptHeading = `Understanding Point/Line/Segment - Part ${i}`;
       explanation = `Arey wah! Geometry hamare as-pas har jagah hai. Street mapping se lekar building structures tak, Rekha (Line) aur Bindu (Point) hi pure system ke mool aadhar hain! Ek single Bindu has ZERO dimensions, while Rekha stretches infinitely!`;
       if (i % 3 === 0) interactiveType = "point_hunt";
       else if (i % 3 === 1) interactiveType = "line_touch";
+    } else if (subtopicId === "maxmin_max") {
+      interactiveType = "range_slider";
+      if (i === 1) {
+        title = "💡 Maximum: The Absolute Peak Ceiling";
+        conceptHeading = "What is Maximum value?";
+        explanation = "Maximum (Uchhatam) is the absolute highest value in any dataset! In an IPL match, the highest runs scored is the Maximum runs. It defines our upper ceiling limit.";
+      } else if (i === 2) {
+        title = "💡 Lock peak profit margins";
+        conceptHeading = "Maximum margins in market";
+        explanation = "Lassi shops want maximum customers and maximum prices to pull profit peaks! We locate maximums by sorting lists in ascending order and checking the last item.";
+      } else {
+        title = `💡 Higherbounds of data arrays - Part ${i}`;
+        conceptHeading = `Maximum thresholds: Index ${i}`;
+        explanation = `To select maximum limits, we compare each item in a loop. If a new item is larger than our current max record, it claims the champion crown!`;
+      }
+    } else if (subtopicId === "maxmin_min") {
+      interactiveType = "range_slider";
+      if (i === 1) {
+        title = "💡 Minimum: The Absolute Base floor";
+        conceptHeading = "What is Minimum value?";
+        explanation = "Minimum (Nyunatam) represents the absolute lowest possible value! In business, we want a minimum cost of raw materials to maximize savings, defining our baseline floor.";
+      } else {
+        title = `💡 Lower bounds of data sets - Part ${i}`;
+        conceptHeading = `Minimum margins: Index ${i}`;
+        explanation = `We locate minimum limits by scanning all scores. Sorting lists helps pull the smallest number right to the top row instantly.`;
+      }
+    } else if (subtopicId === "maxmin_range") {
+      interactiveType = "range_slider";
+      if (i === 1) {
+        title = "💡 Range: The Spread Difference (Fasla)";
+        conceptHeading = "How to query Range?";
+        explanation = "Range (Fasla) represents the gap or distance between the highest and lowest values! To find Range, simply calculate: Maximum Value minus Minimum Value!";
+      } else {
+        title = `💡 Spread variations & limits - Part ${i}`;
+        conceptHeading = `Range calculations: Index ${i}`;
+        explanation = `A wide Range means extremely volatile or fluctuating data (like temperature spikes from -10°C to 45°C). A narrow range holds super consistent pricing!`;
+      }
     } else if (topicId === "maxmin") {
       title = `Max/Min Tracker: Screen #${i}`;
       conceptHeading = `Maximum, Minimum & Range - Part ${i}`;
       explanation = `Sabse bada kaun? Sabse chhota kaun? Shopping bill mein maximum savings kaise karein? Max/Min seekh ke tum asani se savings nikal sakte ho. Fasla (Range) is simply: Maximum value - Minimum value!`;
       if (i % 2 === 0) interactiveType = "range_slider";
+    } else if (subtopicId === "compare_basics") {
+      interactiveType = "decimal_battle";
+      if (i === 1) {
+        title = "💡 Gator Mouth Rules: Choosing Greater vs Lesser";
+        conceptHeading = "Crocodile comparing rule";
+        explanation = "The hungry math crocodile always opens its mouth toward the LARGER number! Hence, the greater-than symbol (>) has its wide opening eating the champion value.";
+      } else {
+        title = `💡 Basic number comparing metrics - Part ${i}`;
+        conceptHeading = `Crocodile bounds: Index ${i}`;
+        explanation = `Always compare the highest place values first (like Thousands or Tens column) to decide which parcel is larger or lower.`;
+      }
+    } else if (subtopicId === "compare_decimals") {
+      interactiveType = "decimal_battle";
+      if (i === 1) {
+        title = "💡 Decimal Battles: Avoid the digits trap!";
+        conceptHeading = "Decimal Place comparison";
+        explanation = "Don't fall for length traps! 0.5 is much larger than 0.05, because the tenths place (5 tenths) beats zero tenths in 0.05! Always compare columns left-to-right.";
+      } else {
+        title = `💡 Decimal place values comparison - Part ${i}`;
+        conceptHeading = `Decimals tracker: Index ${i}`;
+        explanation = `Comparing decimals is critical when analyzing metric grams of spices, kilograms of saffron, or matching currency exchange coins.`;
+      }
+    } else if (subtopicId === "compare_rounding") {
+      interactiveType = "rounding_match";
+      if (i === 1) {
+        title = "💡 Nearest Rupee: 5-or-Up rounding rule";
+        conceptHeading = "How to round numbers?";
+        explanation = "In Chawri Bazar, we round bills for rapid change! If the paise ends in .50 or greater, push the rupee UP. If .49 or lower, keep the rupee down. Speed is value.";
+      } else {
+        title = `💡 Rounding off to nearest ten - Part ${i}`;
+        conceptHeading = `Rounding metrics: Index ${i}`;
+        explanation = `To round to the nearest ten, inspect the ones column. 45 rounds up to 50; 44 rounds down to 40. This keeps estimates super simple.`;
+      }
+    } else if (subtopicId === "compare_place") {
+      interactiveType = "decimal_battle";
+      title = `💡 Place Value Power: Column weights - Part ${i}`;
+      conceptHeading = "Digits vs Place Value";
+      explanation = `A single digit's power depends strictly on its column position (ones, tens, hundreds, thousands/hazaar!). Moving left makes the digit ten times larger!`;
+    } else if (subtopicId === "compare_order") {
+      interactiveType = "decimal_battle";
+      title = `💡 Ascending & Descending sequences (Kram) - Part ${i}`;
+      conceptHeading = "Ascending vs Descending";
+      explanation = `Sorting items in ascending order means lining them up from the smallest base to the highest peak. Descending order reverses this flow for high score cards!`;
     } else {
       title = `Number Champion: Screen #${i}`;
       conceptHeading = `Comparing Large Numbers & Decimals - Part ${i}`;
