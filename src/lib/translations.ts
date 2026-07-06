@@ -118,10 +118,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     tagline: "CBSE Math Made Fun",
     hinglishClasses: "Hinglish Classes 6-8",
     poweredBy: "Powered by street-smart Hinglish pedagogy",
-    
-    // Streak & Progress
-    streakDays: "Days",
+    difficultyDesc: "Adjust explanations for your class:",
     nextRank: "Next rank",
+    streakDays: "Days",
     screensDone: "Screens done",
     
     // Quiz & Drills
@@ -263,6 +262,7 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     tagline: "CBSE Maths Ab Hogi Fun",
     hinglishClasses: "Hinglish Classes 6-8",
     poweredBy: "Street-smart Hinglish pedagogy se powered",
+    difficultyDesc: "Apni class ke hisaab se explanations set karo:",
     
     // Streak & Progress
     streakDays: "Din",
