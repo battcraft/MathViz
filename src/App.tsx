@@ -35,7 +35,7 @@ function RootContent() {
           </div>
           <div className="h-10 w-[2px] bg-black opacity-20 mx-1 hidden sm:block"></div>
           <div className="text-center sm:text-left">
-            <span className="text-base font-black italic block">Maths Dost ke sath — Socho, samjho, aur solve karo! 🧠</span>
+            <span className="text-base font-black italic block">Namaste, Math Hero! 🙏</span>
             <span className="text-[10px] text-zinc-500 uppercase font-bold tracking-wider mt-0.5 inline-block bg-orange-100/80 border border-orange-400 px-1.5 py-0.5 rounded-md">
               Hinglish Classes 6-8
             </span>
@@ -52,9 +52,6 @@ function RootContent() {
           <div className="bg-[#FF4D4D] text-white border-2 border-black px-4 py-1.5 flex items-center gap-2 font-black text-xs sm:text-sm rounded-xl shadow-[3px_3px_0px_black]">
             <span className="text-white font-extrabold">{stats.streak} DAYS</span>
             <span>🔥</span>
-            {stats.streak >= 30 && <span className="text-yellow-300 text-[10px]">🏆</span>}
-            {stats.streak >= 7 && stats.streak < 30 && <span className="text-blue-300 text-[10px]">🥈</span>}
-            {stats.streak >= 3 && stats.streak < 7 && <span className="text-green-300 text-[10px]">🥉</span>}
           </div>
           <div className="flex items-center gap-2 bg-white rounded-xl">
             <LanguageSwitcher />

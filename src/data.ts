@@ -425,105 +425,6 @@ export const EXPLICIT_SCREENS: Screen[] = [
     explanation: "Math gator (crocodile) hamesha bade number ko khata hai! Isliye greater than (>) ka open side bade number ki taraf hota hai aur band side small number ki taraf hook karta hai. Jaise: 98,720 > 89,999. Negative numbers mein, jo dikhne mein bada hota hai (jaise -50), woh asliyat mein -10 se chhota hota hai!",
     interactiveType: "decimal_battle",
     pangaHint: "Click correct symbol comparing negative vs positive!"
-  },
-  {
-    id: "compare_video_1",
-    title: "🎬 Comparing Numbers Intro Lesson",
-    videoFile: "FINAL_compare_intro.mp4",
-    topicId: "compare",
-    subtopicId: "compare_video",
-    conceptHeading: "Chalo Numbers Compare Karein!",
-    explanation: "Yeh animated clip dekhein jahan MathsGuru Bhaiya crocodile mouth (> , <) aur place value charts ke saath numbers compare karna sikhate hain. Bade numbers, decimals, aur rounding - teeno ek hi video mein!"
-  },
-  {
-    id: "geom_khand_1",
-    title: "💡 Khand (Segment) — Fixed Line with Two Endpoints!",
-    topicId: "geom",
-    subtopicId: "geom_khand",
-    conceptHeading: "Segment: The Measurable Line",
-    explanation: "Line Segment (Khand) ek line ka woh portion hota hai jiske DO fixed endpoints hote hain. Jaise aapne notebook mein pencil se 7 cm ki line kheechi — woh ek segment hai! Iski length measure ki ja sakti hai, unlike infinite Rekha. Cricket pitch ki 22-yard line ek perfect segment hai!",
-    interactiveType: "line_touch",
-    pangaHint: "Segment endpoints A aur B ko identify karo aur length measure karo!"
-  },
-  {
-    id: "geom_kiran_1",
-    title: "💡 Kiran (Ray) — Ek Taraf Infinite, Doosri Taraf Fixed!",
-    topicId: "geom",
-    subtopicId: "geom_kiran",
-    conceptHeading: "Kiran: Starts at O, Goes Forever!",
-    explanation: "Kiran (Ray) ek aisi line hoti hai jo EK endpoint se shuru hoti hai aur doosri taraf infinity tak jaati hai! Jaise flashlight ki beam — bulb se start ho kar door tak jaati hai. Notation: OP (O is endpoint, P is direction). Surya ki kiran bhi aise hi hoti hai!",
-    interactiveType: "line_touch",
-    pangaHint: "Ray ka starting point lock karo aur usey extend karte jao!"
-  },
-  {
-    id: "geom_shikhar_1",
-    title: "💡 Shikhar (Vertex) — Jahan Do Kirane Milte Hain!",
-    topicId: "geom",
-    subtopicId: "geom_shikhar",
-    conceptHeading: "Vertex: The Corner Point!",
-    explanation: "Shikhar (Vertex) wah point hota hai jahan do ya zyada rays ya line segments aapas mein milte hain. Har angle ka ek vertex hota hai! Jaise corner of a table, ya triangle ke teenon corners — har ek ek vertex hai! Geometry mein vertices plural hota hai!",
-    interactiveType: "point_hunt",
-    pangaHint: "Screen mein teen vertices (corners) dhoondho aur unhe label karo!"
-  },
-  {
-    id: "maxmin_min_1",
-    title: "💡 Minimum: Sabse Chhota Value Champion!",
-    topicId: "maxmin",
-    subtopicId: "maxmin_min",
-    conceptHeading: "Minimum (Nyuntam) Value",
-    explanation: "Minimum matlab sabse chhoti value ya lowest limit! Ek cricket match mein lowest score, ya fridge ka sabse thanda temperature — ye sab minimum values hain. Range nikalne ke liye hum minimum ko maximum se subtract karte hain! Negative numbers mein, -50 actually -10 se chhota hota hai!",
-    interactiveType: "range_slider",
-    pangaHint: "Slider ko lowest point tak ghaseet kar minimum lock karo!"
-  },
-  {
-    id: "maxmin_range_1",
-    title: "💡 Range (Fasla) — Max aur Min ke Beech ka Distance!",
-    topicId: "maxmin",
-    subtopicId: "maxmin_range",
-    conceptHeading: "Range: Max - Min = Fasla!",
-    explanation: "Range (Fasla) simply maximum aur minimum value ke beech ka difference hai! Formula: Range = Maximum Value - Minimum Value. Jaise ek hafte mein sabse garm din 42°C aur sabse thanda 28°C tha, toh range = 42 - 28 = 14°C! Yeh data analysis ka basic tool hai!",
-    interactiveType: "range_slider",
-    pangaHint: "Pehle max, phir min select karo — range automatically calculate hoga!"
-  },
-  {
-    id: "compare_decimals_1",
-    title: "💡 Decimals Comparison — Dot Ke Baad Ki Duniya!",
-    topicId: "compare",
-    subtopicId: "compare_decimals",
-    conceptHeading: "Decimal Numbers ki Tola-Bhol!",
-    explanation: "Decimals compare karte waqt pehle whole number part dekho, phir decimal part! Jaise 3.45 aur 3.4 mein — whole number same hai (3), toh ab decimal part dekhenge: 45 > 40, isliye 3.45 > 3.4! Place value yaad rakho — tenths, hundredths, thousandths!",
-    interactiveType: "decimal_battle",
-    pangaHint: "Har decimal ke place value ko align karo phir compare karo!"
-  },
-  {
-    id: "compare_rounding_1",
-    title: "💡 Rounding Arena — Chandni Chowk Banya Style!",
-    topicId: "compare",
-    subtopicId: "compare_rounding",
-    conceptHeading: "Rounding Off: Nearest Tens, Hundreds, Rupees!",
-    explanation: "Rounding off ka simple rule: agar boundary digit 5 ya usse upar hai, toh upar jao! Niche hai toh neeche! Jaise Chandni Chowk ka banya kehti hai 'Rs 44.60 ko round karo to Rs 45'. Nearest ten: 47 → 50, 42 → 40. Nearest hundred: 378 → 400, 321 → 300!",
-    interactiveType: "rounding_match",
-    pangaHint: "Number ko dekho aur correct rounded value se match karo!"
-  },
-  {
-    id: "compare_place_1",
-    title: "💡 Place Value Power — Har Digit Ka Apna Ghar!",
-    topicId: "compare",
-    subtopicId: "compare_place",
-    conceptHeading: "Crores, Lakhs, Thousands, Ones!",
-    explanation: "Place value system mein har digit ka apna ghar (place) hota hai! India mein hum Crores, Lakhs, Thousands, Hundreds, Tens, Ones use karte hain. Jaise 45,67,890 mein: 4 crores, 56 lakhs, 7 thousands, 8 hundreds, 9 tens, 0 ones. Yeh place chart bade numbers compare karne mein madad karta hai!",
-    interactiveType: "decimal_battle",
-    pangaHint: "Har digit ko sahi place value ghar mein rakho!"
-  },
-  {
-    id: "compare_order_1",
-    title: "💡 Order (Kram) — Numbers ko Line Mein Khara Karo!",
-    topicId: "compare",
-    subtopicId: "compare_order",
-    conceptHeading: "Ascending aur Descending Order!",
-    explanation: "Order (Kram) ka matlab hai numbers ko ek sequence mein arrange karna. Ascending order: chhote se bade (1, 5, 12, 45). Descending order: bade se chhote (45, 12, 5, 1). Negative numbers yaad rakho: -10, -5, 0, 3 — ascending order mein -10 sabse pehle aayega kyunki woh sabse chhota hai!",
-    interactiveType: "decimal_battle",
-    pangaHint: "Numbers ko sahi ascending ya descending kram mein arrange karo!"
   }
 ];
 
@@ -557,7 +458,8 @@ export const TOPICS: Topic[] = [
       { id: "maxmin_practice", name: "🏋️ Practice Zone", screens: [] },
       { id: "maxmin_kahani", name: "📖 Kahani (Story)", screens: [] },
       { id: "maxmin_panga", name: "🎯 Panga (Quiz)", screens: [] },
-      { id: "maxmin_mastery", name: "🏆 Mastery", screens: [] }
+      { id: "maxmin_mastery", name: "🏆 Mastery", screens: [] },
+      { id: "maxmin_skills", name: "🔧 Max/Min Skills", screens: [] }
     ]
   },
   {
@@ -573,7 +475,7 @@ export const TOPICS: Topic[] = [
       { id: "compare_kahani", name: "📖 Kahani (Story)", screens: [] },
       { id: "compare_panga", name: "🎯 Panga (Quiz)", screens: [] },
       { id: "compare_mastery", name: "🏆 Mastery", screens: [] },
-      { id: "compare_video", name: "🎬 Video Lessons", screens: [] }
+      { id: "compare_skills", name: "🔧 Number Skills", screens: [] }
     ]
   }
 ];

@@ -14,6 +14,9 @@ import { generateInteractiveSrcDoc as generateInteractiveSrcDocHelper } from "./
 import { getPracticeDrillVariants, getStoryQuestVariants, getConceptQuizVariants } from "../variants";
 import InteractiveSandbox from "./InteractiveSandbox";
 import { injectConceptTooltips } from "./MicroConceptTooltip";
+import GeometrySkillsHub from "./GeometrySkillsHub";
+import MaxMinSkillsHub from "./MaxMinSkillsHub";
+import CompareSkillsHub from "./CompareSkillsHub";
 
 interface LearnViewProps {
   difficulty: DifficultyLevel;
@@ -651,6 +654,39 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
   // --- SUBTOPIC QUEST CONTAINER RENDERING ---
   if (selectedSubtopic) {
+    if (selectedSubtopic.id === "geom_skills") {
+      return (
+        <GeometrySkillsHub
+          onBack={() => {
+            setSelectedSubtopic(null);
+            setActiveQuestStep("overview");
+          }}
+        />
+      );
+    }
+
+    if (selectedSubtopic.id === "maxmin_skills") {
+      return (
+        <MaxMinSkillsHub
+          onBack={() => {
+            setSelectedSubtopic(null);
+            setActiveQuestStep("overview");
+          }}
+        />
+      );
+    }
+
+    if (selectedSubtopic.id === "compare_skills") {
+      return (
+        <CompareSkillsHub
+          onBack={() => {
+            setSelectedSubtopic(null);
+            setActiveQuestStep("overview");
+          }}
+        />
+      );
+    }
+
     const isSpecialSyllabusQuiz = selectedSubtopic.id.includes("_panga") || selectedSubtopic.name.toLowerCase().includes("panga") || selectedSubtopic.name.toLowerCase().includes("quiz");
     const isSpecialSyllabusStory = selectedSubtopic.id.includes("_kahani") || selectedSubtopic.name.toLowerCase().includes("kahani") || selectedSubtopic.name.toLowerCase().includes("story");
 
@@ -1269,24 +1305,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
     // STEP 1 UI: Video whiteboard Class
     if (activeQuestStep === "video") {
-      const getVideoForSubtopic = (subtopicId: string): string => {
-        // Geometry videos
-        if (subtopicId.includes("geom_bindu")) return "FINAL_bindu.mp4";
-        if (subtopicId.includes("geom_rekha")) return "FINAL_rekha.mp4";
-        if (subtopicId.includes("geom_khand")) return "FINAL_segment.mp4";
-        if (subtopicId.includes("geom_kiran")) return "FINAL_kiran_manim_chalkboard.mp4";
-        if (subtopicId.includes("geom_shikhar")) return "FINAL_shikhar.mp4";
-        if (subtopicId.startsWith("geom_")) return "FINAL_geometry_intro.mp4";
-        // Max/Min videos
-        if (subtopicId.includes("maxmin_max")) return "FINAL_max.mp4";
-        if (subtopicId.includes("maxmin_min")) return "FINAL_min.mp4";
-        if (subtopicId.includes("maxmin_range")) return "FINAL_range.mp4";
-        if (subtopicId.startsWith("maxmin_")) return "FINAL_maxmin_intro.mp4";
-        // Compare
-        if (subtopicId.startsWith("compare_")) return "FINAL_compare_intro.mp4";
-        return "FINAL_geometry_intro.mp4";
-      };
-      const displayVideoFile = getVideoForSubtopic(selectedSubtopic.id);
+      const displayVideoFile = `FINAL_${selectedSubtopic.id}.mp4`;
 
       return (
         <div className="flex flex-col gap-6 animate-fade-in pb-12 font-mono text-black">
@@ -1325,51 +1344,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                     <p>✨ <strong>Line Segment (Khand):</strong> Segment humesa finite boundaries se bhandha hota hai. Iske do explicit endpoints scale coordinates banate hain (Jaise geometry notebook me kheechi gayi 7.5 cm segment scale limit).</p>
                   </>
                 )}
-                {selectedSubtopic.id.includes("kiran") && (
-                  <>
-                    <p>✨ <strong>Kiran (Ray) ki Anant Yatra:</strong> Ray ek fixed start point (O) se shuru hoti hai aur doosri taraf infinity tak jaati hai! Flashlight ki beam ki tarah — bulb se start ho kar door tak roshni.</p>
-                    <p>🔦 Kiran notation: OP (O = endpoint, P = direction). Sirf ek arrowhead hota hai, doosri taraf solid dot.</p>
-                  </>
-                )}
-                {selectedSubtopic.id.includes("shikhar") && (
-                  <>
-                    <p>✨ <strong>Shikhar (Vertex) Powers:</strong> Vertex wo jagah hai jahan do rays ya segments aapas mein milte hain. Har angle ka apna ek vertex hota hai!</p>
-                    <p>📐 Jaise table ka corner, ya triangle ke teen corners — har ek vertex hai. Multiple vertices ko 'vertices' kehte hain!</p>
-                  </>
-                )}
-                {selectedTopic.id === "maxmin" && !selectedSubtopic.id.includes("video") && !selectedSubtopic.id.includes("practice") && !selectedSubtopic.id.includes("kahani") && !selectedSubtopic.id.includes("panga") && !selectedSubtopic.id.includes("mastery") && (
-                  <>
-                    {selectedSubtopic.id.includes("max") && (
-                      <p>📈 <strong>Maximum (Uchhatam Value):</strong> Sabse badi limit! Cricket mein highest score, ya store par maximum discount. Array mein sabse bada number filter karo!</p>
-                    )}
-                    {selectedSubtopic.id.includes("min") && (
-                      <p>📉 <strong>Minimum (Nyuntam Value):</strong> Sabse chhoti value! Freezer ka thanda temperature ya lowest cricket score. List mein sabse chhota number pakdo!</p>
-                    )}
-                    {selectedSubtopic.id.includes("range") && (
-                      <p>📊 <strong>Range (Fasla):</strong> Max aur Min ke beech ka fark! Formula: <strong>Range = Maximum - Minimum</strong>. Jaise hafte ka temperature range = 42°C - 28°C = 14°C!</p>
-                    )}
-                  </>
-                )}
-                {selectedTopic.id === "compare" && !selectedSubtopic.id.includes("video") && !selectedSubtopic.id.includes("practice") && !selectedSubtopic.id.includes("kahani") && !selectedSubtopic.id.includes("panga") && !selectedSubtopic.id.includes("mastery") && (
-                  <>
-                    {selectedSubtopic.id.includes("basics") && (
-                      <p>🐊 <strong>Comparing Basics:</strong> Crocodile mouth ({'>'} , {'<'}) hamesha bade number ko khata hai! 98,720 {">"} 89,999. Negative mein, jo 'bada' dikhta hai woh actually chhota hota hai!</p>
-                    )}
-                    {selectedSubtopic.id.includes("decimals") && (
-                      <p>🔢 <strong>Decimal Comparison:</strong> Pehle whole number part dekho, phir decimal part! 3.45 {">"} 3.4 because 45 {">"} 40 (tenths, hundredths, thousandths).</p>
-                    )}
-                    {selectedSubtopic.id.includes("rounding") && (
-                      <p>💵 <strong>Rounding (Chandni Chowk Style):</strong> Digit 5 ya upar = upar jao! Jaise Rs 44.60 → Rs 45. Nearest ten: 47 → 50. Nearest hundred: 378 → 400.</p>
-                    )}
-                    {selectedSubtopic.id.includes("place") && (
-                      <p>🏠 <strong>Place Value Power:</strong> Har digit ka apna ghar! India system: Crores, Lakhs, Thousands, Ones. 45,67,890 = 4 Crore + 56 Lakh + 7 Thousand + 890.</p>
-                    )}
-                    {selectedSubtopic.id.includes("order") && (
-                      <p>📋 <strong>Order (Kram):</strong> Ascending = chhote se bade (1, 5, 12). Descending = bade se chhote (45, 12, 5). Negative yaad rakho: -10, -5, 0, 3.</p>
-                    )}
-                  </>
-                )}
-                {(!selectedSubtopic.id.includes("bindu") && !selectedSubtopic.id.includes("rekha") && !selectedSubtopic.id.includes("khand") && !selectedSubtopic.id.includes("kiran") && !selectedSubtopic.id.includes("shikhar") && !(!selectedSubtopic.id.includes("video") && !selectedSubtopic.id.includes("practice") && !selectedSubtopic.id.includes("kahani") && !selectedSubtopic.id.includes("panga") && !selectedSubtopic.id.includes("mastery") && (selectedTopic.id === "maxmin" || selectedTopic.id === "compare"))) && (
+                {!selectedSubtopic.id.includes("bindu") && !selectedSubtopic.id.includes("rekha") && !selectedSubtopic.id.includes("khand") && (
                   <>
                     <p>✨ <strong>Maths Dost Kahte Hain:</strong> Math is pure gold when you run transactions in daily bazaar! Play the IPL stakes tracking, compare decimal ratings, and check ranges to be standard market gurus.</p>
                   </>
