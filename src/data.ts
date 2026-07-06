@@ -375,7 +375,7 @@ export const EXPLICIT_SCREENS: Screen[] = [
     topicId: "geom",
     subtopicId: "geom_video",
     conceptHeading: "Aao seekhein Rekha aur Bindu!",
-    explanation: "Yeh high quality animated video dekhein jisme MathsGuru Bhaiya point (Bindu) aur Rekha ke simple rules sikha rahe hain. Samosa, Cricket, aur local streets se seekhein basic Geometry!",
+    explanation: "Yeh high quality animated video dekhein jisme Maths Dost point (Bindu) aur Rekha ke simple rules sikha rahe hain. Samosa, Cricket, aur local streets se seekhein basic Geometry!",
   },
   {
     id: "geom_bindu_1",
@@ -540,7 +540,7 @@ export const STORY_SLIDES: StorySlide[] = [
     id: "story_1",
     emoji: "🪁",
     title: "Tara's Kite High Flyer in Old Delhi!",
-    narration: "Tara is flying a patang (kite) over Chawri Bazar! Suddenly, the kite string stretches tightly. MathsGuru Bhaiya stops by and asks: 'Tara, the string is straight but has two ends - your hand and the kite. Is this string a Point, Rekha, or Segment?'",
+    narration: "Tara is flying a patang (kite) over Chawri Bazar! Suddenly, the kite string stretches tightly. Maths Dost stops by and asks: 'Tara, the string is straight but has two ends - your hand and the kite. Is this string a Point, Rekha, or Segment?'",
     choices: [
       { text: "Bindu (Point)", correct: false, rewardXp: 0 },
       { text: "Khand (Segment)", correct: true, rewardXp: 15 },
@@ -693,7 +693,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: "q16",
     question: "If you have 4,320 coins and a friend has 4,230 coins, who is the richer champion?",
-    options: ["You (4,320)", "Friend (4,230)", "Equal wealth", "Bhaiya is richer"],
+    options: ["You (4,320)", "Friend (4,230)", "Equal wealth", "Friend is richer"],
     correct: 0,
     hint: "Compare thousands place (both 4), then hundreds place (3 vs 2). 3 is bigger."
   },

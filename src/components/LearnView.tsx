@@ -375,7 +375,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
             } else if (isQuiz) {
               cardBg = "bg-blue-50/40 hover:bg-blue-50/70";
               stepLabel = `Step ${idx + 1}: Ultimate Panga Quiz 🎯`;
-              description = "Fight 20 randomized adaptive CBSE class standard math questions!";
+              description = "Quick 5-question CBSE quiz — sharp and focused!";
             } else if (isMastery) {
               cardBg = "bg-amber-50/60 hover:bg-amber-100/40";
               stepLabel = "Final Milestone: Mastery Area 🏆";
@@ -435,14 +435,14 @@ export default function LearnView({ difficulty }: LearnViewProps) {
   const CONCEPT_STORIES: Record<string, { title: string; story: string; options: string[]; correct: number; explanation: string }> = {
     geom_bindu: {
       title: "📍 Gali Lockers Map Marker",
-      story: "Tara has to meet a supplier at a narrow coordinate corner in Chandni Chowk! The digital map shows several streets crossing, but the meet-up spot is a single exact coordinate dot with zero physical size. Tara asks: 'Bhaiya, how does this point look mathematically?'",
+      story: "Tara has to meet a supplier at a narrow coordinate corner in Chandni Chowk! The digital map shows several streets crossing, but the meet-up spot is a single exact coordinate dot with zero physical size. Tara asks: 'How does this point look mathematically?'",
       options: ["Point (Bindu) - has zero size, only position!", "Infinite Rekha stretching both sides", "Line Segment measuring exactly 15 meters"],
       correct: 0,
       explanation: "Excellent! A Point (Bindu) indicates an exact location with zero dimensions—no length, width, or height!"
     },
     geom_rekha: {
       title: "🛣️ The Endless Metro Tracks",
-      story: "A Delhi Metro railway designer is examining train blueprints. The steel tracks are designed straight, extending infinitely in both directions so trains can travel indefinitely. Bhaiya asks: 'Tara, what geometric entity runs endlessly with no endpoints?'",
+      story: "A Delhi Metro railway designer is examining train blueprints. The steel tracks are designed straight, extending infinitely in both directions so trains can travel indefinitely. Maths Dost asks: 'Tara, what geometric entity runs endlessly with no endpoints?'",
       options: ["A simple point (Bindu)", "An infinite Rekha (Line)!", "A narrow line segment with ends"],
       correct: 1,
       explanation: "Waah! A Line (Rekha) is a 1D concept stretching infinitely without boundary endpoints!"
@@ -463,7 +463,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     },
     geom_shikhar: {
       title: "📐 The Samosa Corner Apex",
-      story: "Tara points to the delicious triangular shape of her plate's hot samosa. She notices that the two straight crispy borders meet at a pointy corner apex. Bhaiya asks: 'What is this corner vertex named in geometry?'",
+      story: "Tara points to the delicious triangular shape of her plate's hot samosa. She notices that the two straight crispy borders meet at a pointy corner apex. Maths Dost asks: 'What is this corner vertex named in geometry?'",
       options: ["Parallel Line", "A Shikhar (Vertex) - the meeting point of angles!", "An infinite ray"],
       correct: 1,
       explanation: "Shabaash! The vertex (Shikhar) is the precise corner intersection point where sides or lines meet to form an angle!"
@@ -560,7 +560,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     maxmin_min: [
       { question: "In a list of integer prices: Rs. 120, Rs. 55, Rs. 99, Rs. 12. Find the minimum price.", options: ["Rs. 120", "Rs. 55", "Rs. 12", "Rs. 99"], correct: 2, hint: "Minimum represents the absolute cheapest/lowest quantity." },
       { question: "Which is smaller: -99 or -30?", options: ["-99 is smaller", "-30 is smaller", "Both are equal", "0 is smaller"], correct: 0, hint: "-99 is further left on the number line, representing the lowest net balance." },
-      { question: "Minimum temperature in Leh was -18°C. In Srinagar, it was -5°C. Which place recorded the minimum?", options: ["Leh (-18°C is colder/lower)", "Srinagar (-5°C)", "Both same", "Bhaiya counter"], correct: 0, hint: "Lower value means less warmth, colder." }
+      { question: "Minimum temperature in Leh was -18°C. In Srinagar, it was -5°C. Which place recorded the minimum?", options: ["Leh (-18°C is colder/lower)", "Srinagar (-5°C)", "Both same", "Cannot determine"], correct: 0, hint: "Lower value means less warmth, colder." }
     ],
     maxmin_range: [
       { question: "Calculate range: Max rating is 4.8, Min is 1.2. What is the Range (Fasla)?", options: ["3.6", "4.8", "1.2", "6.0"], correct: 0, hint: "Formula is Maximum (4.8) - Minimum (1.2) = 3.6." },
@@ -570,7 +570,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     compare_basics: [
       { question: "Compare: -80 is _______ than -8.", options: ["Smaller than (<)", "Greater than (>)", "Equal to (=)", "Same"], correct: 0, hint: "A bigger debt represents a lower net value (-80 < -8)." },
       { question: "Which integer comparison statement is mathematically correct?", options: ["-10 > 0", "0 > -5", "-5 > -1", "-50 > 5"], correct: 1, hint: "Zero is always greater than any negative integer value." },
-      { question: "A student stands at -3 meters, another stands at -9 meters on the grid. Who is closer to 0?", options: ["Student at -3 meters (closer and larger!)", "Student at -9 meters", "Both same distance", "Bhaiya"], correct: 0, hint: "-3 is only 3 steps away from 0, further right, so it is larger." }
+      { question: "A student stands at -3 meters, another stands at -9 meters on the grid. Who is closer to 0?", options: ["Student at -3 meters (closer and larger!)", "Student at -9 meters", "Both same distance", "Neither"], correct: 0, hint: "-3 is only 3 steps away from 0, further right, so it is larger." }
     ],
     compare_decimals: [
       { question: "Which is smaller: 0.72 or 0.08?", options: ["0.72", "0.08 (8 hundredths is much smaller than 72 hundredths!)", "Both same", "0"], correct: 1, hint: "Compare Tenths digit: 7 tenths vs 0 tenths." },
@@ -590,7 +590,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     compare_order: [
       { question: "Arrange smallest to largest: -50, 20, -100, 0.", options: ["-100, -50, 0, 20 (Deepest negative debt is the absolute smallest!)", "-50, -100, 0, 20", "0, 20, -50, -100", "20, 0, -50, -100"], correct: 0, hint: "-100 represents the most left side on a horizontal number line." },
       { question: "Which collection is NOT sorted in ascending order?", options: ["[-10, -5, 0, 5]", "[-3, -8, 2, 7] (-8 must come before -3!)", "[-22, 1, 10, 15]", "[-100, -90, -80, -70]"], correct: 1, hint: "Ascending order means smallest to largest. -8 is smaller than -3." },
-      { question: "If Tara is standing on step -12 and Rohan on step -4, who is higher?", options: ["Tara", "Rohan (-4 is closer to 0, hence greater/higher!)", "Both are same height", "Bhaiya is higher"], correct: 1, hint: "Higher value on negative graph represents points closer to zero." }
+      { question: "If Tara is standing on step -12 and Rohan on step -4, who is higher?", options: ["Tara", "Rohan (-4 is closer to 0, hence greater/higher!)", "Both are same height", "Depends on direction"], correct: 1, hint: "Higher value on negative graph represents points closer to zero." }
     ]
   };
 
@@ -635,15 +635,15 @@ export default function LearnView({ difficulty }: LearnViewProps) {
           while (finalQs.length < 20) {
             finalQs.push({ ...finalQs[finalQs.length % originalLength] });
           }
-        } else if (finalQs.length > 20) {
-          finalQs = finalQs.slice(0, 20);
+        } else if (finalQs.length > 5) {
+          finalQs = finalQs.slice(0, 5);
         }
         setQuestQuizQuestions(finalQs);
       } else {
         throw new Error("Invalid format");
       }
     } catch (e) {
-      console.error("Failed loading 20 subtopic quiz questions pool in LearnView:", e);
+      console.error("Failed loading subtopic quiz questions pool in LearnView:", e);
       // Use our brand new high-quality 20-variant generator!
       const fallbackQs = getConceptQuizVariants(tId, sId, difficulty);
       setQuestQuizQuestions(fallbackQs);
@@ -1085,7 +1085,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                   </span>
                   <h4 className="font-sans font-black text-sm uppercase text-black mb-0.5">Fight Panga Challenge</h4>
                   <p className="text-[11px] text-zinc-500 font-semibold leading-normal">
-                    Conquer 20 adaptive conceptual questions to solidify your CBSE credentials.
+                    5 adaptive questions to solidify your CBSE skills.
                   </p>
                 </div>
                 <div className="flex items-center gap-3 self-stretch md:self-auto justify-between border-t border-black/5 md:border-none pt-2.5 md:pt-0">
@@ -1722,7 +1722,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
         return (
           <div className="max-w-2xl mx-auto w-full flex flex-col items-center justify-center p-12 text-center bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_black] font-mono text-black">
             <div className="animate-spin h-8 w-8 border-4 border-t-transparent border-black rounded-full mx-auto mb-4"></div>
-            <p className="font-sans font-black uppercase text-sm">Generating 20-question custom CBSE quiz...</p>
+            <p className="font-sans font-black uppercase text-sm">Generating 5-question custom CBSE quiz...</p>
             <span className="text-[10px] text-zinc-500 mt-1 block uppercase">Gathering syllabus question pool, please wait!</span>
           </div>
         );

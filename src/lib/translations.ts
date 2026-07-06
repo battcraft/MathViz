@@ -112,7 +112,39 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     
     // Photo ask
     photoTitle: "Photo Ask (Math Snap) 📸",
-    photoDesc: "Upcoming feature: Snap a photo of your notebook & get step-by-step Hinglish tips!"
+    photoDesc: "Upcoming feature: Snap a photo of your notebook & get step-by-step Hinglish tips!",
+    
+    // Footer & Header
+    tagline: "CBSE Math Made Fun",
+    hinglishClasses: "Hinglish Classes 6-8",
+    poweredBy: "Powered by street-smart Hinglish pedagogy",
+    
+    // Streak & Progress
+    streakDays: "Days",
+    nextRank: "Next rank",
+    screensDone: "Screens done",
+    
+    // Quiz & Drills
+    quizQuestions: "5 Questions",
+    launchQuiz: "Launch 5-Question Challenge ⚔️",
+    drillCount: "5",
+    
+    // Learn View extras
+    markComplete: "I'm Done ✓",
+    selectDifficulty: "Choose your level",
+    chooseTopic: "Choose a topic",
+    chooseSubtopic: "Choose a subtopic",
+    startVideo: "Start Video",
+    reviewCards: "Review Cards",
+    startConcepts: "Start Concepts",
+    startPractice: "Start Practice",
+    startStory: "Start Kahani",
+    startQuiz: "Start Quiz",
+    claimMastery: "Claim Mastery Badge!",
+    mastered: "✓ Mastered",
+    claimSeal: "Claim Seal",
+    replayQuiz: "Replay Quiz",
+    replayStory: "Replay Kahani"
   },
   hi: {
     // Nav & Common UI
@@ -225,119 +257,38 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     
     // Photo ask
     photoTitle: "Photo Ask (Math Snap) 📸",
-    photoDesc: "Aane wala feature: Notebook ka photo khicho aur Hinglish mein step-by-step solution pao!"
-  },
-  "simple-hi": {
-    // Nav & Common UI
-    appName: "MathsGuru",
-    tabHome: "Home Screen",
-    tabLearn: "Study Room",
-    tabQuiz: "Quiz",
-    tabStory: "Story Time",
-    navHome: "Home 🏠",
-    navLearn: "Study Room 📚",
-    navQuiz: "Quiz ⚔️",
-    navStory: "Stories 📖",
-    navVideos: "Videos 🎬",
-    streak: "Streak days",
-    xpCoins: "Coins (XP)",
-    screensCompleted: "Completed Sheets",
-    levelBeg: "Beginner Level (Class 6)",
-    levelInt: "Intermediate Level (Class 7)",
-    levelExp: "Expert Level (Class 8)",
-    difficultyLabel: "Class / Level Select",
-    welcomeTitle: "Hi Math Hero! 👋",
-    startDrillCta: "Start Easy Practice",
-    badgesTitle: "Badges List",
-    badgesSubtitle: "Easy steps complete karke badge unlock karo",
-    dailyRiddleTitle: "Daily Quiz Riddle 🧩",
-    dailyRiddleSubtitle: "Easy 20 XP ke liye solve karo!",
-    riddleSuccess: "Good job! Correct answer! +20 XP.",
-    riddleFail: "No proxy! Try easy numbers. Mind block mat karo, simple logic hai!",
-    submitBtn: "Answer check karo",
-    riddleBtn: "Riddle and Match",
-    quickAccessTitle: "Quick Entry",
-    quickAccessLearn: "📚 Open Lessons",
-    quickAccessStory: "📖 Open Story",
+    photoDesc: "Aane wala feature: Notebook ka photo khicho aur Hinglish mein step-by-step solution pao!",
     
-    // Ranks
-    rank0: "Nimbu Scholar 🍋",
-    rank1: "Learner 🟢",
-    rank2: "Scholar 🔵",
-    rank3: "MathsGuru 🏆",
+    // Footer & Header
+    tagline: "CBSE Maths Ab Hogi Fun",
+    hinglishClasses: "Hinglish Classes 6-8",
+    poweredBy: "Street-smart Hinglish pedagogy se powered",
     
-    // Auth & UI Account
-    signInGoogle: "Google sign-in link",
-    signOut: "Log Out",
-    guestMode: "Guest Only (Offline)",
-    welcomeUser: "Welcome user,",
-    statsSynced: "All cloud sync operations done!",
-    saveOffline: "Offline browser storage update done",
+    // Streak & Progress
+    streakDays: "Din",
+    nextRank: "Agla rank",
+    screensDone: "Screens ho gaye",
     
-    // Mascot Messages
-    mascot_0: "Samosa bina aalu is like math without steps. Easy concept se dimaag kholo!",
-    mascot_1: "Hey champion, full volume swagg ke sath infinite math problems clear karo!",
-    mascot_2: "Bazaar game ho ya score analysis, quick numbers match calculations easy rakho!",
-    mascot_3: "Look around friend! Parallel boundary lines are everywhere - in streets and IPL courts!",
+    // Quiz & Drills
+    quizQuestions: "5 Sawal",
+    launchQuiz: "5 Sawal Ka Panga Lo ⚔️",
+    drillCount: "5",
     
-    // Learn View
-    selectTopicPrompt: "Please choose one Topic to start learning",
-    selectSubtopicPrompt: "Please choose a Subtopic",
-    screensProgress: "Completed pages",
-    markAsDone: "Finished sheet! (+5 XP)",
-    screenCompletedTag: "✓ COMPLETE",
-    viewedTag: "👁 REVIEWED",
-    unviewedTag: "CLEARED",
-    nextBtn: "Go Next",
-    prevBtn: "Go Back",
-    backToTopics: "← Go to Topics Menu",
-    backToSubtopics: "← Go to Subtopics Menu",
-    voiceActive: "Voice support active! Say 'agla'/'pichla'/'ho gaya'",
-    voiceInactive: "Click mic for hands-free study mode",
-    
-    // Video Player
-    playVideo: "Watch Easy Tutorial",
-    videoPlaying: "▶ PLAYING VIDEO",
-    videoEnded: "Video finished! Sheet done! +5 XP added",
-
-    // Quiz View
-    pangaIntroTitle: "Math Quiz",
-    pangaIntroDesc: "5 instant simple questions. Get +10 XP on every correct match!",
-    pangaStartBtn: "Start Quiz! ⚔️",
-    pangaHintBtn: "Show Maths Dost's Hint",
-    pangaCorrect: "Congratulations! Correct!",
-    pangaWrong: "Incorrect options. Get hint and try again!",
-    pangaResultTitle: "Quiz ScoresCard",
-    pangaResultWisdom: "Maths Dost says: Try making groups of 10s to calculate any shopping bill!",
-    pangaButtonNew: "Give me new questions",
-    pangaBackHome: "Go back to Home dashboard",
-    
-    // Story View
-    storyIntroTitle: "Math Storybook",
-    storyIntroDesc: "See how Delhi street shopping runs on clean Math logic! Earn +15 XP!",
-    storyStartBtn: "Read Kahani 📖",
-    storyDobaraBtn: "Read story again",
-    storyNextChoice: "Click choice option to continue story...",
-    storyFinished: "Storybook ended! Well done!",
-    storyFullScore: "Wow! You are indeed the King of Delhi Market Math!",
-    storyOkScore: "Nice attempt! Read again to secure full marks!",
-
-    // Chat Chowpal
-    chatTitle: "AI Maths Dost 💬",
-    chatSubtitle: "Maths Dost ke saath: Socho, samjho, aur solve karo!",
-    chatPromptPlaceholder: "Type question for Maths Dost helper...",
-    chatSendBtn: "Ask now",
-    chatQ1: "What is Bindu/Point?",
-    chatQ2: "What is the difference between Rekha (Line) & Segment?",
-    chatQ3: "How is negative number compared?",
-    chatQ4: "What does Range mean in real life?",
-    chatQ5: "Suggest a trick to round off numbers quickly.",
-    chatQ6: "How does Place Value protect our money?",
-    chatQ7: "Why do parallel lines never clash?",
-    chatQ8: "How does IPL use Max/Min values?",
-    
-    // Photo ask
-    photoTitle: "Camera math snap 📸",
-    photoDesc: "Upcoming features: Click notebook paper sum picture and get easy guide pointers!"
+    // Learn View extras
+    markComplete: "Ho Gaya! ✓",
+    selectDifficulty: "Apna level chuno",
+    chooseTopic: "Topic chuno",
+    chooseSubtopic: "Subtopic chuno",
+    startVideo: "Video Shuru Karo",
+    reviewCards: "Cards Dekho",
+    startConcepts: "Concepts Shuru Karo",
+    startPractice: "Practice Shuru Karo",
+    startStory: "Kahani Shuru Karo",
+    startQuiz: "Quiz Shuru Karo",
+    claimMastery: "Mastery Badge Lo!",
+    mastered: "✓ Seekh Liya",
+    claimSeal: "Seal Lo",
+    replayQuiz: "Quiz Dobara",
+    replayStory: "Kahani Dobara"
   }
 };

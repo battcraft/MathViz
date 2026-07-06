@@ -107,7 +107,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
     };
   }, []);
 
-  // Load 20-scenario story slides
+  // Load 5-scenario story slides
   const loadStorySlides = async (tId: string, sId: string) => {
     setLoading(true);
     const storyId = `${tId}_${sId}_${difficulty || "beginner"}`;
@@ -315,7 +315,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
       <div className="p-12 text-center bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] font-mono max-w-sm mx-auto text-black">
         <div className="animate-spin h-8 w-8 border-4 border-t-transparent border-black rounded-full mx-auto mb-4"></div>
         <p className="font-black uppercase tracking-tight text-xs">Assembling full 20-Scenarios Storybook...</p>
-        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Please wait while Bhaiya compiles slides...</span>
+        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Please wait while Maths Dost compiles slides...</span>
       </div>
     );
   }

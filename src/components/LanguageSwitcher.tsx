@@ -15,7 +15,6 @@ export default function LanguageSwitcher() {
       >
         <option value="en" className="bg-white text-black text-xs font-mono font-bold">English (EN)</option>
         <option value="hi" className="bg-white text-black text-xs font-mono font-bold">Hinglish (HI)</option>
-        <option value="simple-hi" className="bg-white text-black text-xs font-mono font-bold">Simple Hinglish</option>
       </select>
     </div>
   );

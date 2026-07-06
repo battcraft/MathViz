@@ -10,7 +10,7 @@ import VideosView from "./components/VideosView";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import UserMenu from "./components/UserMenu";
 import { DifficultyLevel } from "./types";
-import { Home, Compass, Target, BookOpen, Crown, PlayCircle } from "lucide-react";
+import { Home, Target, BookOpen, Crown, PlayCircle } from "lucide-react";
 
 function RootContent() {
   const { t } = useLanguage();
@@ -35,9 +35,9 @@ function RootContent() {
           </div>
           <div className="h-10 w-[2px] bg-black opacity-20 mx-1 hidden sm:block"></div>
           <div className="text-center sm:text-left">
-            <span className="text-base font-black italic block">Namaste, Math Hero! 🙏</span>
+            <span className="text-base font-black italic block">{t("welcomeTitle")}</span>
             <span className="text-[10px] text-zinc-500 uppercase font-bold tracking-wider mt-0.5 inline-block bg-orange-100/80 border border-orange-400 px-1.5 py-0.5 rounded-md">
-              Hinglish Classes 6-8
+              {t("hinglishClasses")}
             </span>
           </div>
         </div>
@@ -45,12 +45,12 @@ function RootContent() {
         {/* Dynamic header widgets matching direct Bento styling */}
         <div className="flex flex-wrap items-center justify-center gap-3">
           <div className="bg-white border-2 border-black px-4 py-1.5 flex items-center gap-2 font-black text-xs sm:text-sm rounded-xl shadow-[3px_3px_0px_black]">
-            <span className="opacity-70 text-[10px] uppercase font-bold">XP Balance:</span>
+            <span className="opacity-70 text-[10px] uppercase font-bold">{t("xpCoins")}:</span>
             <span className="text-black font-extrabold">{stats.xp} XP</span>
             <div className="w-5 h-5 bg-[#FFC700] border-2 border-black rounded-full"></div>
           </div>
           <div className="bg-[#FF4D4D] text-white border-2 border-black px-4 py-1.5 flex items-center gap-2 font-black text-xs sm:text-sm rounded-xl shadow-[3px_3px_0px_black]">
-            <span className="text-white font-extrabold">{stats.streak} DAYS</span>
+            <span className="text-white font-extrabold">{stats.streak} {t("streakDays")}</span>
             <span>🔥</span>
           </div>
           <div className="flex items-center gap-2 bg-white rounded-xl">
@@ -170,7 +170,7 @@ function RootContent() {
           © 2026 MathsGuru AI. Focused on Class 6, 7 & 8 CBSE/state student micro-learning workflows.
         </p>
         <div className="mt-3.5 inline-block text-[10px] bg-sky-50 border-2 border-black text-black font-extrabold px-3.5 py-1 rounded-full select-none uppercase tracking-wider shadow-[2px_2px_0px_black] transform rotate-1">
-          💡 Powered by street-smart Hinglish pedagogy
+          💡 {t("poweredBy")}
         </div>
       </footer>
 

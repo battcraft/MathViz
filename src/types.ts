@@ -3,7 +3,7 @@
  */
 
 export type DifficultyLevel = "beginner" | "intermediate" | "expert";
-export type Language = "en" | "hi" | "simple-hi";
+export type Language = "en" | "hi";
 
 export interface Screen {
   id: string;

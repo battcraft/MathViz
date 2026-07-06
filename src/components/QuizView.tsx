@@ -35,7 +35,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
   const [quizFinished, setQuizFinished] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Load custom 20 questions
+  // Load custom 5 questions
   const loadQuizPool = async (tId: string, sId: string, diff: DifficultyLevel) => {
     setLoading(true);
     const quizId = `${tId}_${sId}_${diff}`;
@@ -46,7 +46,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
 
       if (snapshot.exists()) {
         const cloudData = snapshot.data();
-        if (cloudData && Array.isArray(cloudData.questions) && cloudData.questions.length === 20) {
+        if (cloudData && Array.isArray(cloudData.questions) && cloudData.questions.length === 5) {
           setActiveQuestions(cloudData.questions);
           setLoading(false);
           return;
@@ -88,10 +88,10 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
         throw new Error("Invalid backend questions format received");
       }
     } catch (e) {
-      console.error("Failed loading 20 subtopic quiz questions pool:", e);
+      console.error("Failed loading quiz questions:", e);
       // Fallback local shuffle of static data if connection fails
       const shuffled = [...QUIZ_QUESTIONS].sort(() => Math.random() - 0.5);
-      setActiveQuestions(shuffled.slice(0, 20));
+      setActiveQuestions(shuffled.slice(0, 5));
     } finally {
       setLoading(false);
     }
@@ -174,7 +174,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
           </div>
           <div>
             <h2 className="text-xl font-sans font-black uppercase tracking-tight">Active Math Panga Room</h2>
-            <p className="text-[11px] text-zinc-500 font-bold uppercase mt-0.5">Solve a high-octane 20-question CBSE quiz tailored to your learning stage!</p>
+            <p className="text-[11px] text-zinc-500 font-bold uppercase mt-0.5">Quick 5-question CBSE quiz — sharp and focused!</p>
           </div>
         </div>
 
@@ -256,7 +256,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
           className="w-full mt-8 py-4 bg-[#FFC700] hover:bg-[#FFB100] text-black font-sans font-black border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wider flex items-center justify-center gap-2.5 cursor-pointer text-sm"
         >
           <Zap className="h-5 w-5 fill-[#1A1A1A] stroke-[2px]" />
-          <span>Launch 20-Question Challenge ⚔️</span>
+          <span>Start 5-Question Panga ⚔️</span>
         </button>
       </div>
     );
@@ -266,8 +266,8 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
     return (
       <div className="p-12 text-center bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] font-mono max-w-sm mx-auto text-black">
         <div className="animate-spin h-8 w-8 border-4 border-t-transparent border-black rounded-full mx-auto mb-4"></div>
-        <p className="font-black uppercase tracking-tight text-xs">Generating 20-question syllabus challenges from DB...</p>
-        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Wait, Bhaiya is setting up cards...</span>
+        <p className="font-black uppercase tracking-tight text-xs">Loading your 5 questions...</p>
+        <span className="text-[10px] text-zinc-400 mt-1 block uppercase">Wait, Maths Dost is setting up cards...</span>
       </div>
     );
   }
@@ -312,7 +312,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
             className="w-full py-3.5 bg-[#FFD700] hover:bg-[#FFC700] text-black font-sans font-black border-4 border-black rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wide flex items-center justify-center gap-2 cursor-pointer transition-transform active:translate-y-0.5 text-xs"
           >
             <RotateCcw className="h-5 w-5 stroke-[3px]" />
-            <span>Generate New 20 Math Panga</span>
+            <span>Try Another 5-Question Panga</span>
           </button>
 
           {onBack ? (
@@ -430,7 +430,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
         <div className="bg-amber-50 border-3 border-black p-4 rounded-xl mb-5 flex gap-3 animate-fade-in text-xs font-mono text-black leading-relaxed shadow-[3px_3px_0px_black]">
           <Lightbulb className="h-6 w-6 text-[#FFC700] fill-[#FFC700] flex-shrink-0" />
           <div>
-            <p className="font-black text-xs text-amber-950">Bhaiya ki Hint:</p>
+            <p className="font-black text-xs text-amber-950">Maths Dost ki Hint:</p>
             <p className="font-bold italic mt-0.5 text-zinc-700">"{currentQuestion?.hint}"</p>
           </div>
         </div>
@@ -448,7 +448,7 @@ export default function QuizView({ topicId: propTopicId, subtopicId: propSubtopi
               : "bg-white hover:bg-neutral-50 text-black"
           } ${isAnswered ? "opacity-30 cursor-not-allowed shadow-none" : ""}`}
         >
-          💡 Hint de do Bhaiya!
+          💡 Hint de do Maths Dost!
         </button>
 
         <div className="flex gap-2">

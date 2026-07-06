@@ -11,7 +11,7 @@ const DELHI_PLACES = [
 
 // Helper to get character names
 const CHARACTERS = [
-  "Tara", "Rohan", "MathsGuru Bhaiya", "Lassi Wale Bhaiya", "Kite Flyer Chacha",
+  "Tara", "Rohan", "Maths Dost", "Lassi Dost", "Kite Flyer Chacha",
   "Samosa Master Ji", "Metro card guard", "Haldiram Cashier", "Cricket Coach Amit", "Tea-stall Raju",
   "Auto Wale Uncle", "Kulfi Seller Sonu", "Bookstore owner Rohit", "Sweet Maker Chaman", "Baloon Seller Diya",
   "Fruit vendor Salim", "Metro Passenger Pinky", "Toy store owner Vinod", "Chaat center Chintu", "Kite Maker Rehman"
@@ -325,7 +325,7 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         digits = decVal as any; // display decimals instead
         targetDigit = Math.floor((decVal * 100) % 10); // get second decimal digit (hundredths place)
         title = `Drill #${i}: Micro Decimal Hundredths Place`;
-        instruction = `Evaluate key measurement ${decVal}. Tell Bhaiya which single digit sits in the Hundredths (Sau-va bhaag) decimal place index. Enter ${targetDigit}!`;
+        instruction = `Evaluate key measurement ${decVal}. Tell Maths Dost which single digit sits in the Hundredths (Sau-va bhaag) decimal place index. Enter ${targetDigit}!`;
       }
       targetValue = targetDigit;
     } 
@@ -415,7 +415,7 @@ export function getGeometryStoryDetails(subId: string, i: number, place: string,
       },
       {
         title: "Lassi Wala's Saffron Rabdi Drop",
-        narration: `Lassi Wale Bhaiya in ${place} drops a tiny drop of orange saffron rabdi on a foam cup to mark your special sugar-free glass. How much surface area on the cup does a true mathematical point occupy?`,
+        narration: `Lassi Dost in ${place} drops a tiny drop of orange saffron rabdi on a foam cup to mark your special sugar-free glass. How much surface area on the cup does a true mathematical point occupy?`,
         choices: [
           { text: "Zero area (A point is 0-dimensional, occupying no area!)", correct: true, rewardXp: 15 },
           { text: "1 square millimeter", correct: false, rewardXp: 0 },
@@ -477,8 +477,8 @@ export function getGeometryStoryDetails(subId: string, i: number, place: string,
         ]
       },
       {
-        title: "Bhaiya's Pole Star Landmark",
-        narration: `Looking up at ${place}, MathsGuru Bhaiya points to the bright North Star. 'It looks like a tiny glowing dot to us because of distance.' From our view, it behaves as:`,
+        title: "Dost's Pole Star Landmark",
+        narration: `Looking up at ${place}, Maths Dost points to the bright North Star. 'It looks like a tiny glowing dot to us because of distance.' From our view, it behaves as:`,
         choices: [
           { text: "A point indicating a directional sky spot", correct: true, rewardXp: 15 },
           { text: "An endless physical vector", correct: false, rewardXp: 0 },
@@ -804,8 +804,8 @@ export function getGeometryStoryDetails(subId: string, i: number, place: string,
         ]
       },
       {
-        title: "Lassi Wale Bhaiya's Silver Ladle Handle",
-        narration: `Serving yogurt in ${place}, Lassi Wale Bhaiya holds a long silver ladle handle of exactly 30 cm. If we denote a line segment from endpoint A to endpoint B, we write it as:`,
+        title: "Lassi Dost's Silver Ladle Handle",
+        narration: `Serving yogurt in ${place}, Lassi Dost holds a long silver ladle handle of exactly 30 cm. If we denote a line segment from endpoint A to endpoint B, we write it as:`,
         choices: [
           { text: "AB with a simple horizontal bar on top (AB̅)", correct: true, rewardXp: 15 },
           { text: "AB with arrows on both ends", correct: false, rewardXp: 0 },
@@ -1426,7 +1426,7 @@ export function getStoryQuestVariants(topicId: string, subId: string): StorySlid
 }
 
 /**
- * Generates 20 CBSE syllabus multiple choice questions for quizzes
+ * Generates CBSE syllabus multiple choice questions for quizzes
  */
 export function getConceptQuizVariants(topicId: string, subId: string, difficulty: string): QuizQuestion[] {
   const list: QuizQuestion[] = [];
