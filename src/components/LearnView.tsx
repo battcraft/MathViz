@@ -1437,9 +1437,9 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
           {/* Drill variant selector */}
           <div className="bg-amber-50/50 border-4 border-black p-4 rounded-2xl shadow-[4px_4px_0px_black] text-left">
-            <span className="font-sans font-black text-xs uppercase text-zinc-500 block mb-2 font-sans">🎯 SELECT FROM 20 HIGH-YIELD PRACTICE DRILLS:</span>
-            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-              {Array.from({ length: 20 }).map((_, idx) => {
+            <span className="font-sans font-black text-xs uppercase text-zinc-500 block mb-2 font-sans">🎯 SELECT FROM 5 HIGH-YIELD PRACTICE DRILLS:</span>
+            <div className="grid grid-cols-5 gap-2">
+              {Array.from({ length: 5 }).map((_, idx) => {
                 const isSelected = idx === activeVariantIndex;
                 const isDone = stats.completedScreens.includes(`${selectedSubtopic.id}_practice_variant_${idx}`);
                 return (
@@ -1468,7 +1468,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
             <div className="lg:col-span-3 bg-white border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden font-mono">
               <div className="p-3 bg-neutral-100 border-b-4 border-black text-left flex justify-between items-center text-xs font-black">
                 <span className="font-sans font-extrabold uppercase">📍 PRACTICING: {activeScreen.title}</span>
-                <span className="bg-white border-2 border-black px-2 py-0.5 rounded text-[10px] uppercase font-mono">Drill {activeVariantIndex + 1} / 20</span>
+                <span className="bg-white border-2 border-black px-2 py-0.5 rounded text-[10px] uppercase font-mono">Drill {activeVariantIndex + 1} / 5</span>
               </div>
               <div className="relative">
                 <iframe
@@ -1495,7 +1495,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 {isCurrentDrillCompleted ? (
                   <button
                     onClick={() => {
-                      if (activeVariantIndex < 19) {
+                      if (activeVariantIndex < 4) {
                         setActiveVariantIndex((p) => p + 1);
                       } else {
                         setActiveQuestStep("overview");
@@ -1503,7 +1503,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                     }}
                     className="w-full py-3 bg-[#10B981] text-white font-sans font-black text-xs uppercase tracking-wider border-3 border-black rounded-xl shadow-[3px_3px_0px_black] hover:bg-emerald-600 cursor-pointer text-center animate-pulse"
                   >
-                    {activeVariantIndex < 19 ? "Next Drill ➡️" : "🎉 All Drills Complete!"}
+                    {activeVariantIndex < 4 ? "Next Drill ➡️" : "🎉 All Drills Complete!"}
                   </button>
                 ) : (
                   <button
@@ -1556,9 +1556,9 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
           {/* Episode selector */}
           <div className="bg-[#ECFDF5] border-4 border-black p-4 rounded-2xl shadow-[4px_4px_0px_black] text-left">
-            <span className="font-mono font-black text-xs uppercase text-[#103D30] block mb-2">⚡ CHOOSE DELHI STREET ADVENTURE (EP 1 - EP 20):</span>
-            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-              {Array.from({ length: 20 }).map((_, idx) => {
+            <span className="font-mono font-black text-xs uppercase text-[#103D30] block mb-2">⚡ CHOOSE DELHI STREET ADVENTURE (EP 1 - EP 5):</span>
+            <div className="grid grid-cols-5 gap-2">
+              {Array.from({ length: 5 }).map((_, idx) => {
                 const isSelected = idx === activeVariantIndex;
                 const isDone = stats.completedScreens.includes(`${selectedSubtopic.id}_story_variant_${idx}`);
                 return (
@@ -1591,7 +1591,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 {storyData.emoji || "🛍️"}
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase font-black text-zinc-400">Delhi Market Episode {activeVariantIndex + 1} / 20</span>
+                <span className="text-[10px] font-mono uppercase font-black text-zinc-400">Delhi Market Episode {activeVariantIndex + 1} / 5</span>
                 <h3 className="font-sans font-black text-xl text-black uppercase tracking-tight leading-none mt-0.5">{storyData.title}</h3>
               </div>
             </div>
