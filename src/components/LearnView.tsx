@@ -371,7 +371,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
             } else if (isStory) {
               cardBg = "bg-emerald-50/40 hover:bg-emerald-50/70";
               stepLabel = `Step ${idx + 1}: Story Adventure 📖`;
-              description = "Explore 5 sequential real-world bargaining story situations in Delhi.";
+              description = "Explore 5 sequential real-world bargaining story situations across India.";
             } else if (isQuiz) {
               cardBg = "bg-blue-50/40 hover:bg-blue-50/70";
               stepLabel = `Step ${idx + 1}: Ultimate Panga Quiz 🎯`;
@@ -442,7 +442,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     },
     geom_rekha: {
       title: "🛣️ The Endless Metro Tracks",
-      story: "A Delhi Metro railway designer is examining train blueprints. The steel tracks are designed straight, extending infinitely in both directions so trains can travel indefinitely. Maths Dost asks: 'Tara, what geometric entity runs endlessly with no endpoints?'",
+      story: "A Mumbai Metro railway designer is examining train blueprints. The steel tracks are designed straight, extending infinitely in both directions so trains can travel indefinitely. Maths Dost asks: 'Tara, what geometric entity runs endlessly with no endpoints?'",
       options: ["A simple point (Bindu)", "An infinite Rekha (Line)!", "A narrow line segment with ends"],
       correct: 1,
       explanation: "Waah! A Line (Rekha) is a 1D concept stretching infinitely without boundary endpoints!"
@@ -456,7 +456,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     },
     geom_kiran: {
       title: "🔦 Red Laser Beam Pointer",
-      story: "During Diwali lights in Old Delhi, Rohan plays with a rechargeable red laser pointer. The bright beam originates at the pointer lens in his hand, and shoots straight forward infinitely into the dark night sky. What structure is this?",
+      story: "During Diwali lights in Kolkata, Rohan plays with a rechargeable red laser pointer. The bright beam originates at the pointer lens in his hand, and shoots straight forward infinitely into the dark night sky. What structure is this?",
       options: ["A Ray (Kiran) - starts at 1 point, flies straight to infinity!", "A Line segment with two endpoints", "A zero-dimensional point"],
       correct: 0,
       explanation: "Sahi pakde! A Ray (Kiran) originates at one single vertex point and projects infinitely in one direction."
@@ -540,7 +540,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
     geom_khand: [
       { question: "A Line Segment (Khand) represents what property?", options: ["Stretches infinitely", "Has exactly two fixed endpoints!", "Has only one endpoint", "Is a curved loop"], correct: 1, hint: "A segment is bounded by two definite endpoints." },
       { question: "Can we measure the exact physical length of a Line Segment?", options: ["Yes, using a standard ruler!", "No, because it is infinite", "Only using a thermometer", "No, it has zero length"], correct: 0, hint: "Since it has fixed boundaries, its length can be measured." },
-      { question: "The distance between Delhi and Noida is a:", options: ["Segment (it has fixed boundaries)", "Ray", "Point", "Infinite Line"], correct: 0, hint: "It has defined starting and ending stations." }
+      { question: "The distance between Mumbai and Thane is a:", options: ["Segment (it has fixed boundaries)", "Ray", "Point", "Infinite Line"], correct: 0, hint: "It has defined starting and ending stations." }
     ],
     geom_kiran: [
       { question: "How many starting endpoints does a Ray (Kiran) have?", options: ["0", "Exactly 1", "Exactly 2", "Infinite"], correct: 1, hint: "A ray has exactly one starting point (or origin) and projects infinitely on the other side." },
@@ -598,7 +598,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
   const getSubtopicStory = (subId: string) => {
     return CONCEPT_STORIES[subId] || {
       title: "📖 Market Problem Solving Quest",
-      story: "Tara is bargaining for materials in Delhi local market. She needs to calculate and compare prices to save money. The merchant gives her a rate spreadsheet, but some cells are missing values.",
+      story: "Tara is bargaining for materials in her local market. She needs to calculate and compare prices to save money. The merchant gives her a rate spreadsheet, but some cells are missing values.",
       options: ["Calculate and check place values first!", "Pick the largest number blindly", "Pay whatever the vendor asks"],
       correct: 0,
       explanation: "Exactly! Settle your prices and understand value positions first before you strike any bazaar deal!"
@@ -1336,7 +1336,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 {selectedSubtopic.id.includes("rekha") && (
                   <>
                     <p>✨ <strong>Rekha (Line) details:</strong> Ek line me infinite dots side-by-side scale ho jati hain. Ye straight stretches me bina end point ke infinite high dynamic vectors me jati hai!</p>
-                    <p>🛣️ Delhi Metro ke straight tracks anant Rekha (infinite lines) ki tarah stretch hoti hain.</p>
+                    <p>🛣️ Metro ke straight tracks anant Rekha (infinite lines) ki tarah stretch hoti hain.</p>
                   </>
                 )}
                 {selectedSubtopic.id.includes("khand") && (
@@ -1542,7 +1542,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       );
     }
 
-    // STEP 4 UI: Delhi Street Kahani
+    // STEP 4 UI: India Street Kahani
     if (activeQuestStep === "story") {
       const isCurrentStoryCompleted = stats.completedScreens.includes(`${selectedSubtopic.id}_story_variant_${activeVariantIndex}`);
 
@@ -1550,13 +1550,13 @@ export default function LearnView({ difficulty }: LearnViewProps) {
         <div className="max-w-3xl mx-auto w-full flex flex-col gap-6 animate-fade-in pb-12 text-black font-sans">
           
           <div className="flex justify-between items-center border-b-4 border-black pb-3 font-mono">
-            <h4 className="font-sans font-black text-lg uppercase font-sans">📖 Step 4: Delhi Street Story Quests</h4>
+            <h4 className="font-sans font-black text-lg uppercase font-sans">📖 Step 4: India Street Story Quests</h4>
             <span className="bg-emerald-100 border-2 border-black text-emerald-700 px-3 py-1 text-xs font-black">+25 XP coins</span>
           </div>
 
           {/* Episode selector */}
           <div className="bg-[#ECFDF5] border-4 border-black p-4 rounded-2xl shadow-[4px_4px_0px_black] text-left">
-            <span className="font-mono font-black text-xs uppercase text-[#103D30] block mb-2">⚡ CHOOSE DELHI STREET ADVENTURE (EP 1 - EP 5):</span>
+            <span className="font-mono font-black text-xs uppercase text-[#103D30] block mb-2">⚡ CHOOSE INDIA STREET ADVENTURE (EP 1 - EP 5):</span>
             <div className="grid grid-cols-5 gap-2">
               {Array.from({ length: 5 }).map((_, idx) => {
                 const isSelected = idx === activeVariantIndex;
@@ -1591,7 +1591,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 {storyData.emoji || "🛍️"}
               </div>
               <div>
-                <span className="text-[10px] font-mono uppercase font-black text-zinc-400">Delhi Market Episode {activeVariantIndex + 1} / 5</span>
+                <span className="text-[10px] font-mono uppercase font-black text-zinc-400">India Street Episode {activeVariantIndex + 1} / 5</span>
                 <h3 className="font-sans font-black text-xl text-black uppercase tracking-tight leading-none mt-0.5">{storyData.title}</h3>
               </div>
             </div>
@@ -1684,7 +1684,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               ) : (
                 <div className="flex-1 flex flex-col gap-4 text-left">
                   <div className="p-4 bg-yellow-50 border-2 border-black rounded-xl text-xs sm:text-sm font-bold text-zinc-800 leading-relaxed font-sans">
-                    🙋‍♂️ <strong>Maths Dost ka Gyaan:</strong> {storyData.explanation || "Bahut ache! Solving Delhi puzzles with algebra makes bargaining super easy. Learn how value placement reveals accurate prices!"}
+                    🙋‍♂️ <strong>Maths Dost ka Gyaan:</strong> {storyData.explanation || "Bahut ache! Solving puzzles with algebra makes bargaining super easy. Learn how value placement reveals accurate prices!"}
                   </div>
                   <div className="flex gap-2 w-full font-sans">
                     <button
@@ -1734,7 +1734,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
         <div className="max-w-2xl mx-auto w-full flex flex-col gap-6 animate-fade-in pb-12 text-black font-sans">
           
           <div className="flex justify-between items-center border-b-4 border-black pb-3 font-mono">
-            <h4 className="font-sans font-black text-lg uppercase">🎯 Step 4: CBSE Panga MCQ</h4>
+            <h4 className="font-sans font-black text-lg uppercase">🎯 Step 5: CBSE Panga MCQ</h4>
             <span className="bg-blue-105 border-2 border-black text-blue-700 px-3 py-1 text-xs font-black">+30 XP coins</span>
           </div>
 
