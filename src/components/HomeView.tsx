@@ -103,7 +103,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
   const [chatInput, setChatInput] = useState("");
   const [chatLoading, setChatLoading] = useState(false);
   const [chatMessages, setChatMessages] = useState<{ sender: "user" | "bhaiya"; text: string }[]>([
-    { sender: "bhaiya", text: "Namaste pyare dost! Main hoon aapka Maths Dost. Chalo, saath mein socho, samjho, aur solve karo! Math ka panga ho ya geometry ka tension, bina ghabraye poocho!" }
+    { sender: "bhaiya", text: t("chatGreeting") }
   ]);
 
   // Seeded instant Hinglish answers for the 8 standard questions
@@ -546,7 +546,7 @@ export default function HomeView({ difficulty, setDifficulty, setActiveTab }: Ho
         >
           <div className="font-sans">
             <h4 className="font-sans font-black text-sm text-black">{t("quickAccessLearn")}</h4>
-            <p className="text-[10px] text-zinc-700 font-bold mt-0.5">239 worksheets</p>
+            <p className="text-[10px] text-zinc-700 font-bold mt-0.5">{t("browseLessons")}</p>
           </div>
           <span className="text-xl h-8 w-8 flex items-center justify-center bg-white border-2 border-black rounded-lg shadow-[2px_2px_0px_black]">👉</span>
         </button>

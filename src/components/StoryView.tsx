@@ -118,7 +118,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
 
       if (snapshot.exists()) {
         const cloudData = snapshot.data();
-        if (cloudData && Array.isArray(cloudData.slides) && cloudData.slides.length === 20) {
+        if (cloudData && Array.isArray(cloudData.slides) && cloudData.slides.length === 5) {
           setActiveSlides(cloudData.slides);
           setLoading(false);
           return;
@@ -159,7 +159,7 @@ export default function StoryView({ topicId: propTopicId, subtopicId: propSubtop
         throw new Error("Invalid story format received");
       }
     } catch (e) {
-      console.error("Failed loading 20 subtopic story slides pool:", e);
+      console.error("Failed loading story slides pool:", e);
       // Fallback local shuffle of static data if connection fails
       const fallbackSlides = Array.from({ length: 20 }).map((_, i) => {
         const base = STORY_SLIDES[i % STORY_SLIDES.length];

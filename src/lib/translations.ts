@@ -34,6 +34,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     quickAccessLearn: "📚 Browse Lessons",
     quickAccessStory: "📖 Hear Stories",
     
+    // Chat Greeting
+    chatGreeting: "Hello dear friend! I am your Maths Dost. Let's think, understand, and solve together! Whether it's a math problem or geometry tension, ask without fear!",
+    
     // Ranks
     rank0: "Nimbu Scholar 🍋",
     rank1: "Learner 🟢",
@@ -97,10 +100,10 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     storyOkScore: "Not bad! Listen again to get perfect score!",
 
     // Chat Chowpal
-    chatTitle: "Maths Dost ki Chaupal 💬",
-    chatSubtitle: "Maths Dost ke saath: Socho, samjho, aur solve karo!",
+    chatTitle: "💬 Maths Dost Ki Chaupal 💬",
+    chatSubtitle: "Chat with Maths Dost: Think, Understand, and Solve!",
     chatPromptPlaceholder: "Type your math doubt here for your Maths Dost...",
-    chatSendBtn: "Puchho!",
+    chatSendBtn: "Ask!",
     chatQ1: "What is Bindu/Point?",
     chatQ2: "What is the difference between Rekha (Line) & Segment?",
     chatQ3: "How is negative number compared?",
@@ -146,6 +149,8 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     replayStory: "Replay Kahani"
   },
   hi: {
+    // Chat Greeting
+    chatGreeting: "Namaste pyare dost! Main hoon aapka Maths Dost. Chalo, saath mein socho, samjho, aur solve karo! Math ka panga ho ya geometry ka tension, bina ghabraye poocho!",
     // Nav & Common UI
     appName: "MathsGuru AI",
     tabHome: "Home",

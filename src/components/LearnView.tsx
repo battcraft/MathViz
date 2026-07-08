@@ -371,7 +371,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
             } else if (isStory) {
               cardBg = "bg-emerald-50/40 hover:bg-emerald-50/70";
               stepLabel = `Step ${idx + 1}: Story Adventure 📖`;
-              description = "Explore 20 sequential real-world bargaining story situations in Delhi.";
+              description = "Explore 5 sequential real-world bargaining story situations in Delhi.";
             } else if (isQuiz) {
               cardBg = "bg-blue-50/40 hover:bg-blue-50/70";
               stepLabel = `Step ${idx + 1}: Ultimate Panga Quiz 🎯`;
@@ -1286,7 +1286,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                   }}
                   className="w-full py-3 bg-[#22C55E] text-white font-sans font-black text-xs uppercase tracking-wider border-3 border-black rounded-xl shadow-[3px_3px_0px_black] hover:bg-green-600 cursor-pointer"
                 >
-                  ✓ Settle Concept Step!
+                  ✓ Done!
                 </button>
                 <button
                   onClick={() => setActiveQuestStep("overview")}
@@ -1385,7 +1385,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                   }}
                   className="w-full py-3 bg-[#22C55E] text-white font-sans font-black text-xs uppercase tracking-wider border-3 border-black rounded-xl shadow-[3px_3px_0px_black] hover:bg-green-600 cursor-pointer"
                 >
-                  ✓ Settle Class Step!
+                  ✓ Done!
                 </button>
                 <button
                   onClick={() => setActiveQuestStep("overview")}
@@ -1679,7 +1679,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                       : "bg-[#22C55E] text-white hover:bg-green-600"
                   }`}
                 >
-                  Settle Story Guidance!
+                  Complete Story Guidance!
                 </button>
               ) : (
                 <div className="flex-1 flex flex-col gap-4 text-left">
@@ -1879,7 +1879,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 CONCEPT UNLOCKED!
               </h2>
               <p className="text-sm font-bold text-zinc-700 leading-relaxed max-w-md mx-auto">
-                Grand Settle successful! You are now the official sovereign master of <strong className="text-neutral-900">{selectedSubtopic.name.replace(/💡|🏋️|📖|🎯|🏆/g, "").trim()}</strong>!
+                Mastery achieved! You are now the official sovereign master of <strong className="text-neutral-900">{selectedSubtopic.name.replace(/💡|🏋️|📖|🎯|🏆/g, "").trim()}</strong>!
               </p>
             </div>
 
@@ -1902,7 +1902,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               onClick={() => setSelectedSubtopic(null)}
               className="mt-4 px-8 py-4 bg-black text-[#FFC700] hover:bg-neutral-800 border-4 border-black rounded-xl font-sans font-black text-sm uppercase tracking-wider shadow-[4px_4px_0px_green] cursor-pointer active:translate-y-0.5"
             >
-              ⏩ Settle & Back to Syllabus Map
+              ⏩ Done — Back to Syllabus Map
             </button>
           </div>
 
