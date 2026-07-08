@@ -35,9 +35,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Physical points walk!";
         explanation = "Look at any digital map. A single shop, a metro terminal station, or the tip of a pencil on paper represents a physical Point in daily math.";
       } else {
-        title = `💡 Spatial points in geometry - Part ${i}`;
-        conceptHeading = `Point structures: Index ${i}`;
-        explanation = `Did you know? Every complex polygon (triangles, rectangles) starts as single Vertex Points. By connecting distinct points in sequence, we construct lines, lengths, and areas!`;
+        title = "💡 Maths Dost ka Bindu Challenge!";
+        conceptHeading = "Ghar mein Bindu dhundho!";
+        explanation = "Maths Dost kehta hai — apne room mein 5 bindu dhundho! Pencil ka tip, door knob, window ka corner, mirror ka edge, fan ka hook. Geometry toh sabke saath hai, bas nazariya chahiye!";
       }
     } else if (subtopicId === "geom_rekha") {
       interactiveType = "line_touch";
@@ -54,9 +54,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Parallel Lines Concept";
         explanation = "When two lines run beside each other with a constant, uniform distance and never touch, we call them Parallel Lines. Delhi Metro's tracks are perfect parallels!";
       } else {
-        title = `💡 Lines extending further - part ${i}`;
-        conceptHeading = `Extended Rekha structures: Index ${i}`;
-        explanation = `Geometry relies on infinite linear guidelines to calculate slopes, perspective, and alignment. If two non-parallel lines cross, they intersect at exactly one single point!`;
+        title = "💡 Maths Dost ki Rekha Pehchaan!";
+        conceptHeading = "Rekha roz milta hai!";
+        explanation = "Chai stall se school ka rasta dekho — seedhi rekha hai jo kabhi nahi rukti! Maths Dost kehta hai: railway track bhi aisi hi hai, dono taraf jaati hai aur kabhi khatam nahi hoti. Rekha toh har jagah hai!";
       }
     } else if (subtopicId === "geom_khand") {
       interactiveType = "line_touch";
@@ -73,9 +73,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Adding lengths up";
         explanation = "If point C lies on segment AB, then length AC + BC is equal to the total segment length AB! Use this simple math to solve road maps and split bills.";
       } else {
-        title = `💡 Segments in active polygons - Part ${i}`;
-        conceptHeading = `Segment boundaries: Index ${i}`;
-        explanation = `Samosas have 3 sides (segments A-B, B-C, and C-A). A kite has 4 segment boundaries. Segments are the true framework of all custom structural shapes.`;
+        title = "💡 Maths Dost ki Khand Pehchaan!";
+        conceptHeading = "Khand roz naapte ho!";
+        explanation = "Samosa ki ek side uthao — fixed length hai, ruler se naap sakte ho! Maths Dost kehta hai: cricket pitch 22 gaj lambi hai, auto-rickshaw ka meter distance naapta hai — yeh sab Khand hain!";
       }
     } else if (subtopicId === "geom_kiran") {
       interactiveType = "line_touch";
@@ -92,9 +92,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Rays in daily life";
         explanation = "A flashlight bulb is the raw origin point. When you turn it on, light shoots out in a straight ray into the endless street, behaving just like a Ray in geometry!";
       } else {
-        title = `💡 Rays & Angular borders - Part ${i}`;
-        conceptHeading = `Ray geometry structures: Index ${i}`;
-        explanation = `When two distinct rays start at a mutual origin point and shoot out at different angles, they form an Corner Angle. Rays define our line of sight in games!`;
+        title = "💡 Maths Dost ki Kiran Roshni!";
+        conceptHeading = "Torch jalao, Kiran mil gaya!";
+        explanation = "Torch jalao — ek point se roshni seedhi jaati hai aur kabhi nahi rukti! Maths Dost kehta hai: diya, phone flashlight, auto ka headlight — sab Kiran hain! Roshni hamesha straight jaati hai, yehi geometry ka rule hai!";
       }
     } else if (subtopicId === "geom_shikhar") {
       interactiveType = "point_hunt";
@@ -107,9 +107,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Vertices listing and bounds";
         explanation = "When multiple vertices are present, we call them 'vertices'. A triangle has vertices A, B, and C. A quadrilateral adds vertex D to form a closed shape.";
       } else {
-        title = `💡 Pointy peaks on graph lines - Part ${i}`;
-        conceptHeading = `Settle vertex rules: Index ${i}`;
-        explanation = `We use vertex points to measure angles, slopes, and aspect ratios. If you drag any vertex on our digital chalkboard, the connected sides automatically stretch!`;
+        title = "💡 Maths Dost ki Shikhar Dhoondh!";
+        conceptHeading = "Corners kahan hain?";
+        explanation = "Samosa ke teeno corners dekho — yeh Shikhar hain! Maths Dost kehta hai: TV screen ke 4 corners, table ke 4 corners, patang ke bhi 4 corners — har jagah vertices hain, bas nazar lagao!";
       }
     } else if (topicId === "geom") {
       title = `Geometry Shastra: Screen #${i}`;
@@ -128,9 +128,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Maximum margins in market";
         explanation = "Lassi shops want maximum customers and maximum prices to pull profit peaks! We locate maximums by sorting lists in ascending order and checking the last item.";
       } else {
-        title = `💡 Higherbounds of data arrays - Part ${i}`;
-        conceptHeading = `Maximum thresholds: Index ${i}`;
-        explanation = `To select maximum limits, we compare each item in a loop. If a new item is larger than our current max record, it claims the champion crown!`;
+        title = "💡 Maths Dost ka Maximum Dhundh!";
+        conceptHeading = "Sabse bada kaun?";
+        explanation = "Class mein 5 bachon ke marks — jo sabse zyada laya, woh topper! Maths Dost kehta hai: chai ki 3 prices dekho (₹10, ₹15, ₹20) — sabse mehengi ₹20 wali hai, yeh maximum price! IPL mein sabse zyada six = maximum!";
       }
     } else if (subtopicId === "maxmin_min") {
       interactiveType = "range_slider";
@@ -139,9 +139,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "What is Minimum value?";
         explanation = "Minimum (Nyunatam) represents the absolute lowest possible value! In business, we want a minimum cost of raw materials to maximize savings, defining our baseline floor.";
       } else {
-        title = `💡 Lower bounds of data sets - Part ${i}`;
-        conceptHeading = `Minimum margins: Index ${i}`;
-        explanation = `We locate minimum limits by scanning all scores. Sorting lists helps pull the smallest number right to the top row instantly.`;
+        title = "💡 Maths Dost ka Minimum Dhundh!";
+        conceptHeading = "Sabse chhota kaun?";
+        explanation = "Maths Dost kehta hai: market mein sabse sasti chai dhundho — woh minimum hai! Auto-rickshaw ka meter — jo sabse kam dikhaye, woh minimum fare! Pocket money mein sabse kam din ka hisaab = minimum!";
       }
     } else if (subtopicId === "maxmin_range") {
       interactiveType = "range_slider";
@@ -150,9 +150,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "How to query Range?";
         explanation = "Range (Fasla) represents the gap or distance between the highest and lowest values! To find Range, simply calculate: Maximum Value minus Minimum Value!";
       } else {
-        title = `💡 Spread variations & limits - Part ${i}`;
-        conceptHeading = `Range calculations: Index ${i}`;
-        explanation = `A wide Range means extremely volatile or fluctuating data (like temperature spikes from -10°C to 45°C). A narrow range holds super consistent pricing!`;
+        title = "💡 Maths Dost ka Fasla (Range)!";
+        conceptHeading = "Kitna fark hai?";
+        explanation = "Maths Dost kehta hai: Delhi mein garmi 45°C aur sardi 2°C — fasla 43°C hai! Chai ki price ₹10 se ₹15 tak — fasla sirf ₹5 hai! Maximum minus Minimum = Range. Simple hai na!";
       }
     } else if (topicId === "maxmin") {
       title = `Max/Min Tracker: Screen #${i}`;
@@ -166,9 +166,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Crocodile comparing rule";
         explanation = "The hungry math crocodile always opens its mouth toward the LARGER number! Hence, the greater-than symbol (>) has its wide opening eating the champion value.";
       } else {
-        title = `💡 Basic number comparing metrics - Part ${i}`;
-        conceptHeading = `Crocodile bounds: Index ${i}`;
-        explanation = `Always compare the highest place values first (like Thousands or Tens column) to decide which parcel is larger or lower.`;
+        title = "💡 Maths Dost ki Crocodile Tips!";
+        conceptHeading = "Kaise compare karein?";
+        explanation = "Maths Dost kehta hai: sabse pehle Hazaar wali jagah dekho! 52,340 vs 49,871 — 50 hazaar > 40 hazaar, toh 52,340 bada hai! Jaise cricket score mein pehle hundreds dekhte ho, wohi trick hai!";
       }
     } else if (subtopicId === "compare_decimals") {
       interactiveType = "decimal_battle";
@@ -177,9 +177,9 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "Decimal Place comparison";
         explanation = "Don't fall for length traps! 0.5 is much larger than 0.05, because the tenths place (5 tenths) beats zero tenths in 0.05! Always compare columns left-to-right.";
       } else {
-        title = `💡 Decimal place values comparison - Part ${i}`;
-        conceptHeading = `Decimals tracker: Index ${i}`;
-        explanation = `Comparing decimals is critical when analyzing metric grams of spices, kilograms of saffron, or matching currency exchange coins.`;
+        title = "💡 Maths Dost ka Decimal Dangal!";
+        conceptHeading = "Decimals mein kaun bada?";
+        explanation = "Maths Dost kehta hai: paan shop pe masala ₹12.50 aur supari ₹12.75 — kaun zyada mehenga? Decimal point ke baad ek-ek karke dekho! 5 < 7, toh supari zyada mehengi hai. Simple trick!";
       }
     } else if (subtopicId === "compare_rounding") {
       interactiveType = "rounding_match";
@@ -188,20 +188,20 @@ export function getProceduralScreens(topicId: string, subtopicId: string): Scree
         conceptHeading = "How to round numbers?";
         explanation = "In Chawri Bazar, we round bills for rapid change! If the paise ends in .50 or greater, push the rupee UP. If .49 or lower, keep the rupee down. Speed is value.";
       } else {
-        title = `💡 Rounding off to nearest ten - Part ${i}`;
-        conceptHeading = `Rounding metrics: Index ${i}`;
-        explanation = `To round to the nearest ten, inspect the ones column. 45 rounds up to 50; 44 rounds down to 40. This keeps estimates super simple.`;
+        title = "💡 Maths Dost ka Rounding Shortcut!";
+        conceptHeading = "Rounding ka asaan tarika!";
+        explanation = "Maths Dost kehta hai: bus fare ₹47 hai — nearest ₹50 mein round karo! Agar last digit 5 ya usse upar ho, toh upar jao. 45 → 50, 44 → 40. Chai stall pe bill round karna — yehi toh rounding hai!";
       }
     } else if (subtopicId === "compare_place") {
       interactiveType = "decimal_battle";
-      title = `💡 Place Value Power: Column weights - Part ${i}`;
-      conceptHeading = "Digits vs Place Value";
-      explanation = `A single digit's power depends strictly on its column position (ones, tens, hundreds, thousands/hazaar!). Moving left makes the digit ten times larger!`;
+      title = `💡 Maths Dost ki Place Value Power!`;
+      conceptHeading = "Digit ki jagah badlo, taakat badlo!";
+      explanation = `Maths Dost kehta hai: 5 ek hi digit hai, lekin jagah se taakat badti hai! 5 rupaye vs 500 rupaye vs 5000 rupaye — sab mein 5 hai, lekin hazaar wali jagah sabse powerful! Left jaao, power 10 guna badho!`;
     } else if (subtopicId === "compare_order") {
       interactiveType = "decimal_battle";
-      title = `💡 Ascending & Descending sequences (Kram) - Part ${i}`;
-      conceptHeading = "Ascending vs Descending";
-      explanation = `Sorting items in ascending order means lining them up from the smallest base to the highest peak. Descending order reverses this flow for high score cards!`;
+      title = `💡 Maths Dost ki Kram (Order) Dikhao!`;
+      conceptHeading = "Chhota se bada ya bada se chhota?";
+      explanation = `Maths Dost kehta hai: IPL ke scores dekho — ascending mein lagao toh sabse kam se zyada dikhega! Descending mein lagao toh topper pehle aayega! School bus stops ko bhi chhota se bada order mein rakh sakte ho!`;
     } else {
       title = `Number Champion: Screen #${i}`;
       conceptHeading = `Comparing Large Numbers & Decimals - Part ${i}`;

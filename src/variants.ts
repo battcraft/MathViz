@@ -1,24 +1,80 @@
 import { QuizQuestion, StorySlide } from "./types";
 
-// Helper to get Delhi street names for story atmosphere
+// Helper to get Indian city locations for story atmosphere
 const DELHI_PLACES = [
-  "Chandni Chowk", "Connaught Place", "Lajpat Nagar", "Chawri Bazar",
-  "Karol Bagh", "Sarojini Nagar Market", "Feroz Shah Kotla Stadium", "India Gate Road",
-  "Nizamuddin Gali", "Daryaganj Market", "Kamla Nagar Chauraha", "Janpath Corridor",
-  "Chitranjan Park", "Hauz Khas Village", "Paharganj Alley", "Dilli Haat Food court",
-  "Sadar Bazaar Lane", "Khan Market Road", "Red Fort Grounds", "Okhla Bypass"
+  // Mumbai
+  "Dadar TT Circle", "Bandra Local Station", "Juhu Beach Vada Pav Stall", "Colaba Causeway Market",
+  "Dharavi Pottery Lane", "Andheri East Tech Park", "Gateway of India Ferry Point", "Sion Flyover Dhaba",
+  // Bangalore
+  "Koramangala Food Street", "MG Road Metro Station", "Indiranagar Kalyan Nagar", "Electronic City Phase Gate",
+  "Commercial Street Shopping Lane", "UB City Food Court", "Whitefield IT Hub Canteen", "Malleshwaram 8th Cross",
+  // Kolkata
+  "Park Street Kebab Lane", "College Street Book Market", "New Market Sweets Corner", "Howrah Bridge Flower Stall",
+  "Salt Lake Sector V Office", "Victoria Memorial Grounds", "Gariahat Bypass junction", "Dakshineswar Temple Ghat",
+  // Chennai
+  "T. Nagar Ranganathan Street", "Mylapore Filter Coffee Stall", "Adyar Ananda Bhavan Lane", "Anna Nagar Tower Park",
+  "Egmore Museum Road", "Velachery Main Bus Stop", "Kapaleeshwarar Temple Street", "Tidal Park Food Court",
+  // Jaipur
+  "Hawa Mahal Bazaar", "Johari Bazaar Gem Shop", "Nahargarh Fort Road", "Bapu Bazaar Textile Lane",
+  "Amber Fort Elephant Point", "Jal Mahal Fish Market", "C-Scheme Office Complex", "Tonk Road Sweet Shop",
+  // Hyderabad
+  "Charminar Biryani Gali", "HITEC City Tech Park", "Jubilee Hills Banjara Hills", "Secunderabad Station Road",
+  "Golconda Fort Market", "Ameerpet Coaching Centre", "Mehdipatnam Vegetable Market", "Film Nagar Studio Gate",
+  // Pune
+  "FC Road College Fest Gate", "Koregaon Park Cafe Lane", "Sinhagad Road Dhaba", "Shaniwar Wada Market",
+  "Viman Nagar IT Park", "Deccan Bus Stand Junction", "Kothrud Misal Pav Stall", "Swargate Auto Stand",
+  // Kerala
+  "Kochi Marine Drive Promenade", "Alleppey Backwaters Houseboat", "Munnar Tea Estate Gate", "Trivandrum Padmanabhaswamy Temple",
+  "Calicut Beach Bazaar", "Kumarakom Fish Market", "Wayanad Spice Plantation", "Kovalam Lighthouse Beach"
 ];
 
-// Helper to get character names
+// Helper to get India-specific character names
 const CHARACTERS = [
-  "Tara", "Rohan", "Maths Dost", "Lassi Dost", "Kite Flyer Chacha",
-  "Samosa Master Ji", "Metro card guard", "Haldiram Cashier", "Cricket Coach Amit", "Tea-stall Raju",
-  "Auto Wale Uncle", "Kulfi Seller Sonu", "Bookstore owner Rohit", "Sweet Maker Chaman", "Baloon Seller Diya",
-  "Fruit vendor Salim", "Metro Passenger Pinky", "Toy store owner Vinod", "Chaat center Chintu", "Kite Maker Rehman"
+  "Tara", "Rohan", "Maths Dost", "Chai Dost", "Kite Flyer Chacha",
+  "Vada Pav Master Ji", "Metro card guard", "IPL Coach Arjun", "Tea-stall Raju",
+  "Auto Wale Uncle", "Filter Coffee Seller Kanna", "Bookstore owner Rohit", "Biryani Bhai", "Diya the Balloon Seller",
+  "Fruit vendor Salim", "Metro Passenger Pinky", "Toy store owner Vinod", "Chaat center Chintu", "Kite Maker Rehman",
+  "Sweet Maker Mohan", "Dosa Uncle from Mylapore", "Pav Bhaji Wale Bhau", "Idli Amma from Chennai", "Momos Didi from Delhi"
 ];
 
 // Emojis mapping
 const EMOJIS = ["🛺", "🪁", "🍢", "🧋", "🏏", "🎯", "🔑", "🍿", "🛍️", "🏪", "🏫", "🔋", "💡", "📦", "🏷️", "💳", "👟", "🚲", "🍵", "🥨"];
+
+// Fun template wrappers for drill instructions (cycles through 8 styles)
+const DRILL_PREFIXES = [
+  "🎯 Bhaiya says: ",
+  "⚡ Quick challenge: ",
+  "🏆 Competition time! ",
+  "📖 Story time: ",
+  "🔥 Speed round: ",
+  "💡 Puzzle alert: ",
+  "🎪 Fun drill: ",
+  "🚀 Blast off! ",
+];
+const DRILL_SUFFIXES = [
+  " Kar dikha, Maths Dost! 🎯",
+  " Chai thandi ho rahi hai, jaldi! ☕",
+  " Agar sahi toh samosa party meri taraf se! 🍛",
+  " Dikhao apna talent! 💪",
+  " Jeeto aur khush raho! 😄",
+  " Ek dum perfect karo! ✨",
+  " Masti ke saath math karo! 🎉",
+  " Go for gold! 🥇",
+];
+
+// Fun distractor pool for quiz questions
+const FUN_DISTRACTORS = [
+  "The number of samosas in a plate (usually 4!) 🍛",
+  "What Rahul scored in his last cricket match 🏏",
+  "The temperature in Shimla today ❄️",
+  "The price of 1kg onions (aaj kal bahut mehenge hain!) 🧅",
+  "How many items in a Haldiram thali 🥘",
+  "Auto fare from Connaught Place to Chandni Chowk 🛺",
+  "The number of overs in a T20 match 🏏",
+  "Papa ji's WiFi password digits 🔢",
+  "The number of stops on Delhi Metro Yellow Line 🚇",
+  "AICC ke samosas ki sankhya 🍛",
+];
 
 /**
  * Generates 20 High-yield Practice Drills for a given subtopic
@@ -156,22 +212,40 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         maxVal = i * 8 + 50;
         const o1 = maxVal - 15;
         const o2 = maxVal - 30;
-        title = `Drill #${i}: Peak Integer Spotter`;
-        instruction = `Compare the quantities: [25, ${o1}, ${maxVal}, ${o2}]. Lock the slider bracket onto the Maximum peak number (${maxVal})!`;
+        const maxStories = [
+          { title: `Drill #${i}: Rohit's Cricket Score Max`, instruction: `Rohit scored these runs in 4 innings: [25, ${o1}, ${maxVal}, ${o2}]. His coach needs the MAXIMUM score to decide the playing XI! Slide the bracket to the highest score: ${maxVal}!` },
+          { title: `Drill #${i}: IPL Ticket Price Hunt`, instruction: `Ticket prices at 4 counters: [Rs 25, Rs ${o1}, Rs ${maxVal}, Rs ${o2}]. Find the MAXIMUM price — that's your worst-case budget! Slide to Rs ${maxVal}!` },
+          { title: `Drill #${i}: Filter Coffee Rush Hour`, instruction: `Kanna served these cups: [25, ${o1}, ${maxVal}, ${o2}]. The MAXIMUM tells him when he needs extra supplies! Slide to ${maxVal} cups!` }
+        ];
+        const story = maxStories[i % maxStories.length];
+        title = story.title;
+        instruction = story.instruction;
       } else if (difficulty === "intermediate") {
         // Intermediate: Standard sports runs comparative datasets
         maxVal = i * 20 + 130;
         const o1 = maxVal - 60;
         const o2 = maxVal - 25;
-        title = `Drill #${i}: IPL Peak Run Spotter`;
-        instruction = `Analyze the run totals: [110, ${maxVal}, ${o1}, ${o2}]. Set the bracket slider lock to capture the Maximum peak runs of ${maxVal}!`;
+        const maxStories = [
+          { title: `Drill #${i}: IPL Peak Run Spotter`, instruction: `Analyze the run totals: [110, ${maxVal}, ${o1}, ${o2}]. Set the bracket slider lock to capture the Maximum peak runs of ${maxVal}!` },
+          { title: `Drill #${i}: Biryani Bhai's Spice Budget`, instruction: `Spice prices: [Rs 110, Rs ${maxVal}, Rs ${o1}, Rs ${o2}]. The MAXIMUM tells Biryani Bhai his biggest expense! Slide to Rs ${maxVal}!` },
+          { title: `Drill #${i}: College Fest Entry Price`, instruction: `Ticket tiers: [Rs 110, Rs ${maxVal}, Rs ${o1}, Rs ${o2}]. The MAXIMUM is the VIP price! Slide to Rs ${maxVal}!` }
+        ];
+        const story = maxStories[i % maxStories.length];
+        title = story.title;
+        instruction = story.instruction;
       } else {
         // Expert: Decimals comparison challenge
         maxVal = parseFloat((i * 1.75 + 14.5).toFixed(2));
         const o1 = parseFloat((maxVal - 1.25).toFixed(2));
         const o2 = parseFloat((maxVal - 0.75).toFixed(2));
-        title = `Drill #${i}: Peak Micro-Decimal Tracker`;
-        instruction = `Evaluate the coordinates: [10.25, ${o1}, ${o2}, ${maxVal}]. Find the maximum limit coefficient and slide the scale lock to ${maxVal}!`;
+        const maxStories = [
+          { title: `Drill #${i}: Saffron Price Tracker`, instruction: `Check the prices at ${place}: [Rs 10.25, Rs ${o1}, Rs ${o2}, Rs ${maxVal}]. Find the sabse mehenga (most expensive) saffron and slide the scale lock to Rs ${maxVal}!` },
+          { title: `Drill #${i}: Coffee Decoction Maximum`, instruction: `Kanna's decoction volumes: [10.25 ml, ${o1} ml, ${o2} ml, ${maxVal} ml]. The MAXIMUM batch needs extra coffee powder! Slide to ${maxVal} ml!` },
+          { title: `Drill #${i}: Sweet Shop Sugar Max`, instruction: `Sugar weights: [10.25 kg, ${o1} kg, ${o2} kg, ${maxVal} kg]. The MAXIMUM batch is for the wedding order! Slide to ${maxVal} kg!` }
+        ];
+        const story = maxStories[i % maxStories.length];
+        title = story.title;
+        instruction = story.instruction;
       }
       targetValue = maxVal;
     } 
@@ -183,19 +257,37 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         minVal = (i % 5) + 2;
         const o1 = minVal + 5;
         const o2 = minVal + 12;
-        title = `Drill #${i}: Minimum Shop Price Tag`;
-        instruction = `Examine prices: [Rs ${o1}, Rs ${minVal}, Rs ${o2}, Rs 40]. Slide-check and select the absolute cheapest minimum rate: Rs. ${minVal}!`;
+        const minStories = [
+          { title: `Drill #${i}: Cheapest Vada Pav Hunt`, instruction: `Vada pav prices at 4 stalls: [Rs ${o1}, Rs ${minVal}, Rs ${o2}, Rs 40]. Find the MINIMUM — the cheapest vada pav! Slide to Rs ${minVal}!` },
+          { title: `Drill #${i}: Filter Coffee Price Check`, instruction: `Coffee prices: [Rs ${o1}, Rs ${minVal}, Rs ${o2}, Rs 40]. The MINIMUM is Kanna's special price! Slide to Rs ${minVal}!` },
+          { title: `Drill #${i}: Metro Ticket Minimum`, instruction: `Metro fares: [Rs ${o1}, Rs ${minVal}, Rs ${o2}, Rs 40]. The MINIMUM fare is the shortest distance! Slide to Rs ${minVal}!` }
+        ];
+        const story = minStories[i % minStories.length];
+        title = story.title;
+        instruction = story.instruction;
       } else if (difficulty === "intermediate") {
         // Intermediate: Negative integer temperatures
         minVal = -((i % 6) * 4 + 3); // -3, -7, -11, -15, -19, -23
-        title = `Drill #${i}: Sub-Zero Coldest Locker`;
-        instruction = `Identify the minimum temperature from logs: [0°C, -2°C, ${minVal}°C, 12°C]. Set the selector to latch onto the absolute coldest value: ${minVal}°C!`;
+        const minStories = [
+          { title: `Drill #${i}: Munnar Tea Estate Frost`, instruction: `Frost warnings at 4 spots: [0°C, -2°C, ${minVal}°C, 12°C]. The MINIMUM is when tea leaves freeze most! Slide to ${minVal}°C!` },
+          { title: `Drill #${i}: Hill Station Freezer Alert`, instruction: `Freezer temps: [0°C, -2°C, ${minVal}°C, 12°C]. The MINIMUM means the kulfi might crack! Slide to ${minVal}°C!` },
+          { title: `Drill #${i}: Backwaters Night Temperature`, instruction: `Night temps on houseboat: [0°C, -2°C, ${minVal}°C, 12°C]. The MINIMUM is when you need extra blankets! Slide to ${minVal}°C!` }
+        ];
+        const story = minStories[i % minStories.length];
+        title = story.title;
+        instruction = story.instruction;
       } else {
         // Expert: Extreme sub-zero precise decimals
         minVal = -parseFloat(((i % 5) * 4.35 + 10.5).toFixed(2)); // e.g., -10.5, -14.85
         const o1 = parseFloat((minVal + 4).toFixed(2));
-        title = `Drill #${i}: Scientific Cryo-Locker Freeze`;
-        instruction = `A laboratory freezer records logs: [0.0°C, ${o1}°C, ${minVal}°C, -5.2°C]. Slide the dial to verify the absolute minimum peak cold: ${minVal}°C!`;
+        const minStories = [
+          { title: `Drill #${i}: Wayanad Spice Cold Room`, instruction: `Spice cold room temps: [0.0°C, ${o1}°C, ${minVal}°C, -5.2°C]. The MINIMUM means cardamom might lose flavor! Slide to ${minVal}°C!` },
+          { title: `Drill #${i}: Shimla vs Chennai Fridge`, instruction: `Freezer readings: [0.0°C, ${o1}°C, ${minVal}°C, -5.2°C]. The MINIMUM is the sabse thanda (coldest) reading! Slide to ${minVal}°C!` },
+          { title: `Drill #${i}: Ice Cream Shop Alert`, instruction: `Freezer temps: [0.0°C, ${o1}°C, ${minVal}°C, -5.2°C]. The MINIMUM means the kulfi is in danger! Slide to ${minVal}°C!` }
+        ];
+        const story = minStories[i % minStories.length];
+        title = story.title;
+        instruction = story.instruction;
       }
       targetValue = minVal;
     } 
@@ -207,22 +299,40 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         const lower = i * 2 + 5;
         const upper = lower + (i % 6) + 12;
         rangeVal = upper - lower;
-        title = `Drill #${i}: Elementary Yardstick Span`;
-        instruction = `A ruler segment starts at ${lower} cm and caps at ${upper} cm. Settle the span offset (Range = Max - Min) which equals ${rangeVal} cm. Clamp the slider!`;
+        const rangeStories = [
+          { title: `Drill #${i}: Mumbai Local Ticket Fasla`, instruction: `Mumbai local tickets: second class Rs ${lower}, AC first Rs ${upper}. Range (Fasla) = ${upper} - ${lower} = ${rangeVal} rupees. Slide to Rs ${rangeVal}!` },
+          { title: `Drill #${i}: Jaipur Textile Price Spread`, instruction: `Dupatta prices: basic Rs ${lower}, fancy mirror-work Rs ${upper}. The Fasla is ${rangeVal} rupees! Slide to Rs ${rangeVal}!` },
+          { title: `Drill #${i}: Kolkata Sweet Range`, instruction: `Rasgulla Rs ${lower}, sandesh tower Rs ${upper}. The Fasla tells Mohan his product spread: ${rangeVal} rupees! Slide to Rs ${rangeVal}!` }
+        ];
+        const story = rangeStories[i % rangeStories.length];
+        title = story.title;
+        instruction = story.instruction;
       } else if (difficulty === "intermediate") {
         // Intermediate: Standard range between upper and basic prices
         const upper = (i % 5) * 20 + 150;
         const lower = (i % 4) * 10 + 20;
         rangeVal = upper - lower;
-        title = `Drill #${i}: Price Fasla Spread`;
-        instruction = `At ${place}, upper cap is Rs ${upper} and basic is Rs ${lower}. Check the spectrum distance (Fasla Range) = Upper - Lower, which is Rs ${rangeVal}. Set slider to Rs ${rangeVal}!`;
+        const rangeStories = [
+          { title: `Drill #${i}: Pune College Fest Fasla`, instruction: `General ticket Rs ${lower}, VIP backstage Rs ${upper}. The Fasla tells the treasurer the pricing spread: Rs ${rangeVal}. Slide to Rs ${rangeVal}!` },
+          { title: `Drill #${i}: Hyderabad Biryani Price Gap`, instruction: `Chicken biryani Rs ${lower}, mutton biryani Rs ${upper}. Biryani Bhai's Fasla is Rs ${rangeVal}! Slide to Rs ${rangeVal}!` },
+          { title: `Drill #${i}: Bangalore Tech Park Lunch`, instruction: `Thali Rs ${lower}, premium buffet Rs ${upper}. The Fasla is Rs ${rangeVal}! Slide to Rs ${rangeVal}!` }
+        ];
+        const story = rangeStories[i % rangeStories.length];
+        title = story.title;
+        instruction = story.instruction;
       } else {
         // Expert: Range between a negative temperature and a positive temperature (Class 8 integers)
         const lower = -((i % 5) * 5 + 5); // negative floor: -5 to -25
         const upper = (i % 4) * 10 + 15; // positive ceiling: 15 to 45
         rangeVal = upper - lower; // spans sub-zero to positive
-        title = `Drill #${i}: Thermal Amplitude Spectrum`;
-        instruction = `The coldest cargo reading is ${lower}°C and peak thermal is ${upper}°C. Find the temperature range distance: Range = Peak(${upper}) - Floor(${lower}) = ${rangeVal}°C. Slide to ${rangeVal}!`;
+        const rangeStories = [
+          { title: `Drill #${i}: Shimla vs Chennai Temperature Fasla`, instruction: `Shimla mein barf giri hai: ${lower}°C aur Chennai mein garmi hai: ${upper}°C. Temperature ka fasla = ${upper} - (${lower}) = ${rangeVal}°C. Slide to ${rangeVal}!` },
+          { title: `Drill #${i}: Munnar vs Kolkata Weather Gap`, instruction: `Munnar: ${lower}°C, Kolkata: ${upper}°C. The temperature Fasla is ${rangeVal}°C! Slide to ${rangeVal}!` },
+          { title: `Drill #${i}: Hill Station vs Coastal Range`, instruction: `Hill station: ${lower}°C, coastal city: ${upper}°C. The Fasla spans ${rangeVal}°C! Slide to ${rangeVal}!` }
+        ];
+        const story = rangeStories[i % rangeStories.length];
+        title = story.title;
+        instruction = story.instruction;
       }
       targetValue = rangeVal;
     } 
@@ -248,8 +358,8 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         const valSm = parseFloat((valLg - 2.15).toFixed(2));
         larger = valLg;
         smaller = valSm;
-        title = `Drill #${i}: Sub-Zero Decimal Gator Duel`;
-        instruction = `The cryogenic scale triggers comparative locks. Settle which is bigger: ${larger} or ${smaller}. Click the larger value!`;
+        title = `Drill #${i}: Negative Number Gator Challenge`;
+        instruction = `Gator bhaiya says: In negative numbers, jo zero ke paas hai woh bada hai! Compare karo: ${larger} vs ${smaller}. Click the larger value!`;
       }
       targetValue = larger;
     } 
@@ -298,8 +408,8 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         const raw = 4.215 + i * 0.137;
         baseNum = raw.toFixed(3);
         expectedRounded = parseFloat(raw.toFixed(1));
-        title = `Drill #${i}: Positional Tenths Rounding`;
-        instruction = `A high-precision balance calibrator clocks coordinate scale ${baseNum}. Round it to the nearest Tenths (1 decimal place) precisely! Settle on ${expectedRounded}.`;
+        title = `Drill #${i}: Haldiram Bill Rounding`;
+        instruction = `Haldiram ka bill aaya hai: Rs ${baseNum}. Bhaiya's weighing balance pe round karo nearest 10 paise (1 decimal place) mein! Answer: Rs ${expectedRounded}.`;
       }
       targetValue = { original: baseNum, expected: expectedRounded };
     } 
@@ -355,16 +465,20 @@ export function getPracticeDrillVariants(topicId: string, subId: string, difficu
         const decSm = -parseFloat((4.75 + i * 0.25).toFixed(2));
         larger = decLg;
         smaller = decSm;
-        title = `Drill #${i}: Scientific Decimals Ascent`;
+        title = `Drill #${i}: Market Price Comparison`;
         instruction = `Determine the deepest value in negative space (smallest coordinate): ${larger} vs ${smaller}. Click the smaller value, which is ${smaller}!`;
         targetValue = smaller;
       }
     }
 
+    // Vary drill instruction format with fun templates
+    const templateIdx = (i - 1) % DRILL_PREFIXES.length;
+    const wrappedInstruction = `${DRILL_PREFIXES[templateIdx]}${instruction}${DRILL_SUFFIXES[templateIdx]}`;
+
     drills.push({
       id: `${topicId}_${subId}_drill_${i}`,
       title: `[${levelLabel}] ${title}`,
-      instruction,
+      instruction: wrappedInstruction,
       targetValue,
       type,
       conceptSubtopicId: activeSubId
@@ -1333,84 +1447,376 @@ export function getStoryQuestVariants(topicId: string, subId: string): StorySlid
       choices = details.choices;
     } 
     else if (subId.includes("max")) {
-      title = `The Vegetable Price Peak: Maximum Value in ${place}`;
-      narration = `At the local market in ${place}, the prices of 1kg vegetables are: Potatoes (Rs. ${i * 5 + 10}), Onions (Rs. ${i * 6 + 20}), and Premium Ginger (Rs. ${i * 12 + 100}). Salim asks you: 'Help me identify the Maximum peak rate to know our most expensive vegetable!'`;
-      const correctVal = i * 12 + 100;
+      // Rotate through different India-specific Max story narratives
+      const maxStories = [
+        {
+          title: `Rohit's Cricket Scoreboard Drama at ${place}`,
+          narration: `Rohit's cricket team is playing a tournament match at ${place}. His coach says: 'Beta, we need your MAXIMUM score from the last 5 innings to decide if you're in the playing XI!' Rohit's scores were: ${i * 3 + 12}, ${i * 5 + 28}, ${i * 2 + 8}, ${i * 7 + 45}, and ${i * 4 + 19}. Which score does the coach need to check?`,
+          correctVal: i * 7 + 45,
+          correctText: `Rs. ${i * 7 + 45} (The highest score — that's Rohit's best innings!)`,
+          wrong1: `${i * 3 + 12}`,
+          wrong2: `${i * 5 + 28}`
+        },
+        {
+          title: `Priya's IPL Ticket Hunt at ${place}`,
+          narration: `Priya desperately wants to watch the IPL final at ${place}. The ticket prices at 5 different counters are: Rs. ${i * 8 + 150}, Rs. ${i * 12 + 280}, Rs. ${i * 6 + 120}, Rs. ${i * 15 + 350}, and Rs. ${i * 10 + 200}. Her dad says: 'Find the MAXIMUM price first — that tells us the worst case budget!' Which is the most expensive ticket?`,
+          correctVal: i * 15 + 350,
+          correctText: `Rs. ${i * 15 + 350} (The peak price — that's the max budget needed!)`,
+          wrong1: `Rs. ${i * 8 + 150}`,
+          wrong2: `Rs. ${i * 12 + 280}`
+        },
+        {
+          title: `Kanna's Filter Coffee Rush at ${place}`,
+          narration: `Kanna runs a famous filter coffee stall at ${place}. During the morning rush, he served ${i * 4 + 15}, ${i * 6 + 25}, ${i * 3 + 10}, and ${i * 8 + 35} cups in 4 consecutive hours. He tells his son: 'Find the MAXIMUM — that's our busiest hour! We need extra supplies then!' Which hour had the most customers?`,
+          correctVal: i * 8 + 35,
+          correctText: `${i * 8 + 35} cups (The busiest hour — that's the MAXIMUM rush!)`,
+          wrong1: `${i * 4 + 15}`,
+          wrong2: `${i * 6 + 25}`
+        },
+        {
+          title: `Biryani Bhai's Spice Market Deal at ${place}`,
+          narration: `Biryani Bhai is shopping for spices at ${place}. He needs to find the most expensive ingredient to manage his budget. Prices per kg: Cardamom Rs. ${i * 20 + 400}, Cloves Rs. ${i * 15 + 300}, Cinnamon Rs. ${i * 10 + 200}, Saffron Rs. ${i * 30 + 800}, and Star Anise Rs. ${i * 8 + 150}. Which spice costs the MAXIMUM?`,
+          correctVal: i * 30 + 800,
+          correctText: `Rs. ${i * 30 + 800} (Saffron — the most expensive spice, that's the MAXIMUM!)`,
+          wrong1: `Rs. ${i * 20 + 400}`,
+          wrong2: `Rs. ${i * 15 + 300}`
+        },
+        {
+          title: `Dosa Uncle's Morning Rush Count at ${place}`,
+          narration: `Dosa Uncle serves hot dosas at his stall near ${place}. He counted servings in 5 batches: ${i * 5 + 20}, ${i * 3 + 12}, ${i * 7 + 38}, ${i * 4 + 18}, and ${i * 2 + 9}. He says: 'Bhai, the MAXIMUM batch tells me when I need my assistant to help!' Which batch was the biggest?`,
+          correctVal: i * 7 + 38,
+          correctText: `${i * 7 + 38} dosas (The largest batch — that's the MAXIMUM!)`,
+          wrong1: `${i * 5 + 20}`,
+          wrong2: `${i * 3 + 12}`
+        }
+      ];
+      const story = maxStories[i % maxStories.length];
+      title = story.title;
+      narration = story.narration;
+      const correctVal = story.correctVal;
       choices = [
-        { text: `Rs. ${i * 5 + 10} (Potatoes)`, correct: false, rewardXp: 0 },
-        { text: `Rs. ${correctVal} (Ginger - the highest value in our dataset!)`, correct: true, rewardXp: 15 },
-        { text: `Rs. ${i * 6 + 20} (Onions)`, correct: false, rewardXp: 0 }
+        { text: `${story.wrong1}`, correct: false, rewardXp: 0 },
+        { text: `${story.correctText}`, correct: true, rewardXp: 15 },
+        { text: `${story.wrong2}`, correct: false, rewardXp: 0 }
       ];
     } 
     else if (subId.includes("min")) {
-      title = `Cold Vegetable Cargo Log at ${place}`;
-      narration = `A cold storage truck delivering fresh spinach to ${place} logs deep freeze storage points: [-${i}, -${i * 3}, -2]°C. Salim needs to identify the minimum coldest temperature value to preserve cargo. Which one is it?`;
+      // Rotate through different India-specific Min story narratives
+      const minStories = [
+        {
+          title: `Alleppey Boatman's Temperature Log at ${place}`,
+          narration: `A boatman sailing through the ${place} backwaters checks his weather app. Tonight's temperatures at 3 different stops are: ${-(i)}°C, ${-(i * 3)}°C, and -2°C. He says: 'Beta, find the MINIMUM — that's the coldest stop where I need extra blankets!' Which temperature is the coldest?`,
+          correctVal: -(i * 3),
+          correctText: `${-(i * 3)}°C (The coldest — that's the MINIMUM temperature!)`,
+          wrong1: `${-(i)}°C`,
+          wrong2: `-2°C`
+        },
+        {
+          title: `Munnar Tea Estate Frost Warning at ${place}`,
+          narration: `Tea plantation workers at ${place} got frost warnings for 3 nights: ${-(i * 2)}°C, ${-(i * 5 + 3)}°C, and -1°C. The supervisor says: 'Find the MINIMUM — that's when the tea leaves freeze the most! We must cover the plants then!' Which night is the most dangerous?`,
+          correctVal: -(i * 5 + 3),
+          correctText: `${-(i * 5 + 3)}°C (The most freezing — that's the MINIMUM!)`,
+          wrong1: `${-(i * 2)}°C`,
+          wrong2: `-1°C`
+        },
+        {
+          title: `Hill Station OYO Room Heater Battle at ${place}`,
+          narration: `Rohan and his friends are on a trip to ${place}. The OYO room heater readings show: ${-(i)}°C, ${-(i * 4)}°C, and ${-(i + 1)}°C. Rohan says: 'The MINIMUM reading tells us when the heater is working hardest! That's when we need to turn it up!' Which is the lowest reading?`,
+          correctVal: -(i * 4),
+          correctText: `${-(i * 4)}°C (The lowest — that's the MINIMUM reading!)`,
+          wrong1: `${-(i)}°C`,
+          wrong2: `${-(i + 1)}°C`
+        },
+        {
+          title: `Wayanad Spice Cold Storage at ${place}`,
+          narration: `Spice farmer Mohan at ${place} stores cardamom in 3 cold rooms. Temperatures are: ${-(i)}°C, ${-(i * 6 + 5)}°C, and -3°C. He says: 'Find the MINIMUM — cardamom loses flavor below -8°C! We need to check that room!' Which room is at risk?`,
+          correctVal: -(i * 6 + 5),
+          correctText: `${-(i * 6 + 5)}°C (The coldest room — that's the MINIMUM!)`,
+          wrong1: `${-(i)}°C`,
+          wrong2: `-3°C`
+        },
+        {
+          title: `Shimla Ice Cream Shop Disaster at ${place}`,
+          narration: `An ice cream shop at ${place} tracks freezer temps: ${-(i + 2)}°C, ${-(i * 3 + 1)}°C, and -1°C. The owner says: 'The MINIMUM temp tells us the freezer is coldest — if it goes too low, the kulfi cracks!' Which reading is the coldest?`,
+          correctVal: -(i * 3 + 1),
+          correctText: `${-(i * 3 + 1)}°C (The deepest freeze — that's the MINIMUM!)`,
+          wrong1: `${-(i + 2)}°C`,
+          wrong2: `-1°C`
+        }
+      ];
+      const story = minStories[i % minStories.length];
+      title = story.title;
+      narration = story.narration;
+      const correctVal = story.correctVal;
       choices = [
-        { text: `-${i * 3}°C (furthest negative limits represent the absolute minimum temperature!)`, correct: true, rewardXp: 15 },
-        { text: `-${i}°C`, correct: false, rewardXp: 0 },
-        { text: `-2°C`, correct: false, rewardXp: 0 }
+        { text: `${story.correctText}`, correct: true, rewardXp: 15 },
+        { text: `${story.wrong1}`, correct: false, rewardXp: 0 },
+        { text: `${story.wrong2}`, correct: false, rewardXp: 0 }
       ];
     } 
     else if (subId.includes("range")) {
-      title = `Vegetable Basket Price Fasla in ${place}`;
-      narration = `At the grocery bazaar in ${place}, a basic mixed veggie basket costs Rs. ${i * 5 + 40} (Minimum) while the organic exotic basket is Rs. ${i * 20 + 200} (Maximum). Maths Dost asks you: 'What is the exact Range (Fasla) between these rates?'`;
-      const rangeVal = (i * 20 + 200) - (i * 5 + 40);
+      // Rotate through different India-specific Range story narratives
+      const rangeStories = [
+        {
+          title: `Mumbai Local Train Ticket Price Range at ${place}`,
+          narration: `Tara is planning a trip on the Mumbai local train from ${place}. The minimum ticket costs Rs. ${i * 3 + 15} (second class) and the maximum is Rs. ${i * 10 + 80} (AC first class). Her dad asks: 'Beta, what is the Range (Fasla) between the cheapest and most expensive ticket? That tells us our budget spread!'`,
+          minVal: i * 3 + 15,
+          maxVal: i * 10 + 80,
+          correctText: (diff: number) => `Rs. ${diff} (Max minus Min — that's the Fasla!)`,
+          wrong1: (max: number) => `Rs. ${max}`,
+          wrong2: () => `Rs. 50`
+        },
+        {
+          title: `Jaipur Textile Shop Price Spread at ${place}`,
+          narration: `Priya is buying Rajasthani dupattas at ${place}. The cheapest one costs Rs. ${i * 5 + 30} and the fanciest mirror-work dupatta costs Rs. ${i * 15 + 150}. The shopkeeper says: 'Find the Range (Fasla) — that's how much prices vary in my shop!' What is the price spread?`,
+          minVal: i * 5 + 30,
+          maxVal: i * 15 + 150,
+          correctText: (diff: number) => `Rs. ${diff} (The price spread — that's the Range!)`,
+          wrong1: (max: number) => `Rs. ${max}`,
+          wrong2: () => `Rs. 20`
+        },
+        {
+          title: `Kolkata Sweets Shop Range at ${place}`,
+          narration: `Sweet Maker Mohan at ${place} sells rasgullas at Rs. ${i * 2 + 10} per piece (minimum) and a grand sandesh tower at Rs. ${i * 8 + 60} (maximum). He asks: 'What is the Range (Fasla) between my cheapest and priciest sweet? That tells me my product spread!'`,
+          minVal: i * 2 + 10,
+          maxVal: i * 8 + 60,
+          correctText: (diff: number) => `Rs. ${diff} (The sweet price range — that's the Fasla!)`,
+          wrong1: (max: number) => `Rs. ${max}`,
+          wrong2: () => `Rs. 15`
+        },
+        {
+          title: `Pune College Fest Budget Range at ${place}`,
+          narration: `The college fest at ${place} has entry tickets ranging from Rs. ${i * 4 + 25} (general) to Rs. ${i * 12 + 120} (VIP with backstage pass). The treasurer asks: 'What is the Range (Fasla) between the cheapest and most expensive ticket? That's our pricing spread!'`,
+          minVal: i * 4 + 25,
+          maxVal: i * 12 + 120,
+          correctText: (diff: number) => `Rs. ${diff} (The budget spread — that's the Range!)`,
+          wrong1: (max: number) => `Rs. ${max}`,
+          wrong2: () => `Rs. 30`
+        },
+        {
+          title: `Hyderabad Biryani Price Comparison at ${place}`,
+          narration: `Biryani Bhai at ${place} sells a basic chicken biryani at Rs. ${i * 6 + 50} and a royal mutton biryani at Rs. ${i * 18 + 200}. He tells his son: 'Find the Range (Fasla) — that's how much our menu prices vary!' What's the difference?`,
+          minVal: i * 6 + 50,
+          maxVal: i * 18 + 200,
+          correctText: (diff: number) => `Rs. ${diff} (The biryani price range — that's the Fasla!)`,
+          wrong1: (max: number) => `Rs. ${max}`,
+          wrong2: () => `Rs. 25`
+        }
+      ];
+      const story = rangeStories[i % rangeStories.length];
+      title = story.title;
+      narration = story.narration;
+      const rangeVal = story.maxVal - story.minVal;
       choices = [
-        { text: `Rs. ${rangeVal} (Max of ${i * 20 + 200} minus Min of ${i * 5 + 40}!)`, correct: true, rewardXp: 15 },
-        { text: `Rs. ${i * 20 + 200}`, correct: false, rewardXp: 0 },
-        { text: `Rs. 50`, correct: false, rewardXp: 0 }
+        { text: story.correctText(rangeVal), correct: true, rewardXp: 15 },
+        { text: story.wrong1(story.maxVal), correct: false, rewardXp: 0 },
+        { text: story.wrong2(), correct: false, rewardXp: 0 }
       ];
     } 
     else if (subId.includes("basics")) {
-      title = `The Crocodile Coin Comparison Gali in ${place}`;
-      narration = `A cute cartoon crocodile gator in ${place} wants to devour the larger bucket of coins of two debtors: -${i * 4} coins or -${i * 8} coins. Help the gator evaluate which represents a larger balance (less debt!).`;
+      // Rotate through different India-specific Comparing Numbers stories
+      const basicsStories = [
+        {
+          title: `Chai Dost's Debt Ledger at ${place}`,
+          narration: `Chai Dost at ${place} keeps a ledger of who owes him money. Rahul owes -${i * 4} rupees and Vikram owes -${i * 8} rupees. He says: 'Beta, which debtor has a SMALLER debt? That's the one who's closer to paying me back!' Who owes less?`,
+          correctText: `-${i * 4} rupees is larger (less debt — closer to zero!)`,
+          wrong1: `-${i * 8} rupees because 8 is bigger`,
+          wrong2: `They owe exactly the same`
+        },
+        {
+          title: `Auto Wale Uncle's Temperature Debate at ${place}`,
+          narration: `Auto Wale Uncle at ${place} is arguing with a passenger about the weather. One app shows -${i * 3}°C and another shows -${i * 6}°C. He says: 'Which reading is WARMER? The one closer to zero!' Which temperature is actually higher?`,
+          correctText: `-${i * 3}°C is warmer (closer to zero on the number line!)`,
+          wrong1: `-${i * 6}°C because 6 is bigger`,
+          wrong2: `Both are the same temperature`
+        },
+        {
+          title: `Momos Didi's Profit Loss at ${place}`,
+          narration: `Momos Didi at ${place} tracks her daily losses. Monday she lost -${i * 5} rupees and Tuesday she lost -${i * 2 + 1} rupees. She says: 'Which day was BETTER for business? The smaller loss!' Which day had less loss?`,
+          correctText: `-${i * 2 + 1} rupees (smaller loss — better day!)`,
+          wrong1: `-${i * 5} rupees because 5 is bigger`,
+          wrong2: `Both days were equally bad`
+        },
+        {
+          title: `Pav Bhaji Wale Bhau's Scoreboard at ${place}`,
+          narration: `Pav Bhaji Wale Bhau at ${place} is watching a cricket match. Team A is at -${i * 4 + 2} runs (below par) and Team B is at -${i * 7} runs (way behind). He shouts: 'Which team is WINNING? The one closer to zero!' Who's ahead?`,
+          correctText: `-${i * 4 + 2} runs (closer to zero — Team A is winning!)`,
+          wrong1: `-${i * 7} runs because 7 is bigger`,
+          wrong2: `Both teams are tied`
+        },
+        {
+          title: `Idli Amma's Bank Balance at ${place}`,
+          narration: `Idli Amma at ${place} checks her bank balance after two big purchases. Account 1 shows -${i * 3 + 5} rupees and Account 2 shows -${i * 6} rupees. She says: 'Which account is HEALTHIER? The one with less negative balance!' Which is better?`,
+          correctText: `-${i * 3 + 5} rupees (less debt — healthier account!)`,
+          wrong1: `-${i * 6} rupees because 6 is bigger`,
+          wrong2: `Both accounts are in the same state`
+        }
+      ];
+      const story = basicsStories[i % basicsStories.length];
+      title = story.title;
+      narration = story.narration;
       choices = [
-        { text: `-${i * 8} coins because 8 is bigger`, correct: false, rewardXp: 0 },
-        { text: `-${i * 4} coins is larger (less debt on our number line!)`, correct: true, rewardXp: 15 },
-        { text: "They are completely identical", correct: false, rewardXp: 0 }
+        { text: story.wrong1, correct: false, rewardXp: 0 },
+        { text: story.correctText, correct: true, rewardXp: 15 },
+        { text: story.wrong2, correct: false, rewardXp: 0 }
       ];
     } 
     else if (subId.includes("decimals")) {
-      title = `Wholesale Saffron Decimal Weighing in ${place}`;
-      narration = `Merchant '${char}' in ${place} is weighing premium saffron. Lot A weighs ${(1.45 + i * 0.01).toFixed(3)} grams, while Lot B weighs ${(1.409 + i * 0.01).toFixed(3)} grams. Which batch contains a larger quantity?`;
-      const valA = (1.45 + i * 0.01).toFixed(3);
-      const valB = (1.409 + i * 0.01).toFixed(3);
+      // Rotate through different India-specific Decimal comparison stories
+      const decimalStories = [
+        {
+          title: `Kanna's Filter Coffee Measurement at ${place}`,
+          narration: `Kanna at ${place} is measuring coffee decoction. Cup A has ${(1.45 + i * 0.01).toFixed(3)} ml and Cup B has ${(1.409 + i * 0.01).toFixed(3)} ml. He asks: 'Which cup has MORE decoction? Check the tenths place carefully!'`,
+          valA: (1.45 + i * 0.01).toFixed(3),
+          valB: (1.409 + i * 0.01).toFixed(3),
+          correctText: (a: string) => `${a} ml (tenths place 4 is bigger than 0!)`,
+          wrong1: (b: string) => `${b} ml`,
+          wrong2: `Both are exactly the same`
+        },
+        {
+          title: `Sweet Shop Sugar Weighing at ${place}`,
+          narration: `Sweet Maker Mohan at ${place} weighs sugar for jalebis. Batch A weighs ${(1.45 + i * 0.01).toFixed(3)} kg and Batch B weighs ${(1.409 + i * 0.01).toFixed(3)} kg. He says: 'Which batch has MORE sugar? The one with the bigger tenths digit!'`,
+          valA: (1.45 + i * 0.01).toFixed(3),
+          valB: (1.409 + i * 0.01).toFixed(3),
+          correctText: (a: string) => `${a} kg (tenths place 4 beats 0!)`,
+          wrong1: (b: string) => `${b} kg`,
+          wrong2: `Both weigh the same`
+        },
+        {
+          title: `Biryani Bhai's Spice Mix at ${place}`,
+          narration: `Biryani Bhai at ${place} is comparing two spice blends. Blend A has ${(1.45 + i * 0.01).toFixed(3)} tsp of saffron and Blend B has ${(1.409 + i * 0.01).toFixed(3)} tsp. He asks: 'Which blend is STRONGER? Check the decimal places!'`,
+          valA: (1.45 + i * 0.01).toFixed(3),
+          valB: (1.409 + i * 0.01).toFixed(3),
+          correctText: (a: string) => `${a} tsp (the tenths digit 4 is greater!)`,
+          wrong1: (b: string) => `${b} tsp`,
+          wrong2: `Both are equally strong`
+        }
+      ];
+      const story = decimalStories[i % decimalStories.length];
+      title = story.title;
+      narration = story.narration;
+      const valA = story.valA;
+      const valB = story.valB;
       choices = [
-        { text: `${valA} grams is larger (tenths & hundredths placements!)`, correct: true, rewardXp: 15 },
-        { text: `${valB} grams`, correct: false, rewardXp: 0 },
-        { text: "Both reflect the same grams weight", correct: false, rewardXp: 0 }
+        { text: story.correctText(valA), correct: true, rewardXp: 15 },
+        { text: story.wrong1(valB), correct: false, rewardXp: 0 },
+        { text: story.wrong2, correct: false, rewardXp: 0 }
       ];
     } 
     else if (subId.includes("rounding")) {
-      title = `Rounding Settle at the Chaat Stall of ${place}`;
-      narration = `You ordered delicious street kachoris at ${place}. The final total calculated bill is Rs. ${(44.3 + i * 0.15).toFixed(2)}. The seller accepts round whole rupee settlements. How much should you hand him to settle?`;
-      const val = parseFloat((44.3 + i * 0.15).toFixed(2));
+      // Rotate through different India-specific Rounding stories
+      const roundingStories = [
+        {
+          title: `Chaat Stall Bill Settlement at ${place}`,
+          narration: `You ordered delicious pani puri and chaat at ${place}. The bill comes to Rs. ${(44.3 + i * 0.15).toFixed(2)}. The chaat-wala says: 'Bhai, just give me a round rupee amount — no coins!' How much should you hand him?`,
+          val: parseFloat((44.3 + i * 0.15).toFixed(2)),
+          correctText: (r: number) => `Rs. ${r} (Round to nearest rupee — that's the smart way!)`,
+          wrong1: (val: number) => `Rs. ${Math.floor(val) - 5}`,
+          wrong2: (val: number) => `Rs. ${Math.ceil(val) + 2}`
+        },
+        {
+          title: `Auto Ride Meter Reading at ${place}`,
+          narration: `Auto Wale Uncle at ${place} shows the meter reading: Rs. ${(44.3 + i * 0.15).toFixed(2)}. He says: 'Just round it off to the nearest rupee, no need for exact change!' What's the fair amount?`,
+          val: parseFloat((44.3 + i * 0.15).toFixed(2)),
+          correctText: (r: number) => `Rs. ${r} (Rounded to nearest rupee!)`,
+          wrong1: (val: number) => `Rs. ${Math.floor(val) - 5}`,
+          wrong2: (val: number) => `Rs. ${Math.ceil(val) + 2}`
+        },
+        {
+          title: `Vada Pav Stall Quick Settlement at ${place}`,
+          narration: `You grab a hot vada pav at ${place}. The total bill is Rs. ${(44.3 + i * 0.15).toFixed(2)}. The vendor says: 'Boss, no coins — just round it!' How much do you pay?`,
+          val: parseFloat((44.3 + i * 0.15).toFixed(2)),
+          correctText: (r: number) => `Rs. ${r} (Quick round-off — that's the street way!)`,
+          wrong1: (val: number) => `Rs. ${Math.floor(val) - 5}`,
+          wrong2: (val: number) => `Rs. ${Math.ceil(val) + 2}`
+        }
+      ];
+      const story = roundingStories[i % roundingStories.length];
+      title = story.title;
+      narration = story.narration;
+      const val = story.val;
       const r = Math.round(val);
       choices = [
-        { text: `Rs. ${r} (Round off based on the boundary .50 condition!)`, correct: true, rewardXp: 15 },
-        { text: `Rs. ${Math.floor(val) - 5}`, correct: false, rewardXp: 0 },
-        { text: `Rs. ${Math.ceil(val) + 2}`, correct: false, rewardXp: 0 }
+        { text: story.correctText(r), correct: true, rewardXp: 15 },
+        { text: story.wrong1(val), correct: false, rewardXp: 0 },
+        { text: story.wrong2(val), correct: false, rewardXp: 0 }
       ];
     } 
     else if (subId.includes("place")) {
-      title = `The Lockbox Key code challenge at ${place}`;
-      narration = `Tara is given a chest box at ${place} with code sequence: ${35000 + i * 650}. The puzzle lock demands: 'Insert the digit that occupies the Thousands (Hazaar) column!' What digit is it?`;
-      const numCode = 35000 + i * 650;
+      // Rotate through different India-specific Place Value stories
+      const placeStories = [
+        {
+          title: `Tara's Treasure Chest Code at ${place}`,
+          narration: `Tara found a treasure chest at ${place} with a 5-digit code: ${35000 + i * 650}. The lock says: 'Tell me which digit sits in the Thousands (Hazaar) place!' Which digit should Tara enter?`,
+          numCode: 35000 + i * 650,
+          correctText: (d: number) => `The digit ${d} — that's the Thousands place!`,
+          wrong1: `The first digit 3`,
+          wrong2: `The last digit 0`
+        },
+        {
+          title: `Rohan's Secret Locker at ${place}`,
+          narration: `Rohan gets a locker code at ${place}: ${35000 + i * 650}. The security guard says: 'The Thousands digit is your key!' What's the digit in the Thousands (Hazaar) column?`,
+          numCode: 35000 + i * 650,
+          correctText: (d: number) => `${d} — that's the Thousands digit!`,
+          wrong1: `The ten-thousands digit`,
+          wrong2: `The units digit`
+        },
+        {
+          title: `Metro Card Recharge Code at ${place}`,
+          narration: `At ${place} metro station, your recharge code is ${35000 + i * 650}. The machine asks: 'Enter the digit in the Thousands (Hazaar) position to confirm!' Which digit?`,
+          numCode: 35000 + i * 650,
+          correctText: (d: number) => `${d} — exactly the Thousands place!`,
+          wrong1: `The hundreds digit`,
+          wrong2: `The ten-thousands digit`
+        }
+      ];
+      const story = placeStories[i % placeStories.length];
+      title = story.title;
+      narration = story.narration;
+      const numCode = story.numCode;
       const thousandsDigit = Math.floor((numCode % 10000) / 1000);
       choices = [
-        { text: `The digit ${thousandsDigit} is correct!`, correct: true, rewardXp: 15 },
-        { text: `The first digit 3`, correct: false, rewardXp: 0 },
-        { text: `The last digit 0`, correct: false, rewardXp: 0 }
+        { text: story.correctText(thousandsDigit), correct: true, rewardXp: 15 },
+        { text: story.wrong1, correct: false, rewardXp: 0 },
+        { text: story.wrong2, correct: false, rewardXp: 0 }
       ];
     } 
     else {
-      title = `Metro Token Kram Queue in ${place}`;
-      narration = `A metro card teller in ${place} is sorting passenger tokens labelled with weights: [-${i * 2}, ${i + 5}, 0, -${i * 5 + 3}]. Which list represents these tokens correctly arranged in Ascending or Kram Order (lowest weight first)?`;
-      const listLowFirstStr = `-${i * 5 + 3}, -${i * 2}, 0, ${i + 5}`;
+      // Order / Ascending stories with India-specific context
+      const orderStories = [
+        {
+          title: `Metro Token Queue Sorting at ${place}`,
+          narration: `At ${place} metro station, passengers have tokens with weights: [-${i * 2}, ${i + 5}, 0, -${i * 5 + 3}]. The guard says: 'Arrange these in Kram (ascending) order — lightest first!' Which list is correct?`,
+          listLowFirst: `-${i * 5 + 3}, -${i * 2}, 0, ${i + 5}`,
+          correctText: (s: string) => `[${s}] (Lightest to heaviest — correct Kram!)`,
+          wrong1: `[${i + 5}, 0, -${i * 2}, -${i * 5 + 3}]`,
+          wrong2: `[0, -${i * 2}, ${i + 5}, -${i * 5 + 3}]`
+        },
+        {
+          title: `Cricket Scoreboard Kram Order at ${place}`,
+          narration: `Coach Arjun at ${place} wants to rank 4 players by their net scores: [-${i * 2}, ${i + 5}, 0, -${i * 5 + 3}]. He says: 'Put them in ascending Kram — worst to best!' Which order is right?`,
+          listLowFirst: `-${i * 5 + 3}, -${i * 2}, 0, ${i + 5}`,
+          correctText: (s: string) => `[${s}] (Worst to best — correct Kram!)`,
+          wrong1: `[${i + 5}, 0, -${i * 2}, -${i * 5 + 3}]`,
+          wrong2: `[0, -${i * 2}, ${i + 5}, -${i * 5 + 3}]`
+        },
+        {
+          title: `Tea Shop Debt List at ${place}`,
+          narration: `Tea-stall Raju at ${place} has 4 debt records: [-${i * 2}, ${i + 5}, 0, -${i * 5 + 3}] rupees. He says: 'Sort them ascending — smallest balance first!' Which list is correct?`,
+          listLowFirst: `-${i * 5 + 3}, -${i * 2}, 0, ${i + 5}`,
+          correctText: (s: string) => `[${s}] (Smallest to largest — correct order!)`,
+          wrong1: `[${i + 5}, 0, -${i * 2}, -${i * 5 + 3}]`,
+          wrong2: `[0, -${i * 2}, ${i + 5}, -${i * 5 + 3}]`
+        }
+      ];
+      const story = orderStories[i % orderStories.length];
+      title = story.title;
+      narration = story.narration;
+      const listLowFirstStr = story.listLowFirst;
       choices = [
-        { text: `[${listLowFirstStr}] (Starting with furthest negative values up!)`, correct: true, rewardXp: 15 },
-        { text: `[${i + 5}, 0, -${i * 2}, -${i * 5 + 3}]`, correct: false, rewardXp: 0 },
-        { text: `[0, -${i * 2}, ${i + 5}, -${i * 5 + 3}]`, correct: false, rewardXp: 0 }
+        { text: story.correctText(listLowFirstStr), correct: true, rewardXp: 15 },
+        { text: story.wrong1, correct: false, rewardXp: 0 },
+        { text: story.wrong2, correct: false, rewardXp: 0 }
       ];
     }
 
@@ -1456,31 +1862,31 @@ export function getConceptQuizVariants(topicId: string, subId: string, difficult
 
     if (activeSubId.includes("bindu")) {
       question = `[${levelText} - Q${i}] How many lines can pass through a single specific Bindu (Point) spotted near ${term}?`;
-      options = ["Only exactly 1 line", "Exactly two lines", "Infinite lines can intersect at one point!", "Zero lines"];
+      options = ["Only exactly 1 line", "Exactly two lines", "Infinite lines can intersect at one point!", FUN_DISTRACTORS[i % FUN_DISTRACTORS.length]];
       correct = 2;
       hint = "Imagine a wheel spike. All spokes of a cycle or compass map pass through the exact same pivot point!";
     } 
     else if (activeSubId.includes("rekha")) {
       question = `[${levelText} - Q${i}] If an infinite Rekha (Line) runs directly straight through ${term}, how many fixed endpoints does it possess?`;
-      options = ["Zero endpoints (It goes endlessly on both sides!)", "Exactly 1 endpoint", "Exactly 2 endpoints", "Varies on map size"];
+      options = ["Zero endpoints (It goes endlessly on both sides!)", "Exactly 1 endpoint", "Exactly 2 endpoints", FUN_DISTRACTORS[(i + 1) % FUN_DISTRACTORS.length]];
       correct = 0;
       hint = "A line represents infinite coordinates. It has two double arrows denoting and stretching endlessly with no limit!";
     } 
     else if (activeSubId.includes("khand")) {
       question = `[${levelText} - Q${i}] A customer in ${term} orders a wire segment of exactly ${i + 4} cm to tie boxes. A Line Segment (Khand) is defined by which property?`;
-      options = ["Stretches infinitely without endings", "Has exactly one boundary origin", "Has exactly two fixed endpoints!", "Has no measurable length"];
+      options = ["Stretches infinitely without endings", "Has exactly one boundary origin", "Has exactly two fixed endpoints!", FUN_DISTRACTORS[(i + 2) % FUN_DISTRACTORS.length]];
       correct = 2;
       hint = "Segment means a finite section. Hence, it starts at point A and ends at point B with exact measurable distance.";
     } 
     else if (activeSubId.includes("kiran")) {
       question = `[${levelText} - Q${i}] A beam of flashlight originating at a torch battery and shooting through ${term} tunnels represents which geometry structure?`;
-      options = ["A Point (Bindu)", "A Ray (Kiran) - starting at 1 origin and flying infinitely!", "A line segment with two endpoints", "A closed loop line"];
+      options = ["A Point (Bindu)", "A Ray (Kiran) - starting at 1 origin and flying infinitely!", "A line segment with two endpoints", FUN_DISTRACTORS[(i + 3) % FUN_DISTRACTORS.length]];
       correct = 1;
       hint = "Think about a solar beam. It originates at the Sun (1 vertex) and travels forward forever.";
     } 
     else if (activeSubId.includes("shikhar")) {
       question = `[${levelText} - Q${i}] A triangle formed by cricket boundaries in ${term} contains how many vertices (intersection Shikhar tips)?`;
-      options = ["One vertex", "Two vertices", "Three vertices (Triangles have 3 corners!)", "Zero vertices"];
+      options = ["One vertex", "Two vertices", "Three vertices (Triangles have 3 corners!)", FUN_DISTRACTORS[(i + 4) % FUN_DISTRACTORS.length]];
       correct = 2;
       hint = "Each pointy corner of the triangle where straight boundaries intersect is a Shikhar!";
     } 
@@ -1488,73 +1894,121 @@ export function getConceptQuizVariants(topicId: string, subId: string, difficult
       const v1 = i * 15 + 100;
       const v2 = i * 20 + 200;
       const v3 = i * 11 + 50;
-      question = `[${levelText} - Q${i}] Scan this dataset of daily sweet sales in ${term}: [${v1}, ${v2}, ${v3}]. Which run represents the Maximum limit?`;
-      options = [`${v1}`, `${v2} - the highest value in the comparative dataset!`, `${v3}`, `${v1 + v3}`];
+      const maxQuizStories = [
+        { question: `[${levelText} - Q${i}] Rohit's cricket scores at ${term}: [${v1}, ${v2}, ${v3}]. His coach needs the MAXIMUM score to decide the playing XI! Which is the highest?`, correctText: `${v2} - the highest score, that's Rohit's best innings!`, hint: "Compare the hundreds digit to find the peak score." },
+        { question: `[${levelText} - Q${i}] IPL ticket prices at ${term}: [Rs ${v1}, Rs ${v2}, Rs ${v3}]. Find the MAXIMUM price — that's the worst-case budget!`, correctText: `Rs ${v2} - the peak price, that's the MAXIMUM!`, hint: "Find the highest rupee amount." },
+        { question: `[${levelText} - Q${i}] Biryani Bhai's spice costs at ${term}: [Rs ${v1}, Rs ${v2}, Rs ${v3}]. Which is the MAXIMUM expense?`, correctText: `Rs ${v2} - the most expensive spice!`, hint: "Compare the hundreds digit." }
+      ];
+      const story = maxQuizStories[i % maxQuizStories.length];
+      question = story.question;
+      options = [`${v1}`, story.correctText, `${v3}`, FUN_DISTRACTORS[(i + 5) % FUN_DISTRACTORS.length]];
       correct = 1;
-      hint = "Compare the hundred's digit of the integer sequence to find the peak magnitude.";
+      hint = story.hint;
     } 
     else if (activeSubId.includes("min")) {
       const valA = - (i * 3);
       const valB = - (i * 4 + 1);
       const valC = 0;
-      question = `[${levelText} - Q${i}] A metro cargo logs thermal cooling levels in ${term}: [${valC}°C, ${valA}°C, ${valB}°C]. Identify the absolute minimum temperature.`;
-      options = [`${valC}°C`, `${valA}°C`, `${valB}°C (Furthest left from zero on the number line!)`, `${valA - 5}°C`];
+      const minQuizStories = [
+        { question: `[${levelText} - Q${i}] Munnar tea estate frost warnings at ${term}: [${valC}°C, ${valA}°C, ${valB}°C]. Find the MINIMUM — when tea leaves freeze most!`, correctText: `${valB}°C — the coldest night, that's the MINIMUM!`, hint: "The most negative value is the minimum." },
+        { question: `[${levelText} - Q${i}] Hill station freezer temps at ${term}: [${valC}°C, ${valA}°C, ${valB}°C]. The MINIMUM means the kulfi might crack!`, correctText: `${valB}°C — the deepest freeze, that's the MINIMUM!`, hint: "Find the lowest temperature." },
+        { question: `[${levelText} - Q${i}] Backwaters houseboat night temps at ${term}: [${valC}°C, ${valA}°C, ${valB}°C]. The MINIMUM is when you need extra blankets!`, correctText: `${valB}°C — the coldest reading!`, hint: "The furthest left from zero on the number line." }
+      ];
+      const story = minQuizStories[i % minQuizStories.length];
+      question = story.question;
+      options = [`${valC}°C`, `${valA}°C`, story.correctText, FUN_DISTRACTORS[(i + 6) % FUN_DISTRACTORS.length]];
       correct = 2;
-      hint = "A greater debt on the number line represents the lowest value in a comparison set.";
+      hint = story.hint;
     } 
     else if (activeSubId.includes("range")) {
       const top = i * 12 + 150;
       const bottom = i * 2 + 10;
       const rangePr = top - bottom;
-      question = `[${levelText} - Q${i}] A merchant in ${term} sells woolens ranging from Rs ${bottom} (minimum) to Rs ${top} (maximum). What is the mathematical Range (Fasla) of these rates?`;
-      options = [`Rs ${rangePr} (Calculated as Peak Max minus Floor Min!)`, `Rs ${top}`, `Rs ${bottom}`, `Rs ${top + bottom}`];
+      const rangeQuizStories = [
+        { question: `[${levelText} - Q${i}] Mumbai local tickets at ${term}: second class Rs ${bottom}, AC first Rs ${top}. What's the Range (Fasla)?`, correctText: `Rs ${rangePr} — Max minus Min, that's the Fasla!`, hint: "Range = Maximum - Minimum. Subtract!" },
+        { question: `[${levelText} - Q${i}] Jaipur dupatta prices at ${term}: basic Rs ${bottom}, fancy Rs ${top}. What's the price Fasla?`, correctText: `Rs ${rangePr} — the price spread!`, hint: "Subtract the minimum from the maximum." },
+        { question: `[${levelText} - Q${i}] Kolkata sweet prices at ${term}: rasgulla Rs ${bottom}, sandesh Rs ${top}. What's the Range?`, correctText: `Rs ${rangePr} — Mohan's product spread!`, hint: "Range = Max - Min." }
+      ];
+      const story = rangeQuizStories[i % rangeQuizStories.length];
+      question = story.question;
+      options = [story.correctText, `Rs ${top}`, `Rs ${bottom}`, FUN_DISTRACTORS[(i + 7) % FUN_DISTRACTORS.length]];
       correct = 0;
-      hint = "Formula for Fasla is: Range = (Maximum value) - (Minimum value). Settle subtraction!";
+      hint = story.hint;
     } 
     else if (activeSubId.includes("basics")) {
       const n1 = - (i * 6);
       const n2 = - (i * 2 + 1);
-      question = `[${levelText} - Q${i}] Help the crocodile in ${term} pick the larger value between negative balances: ${n1} vs ${n2}.`;
-      options = [`${n1}`, `${n2} represents a smaller negative debt, so it is larger!`, "Both are equal values", "Zero is smaller than both"];
+      const basicsQuizStories = [
+        { question: `[${levelText} - Q${i}] Chai Dost's debt ledger at ${term}: Rahul owes ${n1} rupees, Vikram owes ${n2} rupees. Who has LESS debt (is closer to zero)?`, correctText: `${n2} — less debt, closer to zero!`, hint: "The number closer to zero on the number line is larger." },
+        { question: `[${levelText} - Q${i}] Auto Wale Uncle's weather apps at ${term}: one shows ${n1}°C, another shows ${n2}°C. Which is WARMER?`, correctText: `${n2}°C — closer to zero, so warmer!`, hint: "Find which number is closer to zero." },
+        { question: `[${levelText} - Q${i}] Momos Didi's daily losses at ${term}: Monday ${n1} rupees, Tuesday ${n2} rupees. Which day was BETTER?`, correctText: `${n2} rupees — smaller loss, better day!`, hint: "The smaller negative number is the better outcome." }
+      ];
+      const story = basicsQuizStories[i % basicsQuizStories.length];
+      question = story.question;
+      options = [`${n1}`, story.correctText, "Both are equal values", FUN_DISTRACTORS[(i + 8) % FUN_DISTRACTORS.length]];
       correct = 1;
-      hint = "Compare which number lies further right (closer to zero) on the horizontal axis.";
+      hint = story.hint;
     } 
     else if (activeSubId.includes("decimals")) {
       const decA = (12.4 + i * 0.05).toFixed(2);
       const decB = (12.04 + i * 0.05).toFixed(2);
-      question = `[${levelText} - Q${i}] A decimal weight gauge in ${term} shows Lot A: ${decA}g and Lot B: ${decB}g. Which relationship is correct?`;
-      options = [`${decA} is greater than ${decB} (tenths place 4 is bigger than 0!)`, `${decA} is smaller than ${decB}`, "They are equivalent weight", "Both are less than 12g"];
+      const decimalQuizStories = [
+        { question: `[${levelText} - Q${i}] Kanna's filter coffee at ${term}: Cup A has ${decA} ml, Cup B has ${decB} ml. Which has MORE decoction?`, correctText: `${decA} ml is greater — tenths place 4 beats 0!`, hint: "Compare tenths place first, then hundredths." },
+        { question: `[${levelText} - Q${i}] Sweet shop sugar at ${term}: Batch A ${decA} kg, Batch B ${decB} kg. Which batch has MORE sugar?`, correctText: `${decA} kg is greater — tenths digit is bigger!`, hint: "Check the tenths place of each number." },
+        { question: `[${levelText} - Q${i}] Biryani Bhai's spice blend at ${term}: Blend A ${decA} tsp, Blend B ${decB} tsp. Which is STRONGER?`, correctText: `${decA} tsp is greater — the tenths digit wins!`, hint: "Compare decimal places from left to right." }
+      ];
+      const story = decimalQuizStories[i % decimalQuizStories.length];
+      question = story.question;
+      options = [story.correctText, `${decA} is smaller than ${decB}`, "They are equivalent weight", FUN_DISTRACTORS[(i + 9) % FUN_DISTRACTORS.length]];
       correct = 0;
-      hint = "Convert to hundreds comparison: compare tenths digit first, then move right.";
+      hint = story.hint;
     } 
     else if (activeSubId.includes("rounding")) {
       const valBill = (299.75 + i * 0.05).toFixed(2);
       const wholeRupeeResult = Math.round(parseFloat(valBill));
-      question = `[${levelText} - Q${i}] A shopping bill at ${term} comes to Rs. ${valBill}. Round the total to the nearest whole rupee integer standard.`;
-      options = [`Rs. ${wholeRupeeResult - 10}`, `Rs. ${wholeRupeeResult} (Round up because the paisa decimal is greater than or equal to .50 Paise!)`, `Rs. ${Math.floor(parseFloat(valBill))}`, `Rs. ${wholeRupeeResult + 5}`];
+      const roundingQuizStories = [
+        { question: `[${levelText} - Q${i}] Chaat stall bill at ${term}: Rs. ${valBill}. The vendor says 'no coins!' Round to nearest rupee.`, correctText: `Rs. ${wholeRupeeResult} — rounded to nearest rupee!`, hint: "If decimal >= .50, round UP. Otherwise round DOWN." },
+        { question: `[${levelText} - Q${i}] Auto ride meter at ${term}: Rs. ${valBill}. Uncle says 'just round it!' What's the fair amount?`, correctText: `Rs. ${wholeRupeeResult} — the rounded amount!`, hint: "Check if the decimal part is .50 or more." },
+        { question: `[${levelText} - Q${i}] Vada pav bill at ${term}: Rs. ${valBill}. The vendor says 'Boss, no coins!' How much do you pay?`, correctText: `Rs. ${wholeRupeeResult} — quick round-off!`, hint: "Round to the nearest whole rupee." }
+      ];
+      const story = roundingQuizStories[i % roundingQuizStories.length];
+      question = story.question;
+      options = [`Rs. ${wholeRupeeResult - 10}`, story.correctText, `Rs. ${Math.floor(parseFloat(valBill))}`, FUN_DISTRACTORS[(i + 10) % FUN_DISTRACTORS.length]];
       correct = 1;
-      hint = "Check the decimal coins index. If >= .50, round UP to next rupee. Otherwise, round DOWN.";
+      hint = story.hint;
     } 
     else if (activeSubId.includes("place")) {
       const original = 84100 + i * 720;
       const thousandsVal = Math.floor((original % 10000) / 1000);
-      question = `[${levelText} - Q${i}] In the coordinate street value code ${original}, what is the place value of the digit located in the Thousands (Hazaar) place?`;
-      options = [`${thousandsVal * 100} units`, `Exactly ${thousandsVal * 1000} (The digit is value ${thousandsVal} in thousands peg column!)`, `Exactly 80,000`, `10 units`];
+      const placeQuizStories = [
+        { question: `[${levelText} - Q${i}] Tara's treasure chest code at ${term}: ${original}. The lock asks for the Thousands (Hazaar) digit! Which is it?`, correctText: `Exactly ${thousandsVal * 1000} — digit ${thousandsVal} in the Thousands place!`, hint: "Count from right: units, tens, hundreds, thousands." },
+        { question: `[${levelText} - Q${i}] Rohan's locker code at ${term}: ${original}. The guard says 'Thousands digit is your key!' What is it?`, correctText: `Exactly ${thousandsVal * 1000} — the Thousands digit!`, hint: "The thousands place is the 4th digit from the right." },
+        { question: `[${levelText} - Q${i}] Metro recharge code at ${term}: ${original}. Enter the Thousands digit to confirm!`, correctText: `Exactly ${thousandsVal * 1000} — digit ${thousandsVal}!`, hint: "Extract the 4th column digit and multiply by 1000." }
+      ];
+      const story = placeQuizStories[i % placeQuizStories.length];
+      question = story.question;
+      options = [`${thousandsVal * 100} units`, story.correctText, `Exactly 80,000`, FUN_DISTRACTORS[(i + 11) % FUN_DISTRACTORS.length]];
       correct = 1;
-      hint = "Positions are: units, tens, hundreds, thousands, ten-thousands. Extract the fourth column digit and multiply by 1000.";
+      hint = story.hint;
     } 
     else {
       // compare_order
       const seqStr = `-${i * 3}, -${i}, 0, ${i + 12}`;
-      question = `[${levelText} - Q${i}] Arrange these integers in a logical ascending (Kram) order queue (smallest first): [${i + 12}, 0, -${i}, -${i * 3}].`;
+      const orderQuizStories = [
+        { question: `[${levelText} - Q${i}] Metro token queue at ${term}: arrange weights [${i + 12}, 0, -${i}, -${i * 3}] in ascending Kram order!`, correctText: `[${seqStr}] — lightest to heaviest, correct Kram!`, hint: "Ascending starts with the deepest negative value." },
+        { question: `[${levelText} - Q${i}] Cricket scoreboard at ${term}: rank net scores [${i + 12}, 0, -${i}, -${i * 3}] from worst to best!`, correctText: `[${seqStr}] — worst to best, correct order!`, hint: "Start with the most negative score." },
+        { question: `[${levelText} - Q${i}] Tea shop debt list at ${term}: sort balances [${i + 12}, 0, -${i}, -${i * 3}] ascending!`, correctText: `[${seqStr}] — smallest to largest!`, hint: "Begin with the deepest debt." }
+      ];
+      const story = orderQuizStories[i % orderQuizStories.length];
+      question = story.question;
       options = [
         `[${i + 12}, 0, -${i}, -${i * 3}]`,
-        `[${seqStr}] (Accurately sorted with furthest negative value first!)`,
+        story.correctText,
         `[0, -${i}, -${i * 3}, ${i + 12}]`,
-        `[${i + 12}, -${i * 3}, -${i}, 0]`
+        FUN_DISTRACTORS[(i + 12) % FUN_DISTRACTORS.length]
       ];
       correct = 1;
-      hint = "Ascending kram starts with the deepest sub-zero negative debt and steps up towards positive values.";
+      hint = story.hint;
     }
 
     list.push({
