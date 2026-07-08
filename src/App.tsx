@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LanguageProvider, useLanguage } from "./lib/LanguageContext";
 import { AuthProvider, useAuth } from "./lib/AuthContext";
 import { ErrorBoundary } from "./components/ErrorBoundary";
@@ -16,9 +16,24 @@ function RootContent() {
   const { t } = useLanguage();
   const { stats } = useAuth();
   
-  // Navigation & Curriculums variables
-  const [activeTab, setActiveTab] = useState<"home" | "learn" | "quiz" | "story" | "videos">("home");
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>("intermediate");
+  // Navigation & Curriculums variables — persist to localStorage
+  const [activeTab, setActiveTab] = useState<"home" | "learn" | "quiz" | "story" | "videos">(() => {
+    const saved = localStorage.getItem("mathsguru_active_tab");
+    return (saved as "home" | "learn" | "quiz" | "story" | "videos") || "home";
+  });
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>(() => {
+    const saved = localStorage.getItem("mathsguru_difficulty");
+    if (saved === "beginner" || saved === "intermediate" || saved === "expert") return saved;
+    return "intermediate";
+  });
+
+  // Persist active tab and difficulty to localStorage on change
+  useEffect(() => {
+    localStorage.setItem("mathsguru_active_tab", activeTab);
+  }, [activeTab]);
+  useEffect(() => {
+    localStorage.setItem("mathsguru_difficulty", difficulty);
+  }, [difficulty]);
 
   return (
     <div className="min-h-screen bg-[#FFC700] text-[#1A1A1A] selection:bg-white selection:text-black font-sans p-4 sm:p-6 flex flex-col gap-6">

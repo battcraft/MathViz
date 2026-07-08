@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { TOPICS, getProceduralScreens } from "../data";
+import { getLevelContent, isTopicRegistered } from "../data/index";
 import { useAuth } from "../lib/AuthContext";
 import { useLanguage } from "../lib/LanguageContext";
 import { Screen, Topic, Subtopic, DifficultyLevel, StorySlide } from "../types";
@@ -34,6 +35,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
   // Modular 5-step concept quest flow states
   const [activeQuestStep, setActiveQuestStep] = useState<"overview" | "video" | "concept" | "practice" | "story" | "quiz" | "mastery">("overview");
+  const [classLevelLabel, setClassLevelLabel] = useState<string | null>(null);
   const [questQuizIdx, setQuestQuizIdx] = useState(0);
   const [questQuizScore, setQuestQuizScore] = useState(0);
   const [questQuizAnswered, setQuestQuizAnswered] = useState(false);
@@ -48,8 +50,45 @@ export default function LearnView({ difficulty }: LearnViewProps) {
   // Trigger loading procedural screens if we enter deep learning subtopics
   useEffect(() => {
     if (selectedTopic && selectedSubtopic) {
-      const list = getProceduralScreens(selectedTopic.id, selectedSubtopic.id);
+      // Try the new level-specific content system first
+      let list: Screen[] = [];
+      let newClassLevel: string | null = null;
+
+      if (isTopicRegistered(selectedTopic.id)) {
+        try {
+          const levelContent = getLevelContent(selectedTopic.id, difficulty);
+          // Find the subtopic in the new content that matches the selected subtopic ID
+          const matchedSubtopic = levelContent.subtopics.find(
+            (s) => s.id === selectedSubtopic.id
+          );
+
+          if (matchedSubtopic && matchedSubtopic.screens.length > 0) {
+            // Convert new ConceptScreen format to old Screen format
+            list = matchedSubtopic.screens.map((cs) => ({
+              id: cs.id,
+              title: cs.title,
+              topicId: selectedTopic.id,
+              subtopicId: selectedSubtopic.id,
+              conceptHeading: cs.conceptHeading,
+              explanation: cs.explanation,
+              interactiveType: cs.interactiveType,
+              pangaHint: cs.pangaHint,
+            }));
+            newClassLevel = levelContent.classLevel;
+          }
+        } catch {
+          // If new system fails, fall through to old system
+        }
+      }
+
+      // Fallback to old procedural system if new system returned nothing
+      if (list.length === 0) {
+        list = getProceduralScreens(selectedTopic.id, selectedSubtopic.id);
+        newClassLevel = null;
+      }
+
       setScreensList(list);
+      setClassLevelLabel(newClassLevel);
       setCurrentScreenIndex(0);
       setActiveQuestStep("overview");
       setQuestQuizIdx(0);
@@ -61,7 +100,7 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       setConceptSlideIdx(0);
       setActiveVariantIndex(0);
     }
-  }, [selectedTopic, selectedSubtopic]);
+  }, [selectedTopic, selectedSubtopic, difficulty]);
 
   // Track screen viewing instantly on load
   const activeScreen = screensList[currentScreenIndex];
@@ -877,10 +916,15 @@ export default function LearnView({ difficulty }: LearnViewProps) {
               <span>{t("backToSubtopics")}</span>
             </button>
 
-            <div className="flex items-center gap-2 text-xs font-black">
+            <div className="flex items-center gap-2 text-xs font-black flex-wrap">
               <span className="bg-amber-100 border-2 border-black py-1 px-3 rounded-lg">{selectedTopic.name.split(":")[0]}</span>
               <span className="opacity-40">/</span>
               <span className="text-zinc-600">{selectedSubtopic.name}</span>
+              {classLevelLabel && (
+                <span className="bg-[#FF6B6B] text-white border-2 border-black py-1 px-3 rounded-lg text-[10px] font-black uppercase tracking-wider shadow-[2px_2px_0px_black]">
+                  🎓 {classLevelLabel} Level
+                </span>
+              )}
             </div>
           </div>
 
@@ -1191,8 +1235,15 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       return (
         <div className="flex flex-col gap-6 animate-fade-in pb-12 font-mono text-black">
           
-          <div className="flex justify-between items-center border-b-4 border-black pb-3">
-            <h4 className="font-sans font-black text-lg uppercase">💡 Step 2: Concept Exploration</h4>
+          <div className="flex justify-between items-center border-b-4 border-black pb-3 flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <h4 className="font-sans font-black text-lg uppercase">💡 Step 2: Concept Exploration</h4>
+              {classLevelLabel && (
+                <span className="bg-[#FF6B6B] text-white border-2 border-black py-1 px-3 rounded-lg text-[10px] font-black uppercase tracking-wider shadow-[2px_2px_0px_black]">
+                  🎓 {classLevelLabel}
+                </span>
+              )}
+            </div>
             <span className="bg-amber-100 border-2 border-black px-3 py-1 text-xs font-black">+15 XP coins reward</span>
           </div>
 
