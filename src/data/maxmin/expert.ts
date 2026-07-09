@@ -582,7 +582,7 @@ export const maxminExpert: LevelTopicContent = {
           partDescription: "Short Answer — Local Range",
         },
         {
-          id": "maxmin_graph_w5",
+          id: "maxmin_graph_w5",
           question: "Apne school ke 6 months attendance data ka bar graph banao aur analyze karo!",
           correct: "Student-apna-answer",
           hint: "Data collect karo, graph banao, Max/Min/Range nikalo!",
