@@ -57,10 +57,12 @@ export default function LearnView({ difficulty }: LearnViewProps) {
       if (isTopicRegistered(selectedTopic.id)) {
         try {
           const levelContent = getLevelContent(selectedTopic.id, difficulty);
+          console.log(`[LearnView] New content loaded: topic=${selectedTopic.id}, difficulty=${difficulty}, subtopics=${levelContent.subtopics.length}`);
           // Find the subtopic in the new content that matches the selected subtopic ID
           const matchedSubtopic = levelContent.subtopics.find(
             (s) => s.id === selectedSubtopic.id
           );
+          console.log(`[LearnView] matchedSubtopic=${matchedSubtopic?.id}, screens=${matchedSubtopic?.screens?.length}`);
 
           if (matchedSubtopic && matchedSubtopic.screens.length > 0) {
             // Convert new ConceptScreen format to old Screen format
