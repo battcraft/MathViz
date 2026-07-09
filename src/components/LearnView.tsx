@@ -49,12 +49,16 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
   // Trigger loading procedural screens if we enter deep learning subtopics
   useEffect(() => {
+    console.log(`[LearnView] useEffect fired: topic=${selectedTopic?.id}, subtopic=${selectedSubtopic?.id}, difficulty=${difficulty}`);
     if (selectedTopic && selectedSubtopic) {
       // Try the new level-specific content system first
       let list: Screen[] = [];
       let newClassLevel: string | null = null;
 
-      if (isTopicRegistered(selectedTopic.id)) {
+      const registered = isTopicRegistered(selectedTopic.id);
+      console.log(`[LearnView] isTopicRegistered(${selectedTopic.id}) = ${registered}`);
+
+      if (registered) {
         try {
           const levelContent = getLevelContent(selectedTopic.id, difficulty);
           console.log(`[LearnView] New content loaded: topic=${selectedTopic.id}, difficulty=${difficulty}, subtopics=${levelContent.subtopics.length}`);
@@ -78,7 +82,8 @@ export default function LearnView({ difficulty }: LearnViewProps) {
             }));
             newClassLevel = levelContent.classLevel;
           }
-        } catch {
+        } catch (err) {
+          console.error(`[LearnView] New content system ERROR:`, err);
           // If new system fails, fall through to old system
         }
       }
