@@ -314,7 +314,7 @@ export const maxminExpert: LevelTopicContent = {
           partDescription: "Short Answer — City Comparison",
         },
         {
-          id": "maxmin_rw_w5",
+          id: "maxmin_rw_w5",
           question: "Apne school ke 6 months attendance data collect karo aur analyze karo!",
           correct: "Student-apna-answer",
           hint: "Attendance collect karo, Max/Min/Range nikalo, trend dekho!",
