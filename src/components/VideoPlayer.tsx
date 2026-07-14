@@ -131,7 +131,9 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
   const [duration, setDuration] = useState(45); // default custom lesson size
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
-  
+  const [ttsError, setTtsError] = useState(false);
+  const [voicesReady, setVoicesReady] = useState(false);
+
   // Custom interactive dual view modes: "video" (native file) vs "blackboard" (AI/Audio narration)
   const [viewMode, setViewMode] = useState<"video" | "blackboard">("blackboard");
   const [nativeLoadError, setNativeLoadError] = useState(false);
@@ -160,6 +162,25 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
     };
   }, [isPlaying, videoFile]);
 
+  // Pre-load TTS voices (Chrome loads them async — need onvoiceschanged listener)
+  useEffect(() => {
+    if (!synthRef.current) return;
+    const loadVoices = () => {
+      const voices = synthRef.current?.getVoices();
+      if (voices && voices.length > 0) {
+        setVoicesReady(true);
+      }
+    };
+    loadVoices();
+    synthRef.current.addEventListener("voiceschanged", loadVoices);
+    // Retry after 500ms in case event already fired
+    const retry = setTimeout(loadVoices, 500);
+    return () => {
+      synthRef.current?.removeEventListener("voiceschanged", loadVoices);
+      clearTimeout(retry);
+    };
+  }, []);
+
   // Simulated scrubber progress if there's no native video playing
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
@@ -183,7 +204,10 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
 
   // Standard Voice Synthesis (TTS) trigger
   const speakAudio = () => {
-    if (!synthRef.current) return;
+    if (!synthRef.current) {
+      setTtsError(true);
+      return;
+    }
     synthRef.current.cancel(); // clean existing lines
 
     // Speech text in pure warm Hinglish/Hindi so the voice synthesizer handles it with a native accent
@@ -193,6 +217,7 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
     utteranceRef.current = utterance;
 
     // Search for suitable native Hindi/Hinglish or Indian English voices for a sweet native experience
+    // Chrome loads voices asynchronously — use voicesReady state to ensure they're loaded
     const voices = synthRef.current.getVoices();
     const optimalVoice = voices.find(v => v.lang.startsWith("hi") || v.lang.includes("hi-IN")) 
       || voices.find(v => v.lang.includes("en-IN")) 
@@ -210,16 +235,28 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
     utterance.pitch = 1.05; // warm, welcoming pitch
 
     utterance.onend = () => {
+      setTtsError(false);
       setIsPlaying(false);
       setCurrentTime(duration);
       onComplete();
     };
 
-    utterance.onerror = () => {
-      // safe fallback on browser restrictions
+    utterance.onerror = (event) => {
+      console.error("TTS error:", event.error);
+      // Only show error for real failures, not 'canceled' which is expected
+      if (event.error !== "canceled" && event.error !== "interrupted") {
+        setTtsError(true);
+      }
     };
 
     synthRef.current.speak(utterance);
+
+    // Chrome workaround: resume speech if suspended (autoplay policy)
+    if (synthRef.current.suspended) {
+      synthRef.current.resume().catch(() => {
+        setTtsError(true);
+      });
+    }
   };
 
   const pauseAudio = () => {
@@ -901,6 +938,13 @@ export default function VideoPlayer({ videoFile, onComplete }: VideoPlayerProps)
           >
             <Play className="h-8 w-8 text-black fill-black" />
           </button>
+        )}
+
+        {/* TTS Error Banner */}
+        {ttsError && (
+          <div className="absolute bottom-2 left-2 right-2 z-30 bg-red-600 text-white text-[11px] font-bold p-2.5 rounded-xl border-2 border-black shadow-[3px_3px_0px_black] text-center">
+            ⚠ Audio playback issue — try clicking Play again or check browser volume. The chalkboard text is shown below!
+          </div>
         )}
       </div>
 

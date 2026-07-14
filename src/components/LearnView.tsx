@@ -1327,6 +1327,16 @@ export default function LearnView({ difficulty }: LearnViewProps) {
                 <p className="text-[11px] text-zinc-500 font-bold mt-2 leading-relaxed">
                   Have you read all the custom Hinglish study sheets and illustrations? Settle your concept exploration block now to unlock practice sessions!
                 </p>
+                {isConceptDone && (
+                  <span className="text-[10px] font-black text-green-600 bg-green-50 border border-green-300 px-2.5 py-1 rounded-lg inline-block mt-2">
+                    ✅ Concepts already locked! You can revisit or proceed to Practice.
+                  </span>
+                )}
+                {!isConceptDone && (
+                  <span className="text-[10px] font-black text-amber-600 bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-lg inline-block mt-2">
+                    ⚡ Click "Done!" below to unlock 🏋️ Practice + 📖 Story + 🎯 Quiz steps!
+                  </span>
+                )}
               </div>
 
               <div className="flex flex-col gap-2">
@@ -1420,13 +1430,18 @@ export default function LearnView({ difficulty }: LearnViewProps) {
 
             {/* Quick Settle actions on right */}
             <div className="bg-white border-4 border-black p-5 rounded-2xl shadow-[6px_6px_0px_black] flex flex-col justify-between h-fit gap-4">
-              <div>
-                <span className="text-[10px] font-black text-amber-600 block mb-1">✓ SUBMIT ASSIGNMENT</span>
-                <h4 className="font-sans font-black text-sm uppercase text-black">Finish & earn rewards</h4>
-                <p className="text-[11px] text-zinc-500 font-bold mt-2 leading-relaxed">
-                  Have you played the brief lesson clip and understood Rekha Didi ke custom Hinglish chalk boards? Press settle below!
-                </p>
-              </div>
+            <div>
+              <span className="text-[10px] font-black text-amber-600 block mb-1">✓ SUBMIT ASSIGNMENT</span>
+              <h4 className="font-sans font-black text-sm uppercase text-black">Finish & earn rewards</h4>
+              <p className="text-[11px] text-zinc-500 font-bold mt-2 leading-relaxed">
+                Have you played the brief lesson clip and understood Rekha Didi ke custom Hinglish chalk boards? Press settle below!
+              </p>
+              {!isVideoDone && (
+                <span className="text-[10px] font-black text-amber-600 bg-amber-50 border border-amber-300 px-2.5 py-1 rounded-lg inline-block mt-2">
+                  ⚡ Click "Done!" to unlock 💡 Concept Exploration next!
+                </span>
+              )}
+            </div>
 
               <div className="flex flex-col gap-2">
                 <button
