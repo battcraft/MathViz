@@ -198,9 +198,15 @@ export default function InteractiveSandbox({ subtopicId }: InteractiveSandboxPro
     const dotAB_BC = ab.x * bc.x + ab.y * bc.y;
     const isPerpendicular = Math.abs(dotAB_BC) < 0.25;
 
+    // Check parallel sides using cross product (parallel if cross product ≈ 0)
+    // Pair 1: AB || CD, Pair 2: BC || DA
+    const crossAB_CD = ab.x * cd.y - ab.y * cd.x;
+    const crossBC_DA = bc.x * da.y - bc.y * da.x;
+    const pair1_parallel = Math.abs(crossAB_CD) < 0.3;
+    const pair2_parallel = Math.abs(crossBC_DA) < 0.3;
+
     if (opp1_equal && opp2_equal) {
       if (isPerpendicular) {
-        // If all adjacent sides are equal, it's a square
         if (Math.abs(ab_len - bc_len) < 0.2) {
           return "Square (Varg) 🟦";
         }
@@ -208,7 +214,49 @@ export default function InteractiveSandbox({ subtopicId }: InteractiveSandboxPro
       }
       return "Parallelogram (Samanantar) ▱";
     }
+    // Trapezium: exactly ONE pair of opposite sides parallel
+    if (pair1_parallel && !pair2_parallel) {
+      return "Trapezium (Samantar Chaturbhuj) ▰";
+    }
+    if (!pair1_parallel && pair2_parallel) {
+      return "Trapezium (Samantar Chaturbhuj) ▰";
+    }
+    // Kite: two pairs of adjacent equal sides
+    const adj1_equal = Math.abs(ab_len - da_len) < 0.2;
+    const adj2_equal = Math.abs(bc_len - cd_len) < 0.2;
+    if (adj1_equal && adj2_equal) {
+      return "Kite (Patang) 🪁";
+    }
     return "Quadrilateral (Chaturbhuj) 💠";
+  };
+
+  // Triangle classification by sides and angles
+  const classifyTriangle = () => {
+    const sides = [segABLength, segBCLength, segCALength].sort((x, y) => x - y);
+    const a = sides[0], b = sides[1], c = sides[2];
+
+    // By sides
+    let sideType = "";
+    if (Math.abs(a - b) < 0.2 && Math.abs(b - c) < 0.2) {
+      sideType = "Equilateral (Sambahu) ⬡";
+    } else if (Math.abs(a - b) < 0.2 || Math.abs(b - c) < 0.2 || Math.abs(a - c) < 0.2) {
+      sideType = "Isosceles (Samadibahu) △";
+    } else {
+      sideType = "Scalene (Vishambahu) 🔺";
+    }
+
+    // By angles — Pythagorean check
+    const pyth = a*a + b*b;
+    let angleType = "";
+    if (Math.abs(pyth - c*c) < 0.3) {
+      angleType = "Right-angled (Samkon) ▶";
+    } else if (pyth < c*c) {
+      angleType = "Obtuse-angled (Adhikkon) 🔻";
+    } else {
+      angleType = "Acute-angled (Nyunkon) 🔼";
+    }
+
+    return `${sideType} • ${angleType}`;
   };
 
   return (
@@ -632,6 +680,14 @@ export default function InteractiveSandbox({ subtopicId }: InteractiveSandboxPro
                     <span>Triangle area:</span>
                     <span className="text-emerald-700 font-sans font-black uppercase text-[10px]">{triangleArea.toFixed(1)} sq units</span>
                   </div>
+                  {triangleArea > 0.01 && (
+                    <div className="flex justify-between border-t border-dashed border-black/10 pt-1 mt-0.5 font-bold">
+                      <span>Detected type:</span>
+                      <span className="bg-emerald-100 border border-emerald-400 text-emerald-700 px-1.5 py-0.5 rounded text-[10px] font-black">
+                        {classifyTriangle()}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 {triangleArea === 0 && (
                   <div className="text-[9px] text-[#FF6B6B] font-black border border-[#FF6B6B]/25 p-1 rounded bg-rose-50 text-center animate-pulse uppercase">
